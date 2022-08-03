@@ -1,6 +1,7 @@
 package com.demo.core;
 
 import java.awt.event.KeyEvent;
+import java.util.Optional;
 
 public class StandardGameLoop {
 
@@ -31,31 +32,9 @@ public class StandardGameLoop {
      * @param app the parent application this GameLoop is attached to
      */
     private void input(Application app) {
-
-
-        GameObject player = app.getObject("player");
-        InputHandler ih = app.getWindow().getInputHandler();
-        double dx = 0;
-        double dy = 0;
-
-        double step = 0.0000001;
-        if (ih.getKey(KeyEvent.VK_UP)) {
-            dy = -step;
+        if (Optional.ofNullable(app.getSceneManager().getCurrent()).isPresent()) {
+            app.getSceneManager().getCurrent().input(app);
         }
-        if (ih.getKey(KeyEvent.VK_DOWN)) {
-            dy = step;
-        }
-        if (ih.getKey(KeyEvent.VK_LEFT)) {
-            dx = -step;
-        }
-        if (ih.getKey(KeyEvent.VK_RIGHT)) {
-            dx = step;
-        }
-
-        if (ih.getKey(KeyEvent.VK_ESCAPE)) {
-            app.requestExit();
-        }
-        player.setSpeed(dx, dy);
     }
 
     /**

@@ -1,10 +1,7 @@
 package com.demo.core;
 
 import java.awt.geom.Rectangle2D;
-import java.util.Collection;
-import java.util.Locale;
-import java.util.Map;
-import java.util.ResourceBundle;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 import static com.demo.core.GameObject.ObjectType.RECTANGLE;
@@ -48,6 +45,10 @@ public class Application {
      */
     private StandardGameLoop gameLoop;
 
+    /**
+     * The Scene manager maintaining all the scene for this application.
+     */
+    private SceneManager scm;
 
     /**
      * The list of internal object maintained by the Application.
@@ -62,7 +63,7 @@ public class Application {
      */
     public Application(String[] args) {
         this(args, "app.properties");
-        System.out.printf("INFO : Application %s initialized%n", getConfiguration().getTitle());
+        System.out.printf("INFO : Application | %s initialized%n", getConfiguration().getTitle());
     }
 
     /**
@@ -90,7 +91,7 @@ public class Application {
      * </pre>
      */
     public void run() {
-        System.out.printf("INFO : Application %s started%n", config.getTitle());
+        System.out.printf("INFO : Application | %s started%n", config.getTitle());
         create();
         if (!isTestMode()) {
             loop();
@@ -108,19 +109,15 @@ public class Application {
                 .attachHandler(new InputHandler());
         render = new Renderer(config);
         gameLoop = new StandardGameLoop();
+        scm = new SceneManager(this);
 
         createScene();
     }
 
     public void createScene() {
-        add(new GameObject("player")
-                .setType(RECTANGLE)
-                .setPosition(160.0, 100.0)
-                .setDimension(16.0, 16.0)
-                .setSpeed(0.0, 0.0)
-                .setLayer(1)
-                .setPriority(1)
-        );
+        if (Optional.ofNullable(scm.getCurrent()).isPresent()) {
+            scm.getCurrent().create(this);
+        }
     }
 
     /**
@@ -137,7 +134,7 @@ public class Application {
      * Release all resources opened or loaded by thus application.
      */
     public void dispose() {
-        System.out.printf("INFO : Application %s ended%n", config.getTitle());
+        System.out.printf("INFO : Application | %s ended%n", config.getTitle());
         window.dispose();
     }
 
@@ -236,5 +233,9 @@ public class Application {
 
     public Rectangle2D getGameArea() {
         return this.config.getGameArea();
+    }
+
+    public SceneManager getSceneManager() {
+        return scm;
     }
 }

@@ -2,10 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="74ac4193-89e5-4b94-9b4f-0ea1348eb06b" name="Changes" comment="Create project Documentation and main components">
-      <change beforePath="$PROJECT_DIR$/out/production/main/app.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/main/i18n/messages.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/main/i18n/messages_en_EN.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/main/i18n/messages_fr_FR.properties" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/demo/core/DemoScene.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/demo/core/Scene.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/demo/core/SceneManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/docs/00-index.md" beforeDir="false" afterPath="$PROJECT_DIR$/src/docs/00-index.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/docs/05-input_handler.md" beforeDir="false" afterPath="$PROJECT_DIR$/src/docs/05-input_handler.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/demo/core/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/demo/core/Application.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/demo/core/Configuration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/demo/core/Configuration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/demo/core/StandardGameLoop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/demo/core/StandardGameLoop.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/demo/core/Window.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/demo/core/Window.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/app.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/app.properties" afterDir="false" />
     </list>
     <list id="64f58486-fa38-47e9-b04b-d7d481cf8ac7" name="getInputHandler" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -16,6 +23,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -123,17 +131,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="JetRunConfigurationType">
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
-      <option name="filePath" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="Application.Application" />
@@ -191,49 +188,14 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/test/java/com/demo/core/tests/ConfigurationTest.java</url>
-          <line>57</line>
-          <option name="timeStamp" value="1" />
+          <url>file://$PROJECT_DIR$/src/main/java/com/demo/core/SceneManager.java</url>
+          <line>34</line>
+          <option name="timeStamp" value="16" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/test/java/com/demo/core/tests/WindowTest.java</url>
-          <line>64</line>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/demo/core/InputHandler.java</url>
-          <line>61</line>
-          <option name="timeStamp" value="3" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/demo/core/InputHandler.java</url>
-          <line>66</line>
-          <option name="timeStamp" value="4" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/test/java/com/demo/core/tests/ConfigurationTest.java</url>
-          <line>80</line>
-          <option name="timeStamp" value="7" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/test/java/com/demo/core/tests/ConfigurationTest.java</url>
-          <line>78</line>
-          <option name="timeStamp" value="8" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/demo/core/Application.java</url>
-          <line>138</line>
-          <option name="timeStamp" value="11" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/demo/core/Application.java</url>
-          <line>94</line>
-          <option name="timeStamp" value="13" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/demo/core/Configuration.java</url>
-          <line>66</line>
-          <option name="timeStamp" value="15" />
+          <url>file://$PROJECT_DIR$/src/main/java/com/demo/core/SceneManager.java</url>
+          <line>53</line>
+          <option name="timeStamp" value="17" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

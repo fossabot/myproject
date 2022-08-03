@@ -39,6 +39,12 @@ public class Window extends JFrame {
         setVisible(true);
     }
 
+    /**
+     * Declare a new InputHandler on this window to support Mouse and keyboard operations.
+     *
+     * @param ih the new InputHandler implementation to be linked to this Window.
+     * @return
+     */
     public Window attachHandler(InputHandler ih) {
         addKeyListener(ih);
         addMouseListener(ih);

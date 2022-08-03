@@ -33,6 +33,16 @@ public class Configuration {
     private Rectangle2D gameArea;
 
     /**
+     * List of scene, comma separated and respecting the item format [name]:[implementation_class]
+     */
+    private String sceneList;
+    /**
+     * the default scene name to be activated.
+     */
+    private String sceneDefault;
+
+
+    /**
      * Initialize the configuration component with values from the properties file
      * <code>configurationFilename</code>.
      *
@@ -74,6 +84,8 @@ public class Configuration {
                 0.0, 0.0,
                 getDouble("app.game.area.width", "320"),
                 getDouble("app.game.area.height", "200"));
+        this.sceneList = props.getProperty("app.scenes.list", "");
+        this.sceneDefault = props.getProperty("app.scenes.default", "");
     }
 
     /**
@@ -208,10 +220,18 @@ public class Configuration {
 
     /**
      * Retrieve the game area Rectangle2D.
-     * 
+     *
      * @return
      */
     public Rectangle2D getGameArea() {
         return this.gameArea;
+    }
+
+    public String getSceneList() {
+        return sceneList;
+    }
+
+    public String getSceneDefault() {
+        return sceneDefault;
     }
 }
