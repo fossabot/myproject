@@ -2,6 +2,7 @@ package com.demo.core;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -73,4 +74,22 @@ public class SceneManager {
         return current;
     }
 
+    /**
+     * Return the list of scenes loaded from configuration into SceneManager.
+     *
+     * @return
+     */
+    public Collection<Scene> getSceneList() {
+        return this.scenes.values();
+    }
+
+    /**
+     * Return a specific scene by its name from tha scenes list.
+     *
+     * @param sceneName the scene name to be retrieved from the list.
+     * @return
+     */
+    public Scene getScene(String sceneName) {
+        return scenes.get(sceneName);
+    }
 }

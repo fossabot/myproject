@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="74ac4193-89e5-4b94-9b4f-0ea1348eb06b" name="Changes" comment="Create project Documentation and main components">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/demo/core/DemoScene.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/demo/core/Scene.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/demo/core/SceneManager.java" afterDir="false" />
+    <list default="true" id="74ac4193-89e5-4b94-9b4f-0ea1348eb06b" name="Changes" comment="Add Maven build tooling.">
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/com/demo/core/tests/SceneManagerTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/com/demo/core/tests/TestScene.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/resources/test-scene.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/docs/00-index.md" beforeDir="false" afterPath="$PROJECT_DIR$/src/docs/00-index.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/docs/05-input_handler.md" beforeDir="false" afterPath="$PROJECT_DIR$/src/docs/05-input_handler.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/demo/core/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/demo/core/Application.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/demo/core/Configuration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/demo/core/Configuration.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/demo/core/StandardGameLoop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/demo/core/StandardGameLoop.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/demo/core/Window.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/demo/core/Window.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/docs/08-scene_management.md" beforeDir="false" afterPath="$PROJECT_DIR$/src/docs/08-scene_management.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/demo/core/DemoScene.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/demo/core/scenes/DemoScene.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/demo/core/SceneManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/demo/core/SceneManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/app.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/app.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/resources/test-app.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/resources/test-app.properties" afterDir="false" />
     </list>
     <list id="64f58486-fa38-47e9-b04b-d7d481cf8ac7" name="getInputHandler" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -41,34 +40,39 @@
     <option name="showMembers" value="true" />
     <option name="sortByType" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;18&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/M313104/projects/personnal/java/myproject/src/main/resources&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.19195402&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "jdk.selected.JAVA_MODULE": "18",
+    "last_opened_file_path": "C:/Users/M313104/projects/personnal/java/myproject/src/test/resources",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.19195402",
+    "settings.editor.selected.configurable": "preferences.lookFeel"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="com.demo.core" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\M313104\projects\personnal\java\myproject\src\test\resources" />
       <recent name="C:\Users\M313104\projects\personnal\java\myproject\src\main\resources" />
     </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\M313104\projects\personnal\java\myproject" />
+    </key>
   </component>
-  <component name="RunManager" selected="Application.Application">
-    <configuration name="Application" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="JUnit.All in myproject">
+    <configuration name="com.demo.core.Application" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.demo.core.Application" />
       <module name="myproject" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.demo.core.*" />
+          <option name="PATTERN" value="com.demo.core.scenes.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -84,7 +88,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="WindowTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="SceneManagerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="myproject" />
       <extension name="coverage">
         <pattern>
@@ -93,13 +97,13 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="com.demo.core.tests" />
-      <option name="MAIN_CLASS_NAME" value="com.demo.core.tests.WindowTest" />
+      <option name="MAIN_CLASS_NAME" value="com.demo.core.tests.SceneManagerTest" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="WindowTest.aWindowCanCaptureKeyInput" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="SceneManagerTest.sceneManageHasTheRightTestScene" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="myproject" />
       <extension name="coverage">
         <pattern>
@@ -108,14 +112,14 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="com.demo.core.tests" />
-      <option name="MAIN_CLASS_NAME" value="com.demo.core.tests.WindowTest" />
-      <option name="METHOD_NAME" value="aWindowCanCaptureKeyInput" />
+      <option name="MAIN_CLASS_NAME" value="com.demo.core.tests.SceneManagerTest" />
+      <option name="METHOD_NAME" value="sceneManageHasTheRightTestScene" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="WindowTest.aWindowCanCaptureMouseInput" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="SceneManagerTest.sceneManagerHasASceneList" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="myproject" />
       <extension name="coverage">
         <pattern>
@@ -124,8 +128,8 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="com.demo.core.tests" />
-      <option name="MAIN_CLASS_NAME" value="com.demo.core.tests.WindowTest" />
-      <option name="METHOD_NAME" value="aWindowCanCaptureMouseInput" />
+      <option name="MAIN_CLASS_NAME" value="com.demo.core.tests.SceneManagerTest" />
+      <option name="METHOD_NAME" value="sceneManagerHasASceneList" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -133,11 +137,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.Application" />
         <item itemvalue="JUnit.All in myproject" />
-        <item itemvalue="JUnit.WindowTest.aWindowCanCaptureMouseInput" />
-        <item itemvalue="JUnit.WindowTest" />
-        <item itemvalue="JUnit.WindowTest.aWindowCanCaptureKeyInput" />
+        <item itemvalue="JUnit.SceneManagerTest" />
+        <item itemvalue="JUnit.SceneManagerTest.sceneManageHasTheRightTestScene" />
+        <item itemvalue="JUnit.SceneManagerTest.sceneManagerHasASceneList" />
+        <item itemvalue="Application.com.demo.core.Application" />
       </list>
     </recent_temporary>
   </component>
@@ -165,7 +169,28 @@
       <option name="project" value="LOCAL" />
       <updated>1659528926991</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Add SceneManager to the Application">
+      <created>1659539175876</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1659539175876</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Add SceneManager to the Application">
+      <created>1659539217930</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1659539217930</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Add Maven build tooling.">
+      <created>1659539515623</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1659539515623</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -182,20 +207,27 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="squash! create project" />
     <MESSAGE value="Create project Documentation and main components" />
-    <option name="LAST_COMMIT_MESSAGE" value="Create project Documentation and main components" />
+    <MESSAGE value="Add SceneManager to the Application" />
+    <MESSAGE value="Add Maven build tooling." />
+    <option name="LAST_COMMIT_MESSAGE" value="Add Maven build tooling." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/demo/core/SceneManager.java</url>
-          <line>34</line>
+          <line>35</line>
           <option name="timeStamp" value="16" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/demo/core/SceneManager.java</url>
-          <line>53</line>
+          <line>54</line>
           <option name="timeStamp" value="17" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/com/demo/core/tests/SceneManagerTest.java</url>
+          <line>29</line>
+          <option name="timeStamp" value="18" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
