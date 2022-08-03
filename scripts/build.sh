@@ -2,13 +2,13 @@
 # more info at https://gist.github.com/mcgivrer/a31510019029eba73edf5721a93c3dec
 # Copyright 2020 Frederic Delorme (McGivrer) fredericDOTdelormeATgmailDOTcom
 # Your program build definition
-export PROGRAM_NAME=monoclass2
-export PROGRAM_VERSION=1.0.3
-export PROGRAM_TITLE=MonoClass2
+export PROGRAM_NAME=myproject
+export PROGRAM_VERSION=1.0.0
+export PROGRAM_TITLE=MyProject
 export AUTHOR_NAME='Frédéric Delorme'
 export VENDOR_NAME=frederic.delorme@gmail.com
-export MAIN_CLASS=com.demoing.app.core.Application
-export JAVADOC_CLASSPATH="com.demoing.app.core com.demoing.app.scenes"
+export MAIN_CLASS=com.demo.core.Application
+export JAVADOC_CLASSPATH="com.demo.core com.demoing.core.scenes"
 export SOURCE_VERSION=17
 export SRC_ENCODING=UTF-8
 # the tools and sources versions
@@ -18,16 +18,16 @@ export JAVA_BUILD=$(java --version | head -1 | cut -f2 -d' ')
 # Paths
 export SRC=src
 export LIBS=lib
-export LIB_TEST="./lib/test/junit-platform-console-standalone-1.8.2.jar"
+export LIB_TEST="./lib/test/junit-platform-console-standalone-1.9.0.jar"
 export TARGET=target
 export BUILD=$TARGET/build
 export CLASSES=$TARGET/classes
 export RESOURCES=$SRC/main/resources
-export TESTRESOURCES=$SRC/test/resources
-export COMPILATION_OPTS="--enable-preview -Xlint:preview"
+export TEST_RESOURCES=$SRC/test/resources
+export COMPILATION_OPTS="-Xlint:preview"
 export JAR_NAME=$PROGRAM_NAME-$PROGRAM_VERSION.jar
 # -Xlint:unchecked -Xlint:preview"
-export JAR_OPTS=--enable-preview
+export JAR_OPTS=--enable-preview -Xlint:unchecked -Xlint:preview
 #
 function manifest() {
   mkdir $TARGET
@@ -56,11 +56,12 @@ function compile() {
   rm -Rf $CLASSES/*
   echo "|_ 2. compile sources from '$SRC/main' ..."
   find $SRC/main -name '*.java' >$TARGET/sources.lst
-  javac $COMPILATION_OPTS @$LIBS/options.txt @$TARGET/sources.lst -cp $CLASSES
+  #javac $COMPILATION_OPTS @$LIBS/options.txt @$TARGET/sources.lst -cp $CLASSES
+  javac $COMPILATION_OPTS @$TARGET/sources.lst -cp $CLASSES
   echo "   done."
 }
 #
-function generatedoc(){
+function generateDoc(){
 echo "generate Javadoc "
   echo "> from : $SRC"
   echo "> to   : $TARGET/javadoc"
@@ -87,7 +88,7 @@ function executeTests(){
   mkdir -p $TARGET/test-classes
   rm -Rf $TARGET/test-classes/*
   echo "copy test resources"
-  cp -r ./src/test/resources/* $TARGET/test-classes
+  cp -r *TEST_RESOURCES/* $TARGET/test-classes
   echo "compile test classes"
   #list test sources
   find ./src/test -name '*.java' >$TARGET/test-sources.lst
@@ -157,7 +158,7 @@ function run() {
     manifest
     compile
     executeTests
-    generatedoc
+    generateDoc
     createJar
     wrapJar
     ;;
@@ -168,7 +169,7 @@ function run() {
   d | D | doc)
     manifest
     compile
-    generatedoc
+    generateDoc
     ;;
   t | T | test)
     manifest

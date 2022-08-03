@@ -1,9 +1,0 @@
-{
-    "java.project.sourcePaths": [
-        "src\\main\\java",
-        "src\\main\\resources",
-        "src\\test\\resources",
-        "src\\test\\java"
-    ],
-    "java.project.outputPath": "target"
-}

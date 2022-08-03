@@ -2,9 +2,9 @@ package com.demo.core.tests;
 
 import com.demo.core.InputHandler;
 import com.demo.core.Window;
-import org.junit.After;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 import java.awt.*;
 import java.awt.event.InputEvent;
@@ -13,12 +13,12 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.util.Optional;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class WindowTest {
     private Window window;
 
-    @After
+    @AfterEach
     public void teardown() {
         if (Optional.ofNullable(window).isPresent()) {
             window.dispose();
@@ -53,9 +53,11 @@ public class WindowTest {
     @Test
     public void aWindowCanBeCreated() {
         window = createWindow("CreatedWindow");
-        assertNotNull("The Window object instance has not been created!", window);
-        assertEquals("The Window width is not set to the right value!", 320, window.getWidth(), 0);
-        assertEquals("The Window height has not been set to the right value!", 200, window.getHeight(), 0);
+        assertNotNull(window, "The Window object instance has not been created!");
+        assertEquals(320, window.getWidth(), 0,
+                "The Window width is not set to the right value!");
+        assertEquals(200, window.getHeight(), 0,
+                "The Window height has not been set to the right value!");
     }
 
     @Test
@@ -67,10 +69,12 @@ public class WindowTest {
             window.setVisible(true);
             robot.keyPress(KeyEvent.VK_ESCAPE);
             robot.delay(100);
-            assertTrue("The Window ESCAPE key has not been pressed", getInputHandler(window).getKey(KeyEvent.VK_ESCAPE));
+            assertTrue(getInputHandler(window).getKey(KeyEvent.VK_ESCAPE),
+                    "The Window ESCAPE key has not been pressed");
             robot.keyRelease(KeyEvent.VK_ESCAPE);
             robot.delay(100);
-            assertFalse("The Window ESCAPE key has not been released", getInputHandler(window).getKey(KeyEvent.VK_ESCAPE));
+            assertFalse(getInputHandler(window).getKey(KeyEvent.VK_ESCAPE),
+                    "The Window ESCAPE key has not been released");
         } catch (AWTException e) {
             fail("Unable to simulate Window listener interaction");
         }
@@ -78,7 +82,7 @@ public class WindowTest {
 
 
     @Test
-    @Ignore("Mouse button input test need to be fixed")
+    @Disabled("Must be fixed to be executed")
     public void aWindowCanCaptureMouseInput() {
         window = createWindow("MouseButtonWindow");
         try {
@@ -92,11 +96,15 @@ public class WindowTest {
             robot.mouseMove(window.getX() + 5, window.getY() + 5);
             robot.mousePress(requiredButtonMask);
             robot.delay(100);
-            assertTrue("The Window mouse button " + mouseButton + " has not been pressed", getInputHandler(window).getMouseButton(mouseButton));
+            assertTrue(
+                    getInputHandler(window).getMouseButton(mouseButton),
+                    "The Window mouse button " + mouseButton + " has not been pressed");
 
             robot.mouseRelease(requiredButtonMask);
             robot.delay(100);
-            assertFalse("The Window mouse button " + mouseButton + " has not been released", getInputHandler(window).getMouseButton(mouseButton));
+            assertFalse(
+                    getInputHandler(window).getMouseButton(mouseButton),
+                    "The Window mouse button " + mouseButton + " has not been released");
 
         } catch (AWTException e) {
             fail("Unable to simulate Window listener interaction");

@@ -2,8 +2,8 @@ package com.demo.core.tests;
 
 import com.demo.core.Application;
 import com.demo.core.SceneManager;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -12,7 +12,7 @@ public class SceneManagerTest {
     Application app;
     SceneManager scm;
 
-    @Before
+    @BeforeEach
     public void setup() {
         app = new Application(new String[]{}, "test-scene.properties");
     }

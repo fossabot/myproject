@@ -3,9 +3,8 @@ package com.demo.core.tests;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import org.junit.Test;
-
 import com.demo.core.GameObject;
+import org.junit.jupiter.api.Test;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;

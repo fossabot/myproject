@@ -1,19 +1,18 @@
 package com.demo.core.tests;
 
-import org.junit.After;
-import org.junit.Before;
-
 import com.demo.core.Application;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 
 public class ApplicationTest {
     Application app;
 
-    @Before
+    @BeforeEach
     void setup() {
-        app = new Application(new String[] {});
+        app = new Application(new String[]{});
     }
 
-    @After
+    @AfterEach
     void tearDown() {
         app.dispose();
         app = null;

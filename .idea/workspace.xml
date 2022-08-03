@@ -1,17 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="74ac4193-89e5-4b94-9b4f-0ea1348eb06b" name="Changes" comment="Add Maven build tooling.">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/com/demo/core/tests/SceneManagerTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/com/demo/core/tests/TestScene.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/resources/test-scene.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/codestream.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apiguardian_apiguardian_api_1_1_2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_junit_jupiter_junit_jupiter_api_5_8_2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_junit_jupiter_junit_jupiter_engine_5_8_2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_junit_platform_junit_platform_commons_1_8_2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_junit_platform_junit_platform_engine_1_8_2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_opentest4j_opentest4j_1_2_0.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/docs/08-scene_management.md" beforeDir="false" afterPath="$PROJECT_DIR$/src/docs/08-scene_management.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/demo/core/DemoScene.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/demo/core/scenes/DemoScene.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/demo/core/SceneManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/demo/core/SceneManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/app.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/app.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/resources/test-app.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/resources/test-app.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/test/junit-platform-console-standalone-1.8.2.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myproject.iml" beforeDir="false" afterPath="$PROJECT_DIR$/myproject.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/build.sh" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/build.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/demo/core/tests/ApplicationTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/demo/core/tests/ApplicationTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/demo/core/tests/ConfigurationTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/demo/core/tests/ConfigurationTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/demo/core/tests/GameObjectTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/demo/core/tests/GameObjectTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/demo/core/tests/SceneManagerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/demo/core/tests/SceneManagerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/demo/core/tests/WindowTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/demo/core/tests/WindowTest.java" afterDir="false" />
     </list>
     <list id="64f58486-fa38-47e9-b04b-d7d481cf8ac7" name="getInputHandler" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -33,6 +46,13 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="useMavenConfig" value="true" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
   <component name="ProjectId" id="2Ca3j0QxKdIGu0HQWyQHGsoPGNr" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -46,9 +66,10 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "ignore.preview.features.used": "true",
     "jdk.selected.JAVA_MODULE": "18",
-    "last_opened_file_path": "C:/Users/M313104/projects/personnal/java/myproject/src/test/resources",
-    "project.structure.last.edited": "Modules",
+    "last_opened_file_path": "C:/Users/frede/Projects/java/myproject",
+    "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.0",
     "project.structure.side.proportion": "0.19195402",
     "settings.editor.selected.configurable": "preferences.lookFeel"
@@ -67,12 +88,12 @@
     </key>
   </component>
   <component name="RunManager" selected="JUnit.All in myproject">
-    <configuration name="com.demo.core.Application" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+    <configuration name="Application" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.demo.core.Application" />
       <module name="myproject" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.demo.core.scenes.*" />
+          <option name="PATTERN" value="com.demo.core.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -103,7 +124,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="SceneManagerTest.sceneManageHasTheRightTestScene" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="WindowTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="myproject" />
       <extension name="coverage">
         <pattern>
@@ -112,14 +133,13 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="com.demo.core.tests" />
-      <option name="MAIN_CLASS_NAME" value="com.demo.core.tests.SceneManagerTest" />
-      <option name="METHOD_NAME" value="sceneManageHasTheRightTestScene" />
-      <option name="TEST_OBJECT" value="method" />
+      <option name="MAIN_CLASS_NAME" value="com.demo.core.tests.WindowTest" />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="SceneManagerTest.sceneManagerHasASceneList" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="com.demo.core.tests in myproject" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="myproject" />
       <extension name="coverage">
         <pattern>
@@ -128,9 +148,7 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="com.demo.core.tests" />
-      <option name="MAIN_CLASS_NAME" value="com.demo.core.tests.SceneManagerTest" />
-      <option name="METHOD_NAME" value="sceneManagerHasASceneList" />
-      <option name="TEST_OBJECT" value="method" />
+      <option name="TEST_OBJECT" value="package" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -138,10 +156,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="JUnit.All in myproject" />
+        <item itemvalue="JUnit.com.demo.core.tests in myproject" />
         <item itemvalue="JUnit.SceneManagerTest" />
-        <item itemvalue="JUnit.SceneManagerTest.sceneManageHasTheRightTestScene" />
-        <item itemvalue="JUnit.SceneManagerTest.sceneManagerHasASceneList" />
-        <item itemvalue="Application.com.demo.core.Application" />
+        <item itemvalue="JUnit.WindowTest" />
+        <item itemvalue="Application.Application" />
       </list>
     </recent_temporary>
   </component>
