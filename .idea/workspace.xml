@@ -4,26 +4,29 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="74ac4193-89e5-4b94-9b4f-0ea1348eb06b" name="Changes" comment="Add Maven build tooling.">
-      <change afterPath="$PROJECT_DIR$/.idea/codestream.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apiguardian_apiguardian_api_1_1_2.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_junit_jupiter_junit_jupiter_api_5_8_2.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_junit_jupiter_junit_jupiter_engine_5_8_2.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_junit_platform_junit_platform_commons_1_8_2.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_junit_platform_junit_platform_engine_1_8_2.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_opentest4j_opentest4j_1_2_0.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="74ac4193-89e5-4b94-9b4f-0ea1348eb06b" name="Changes" comment="feat(package): redispatch components into new packages">
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_junit_jupiter_junit_jupiter_api_5_8_2.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_junit_jupiter_junit_jupiter_engine_5_8_2.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_junit_platform_junit_platform_commons_1_8_2.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_junit_platform_junit_platform_engine_1_8_2.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/test/junit-platform-console-standalone-1.8.2.jar" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/myproject.iml" beforeDir="false" afterPath="$PROJECT_DIR$/myproject.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/build.sh" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/build.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/demo/core/tests/ApplicationTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/demo/core/tests/ApplicationTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/demo/core/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/demo/core/Application.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/demo/core/Configuration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/demo/core/services/config/Configuration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/demo/core/GameLoop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/demo/core/services/gameloop/GameLoop.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/demo/core/GameObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/demo/core/entity/GameObject.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/demo/core/InputHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/demo/core/services/io/InputHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/demo/core/Renderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/demo/core/services/gfx/Renderer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/demo/core/Scene.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/demo/core/services/scene/Scene.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/demo/core/SceneManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/demo/core/services/scene/SceneManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/demo/core/StandardGameLoop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/demo/core/services/gameloop/StandardGameLoop.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/demo/core/Window.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/demo/core/services/gfx/Window.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/demo/core/scenes/DemoScene.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/demo/scenes/DemoScene.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/demo/scenes/DemoScene.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/com/demo/core/tests/ConfigurationTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/demo/core/tests/ConfigurationTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/com/demo/core/tests/GameObjectTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/demo/core/tests/GameObjectTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/com/demo/core/tests/SceneManagerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/demo/core/tests/SceneManagerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/demo/core/tests/TestScene.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/demo/core/tests/TestScene.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/com/demo/core/tests/WindowTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/demo/core/tests/WindowTest.java" afterDir="false" />
     </list>
     <list id="64f58486-fa38-47e9-b04b-d7d481cf8ac7" name="getInputHandler" comment="" />
@@ -41,6 +44,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MarkdownSettingsMigration">
@@ -60,21 +68,21 @@
     <option name="showMembers" value="true" />
     <option name="sortByType" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "ignore.preview.features.used": "true",
-    "jdk.selected.JAVA_MODULE": "18",
-    "last_opened_file_path": "C:/Users/frede/Projects/java/myproject",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.19195402",
-    "settings.editor.selected.configurable": "preferences.lookFeel"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;ignore.preview.features.used&quot;: &quot;true&quot;,
+    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;18&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/frede/Projects/java/myproject&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.19195402&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="com.demo.core" />
@@ -87,13 +95,13 @@
       <recent name="C:\Users\M313104\projects\personnal\java\myproject" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.All in myproject">
-    <configuration name="Application" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Application.com.demo.core.Application">
+    <configuration name="com.demo.core.Application" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.demo.core.Application" />
       <module name="myproject" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.demo.core.*" />
+          <option name="PATTERN" value="com.demo.core.services.gameloop.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -155,11 +163,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.com.demo.core.Application" />
         <item itemvalue="JUnit.All in myproject" />
         <item itemvalue="JUnit.com.demo.core.tests in myproject" />
         <item itemvalue="JUnit.SceneManagerTest" />
         <item itemvalue="JUnit.WindowTest" />
-        <item itemvalue="Application.Application" />
       </list>
     </recent_temporary>
   </component>
@@ -227,19 +235,21 @@
     <MESSAGE value="Create project Documentation and main components" />
     <MESSAGE value="Add SceneManager to the Application" />
     <MESSAGE value="Add Maven build tooling." />
-    <option name="LAST_COMMIT_MESSAGE" value="Add Maven build tooling." />
+    <MESSAGE value="Add GameLoop interface and all updated doc" />
+    <MESSAGE value="feat(package): redispatch components into new packages" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat(package): redispatch components into new packages" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/demo/core/SceneManager.java</url>
-          <line>35</line>
+          <url>file://$PROJECT_DIR$/src/main/java/com/demo/core/services/scene/SceneManager.java</url>
+          <line>37</line>
           <option name="timeStamp" value="16" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/demo/core/SceneManager.java</url>
-          <line>54</line>
+          <url>file://$PROJECT_DIR$/src/main/java/com/demo/core/services/scene/SceneManager.java</url>
+          <line>56</line>
           <option name="timeStamp" value="17" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">

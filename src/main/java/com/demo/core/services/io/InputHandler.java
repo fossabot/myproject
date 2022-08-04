@@ -1,4 +1,6 @@
-package com.demo.core;
+package com.demo.core.services.io;
+
+import com.demo.core.services.gfx.Window;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -92,7 +94,7 @@ public class InputHandler implements KeyListener, MouseListener, MouseMotionList
      * Retrieve the mouse button x status.
      *
      * @param x the mouse button number to retrieve current state of.
-     * @return
+     * @return true if the mouse button <code>x</code> is pressed.
      */
     public boolean getMouseButton(int x) {
         return mouseButton[x];
@@ -102,7 +104,7 @@ public class InputHandler implements KeyListener, MouseListener, MouseMotionList
      * Retrieve the key keyCode status.
      *
      * @param keyCode the keyCode number to retrieve current state of.
-     * @return
+     * @return true if the key <code>keyCode</code> is pressed.
      */
     public boolean getKey(int keyCode) {
         return keys[keyCode];
@@ -111,7 +113,7 @@ public class InputHandler implements KeyListener, MouseListener, MouseMotionList
     /**
      * get the current mouse position.
      *
-     * @return
+     * @return the current mouse position as a Point.
      */
     public Point getMousePosition() {
         return this.mousePosition;

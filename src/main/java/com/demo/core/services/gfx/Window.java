@@ -1,4 +1,6 @@
-package com.demo.core;
+package com.demo.core.services.gfx;
+
+import com.demo.core.services.io.InputHandler;
 
 import java.awt.Dimension;
 
@@ -43,7 +45,7 @@ public class Window extends JFrame {
      * Declare a new InputHandler on this window to support Mouse and keyboard operations.
      *
      * @param ih the new InputHandler implementation to be linked to this Window.
-     * @return
+     * @return the current Window object updated (Fluent API).
      */
     public Window attachHandler(InputHandler ih) {
         addKeyListener(ih);
@@ -53,6 +55,11 @@ public class Window extends JFrame {
         return this;
     }
 
+    /**
+     * Return the currently attached InputHandler to this window.
+     *
+     * @return THe Current InputHandler.
+     */
     public InputHandler getInputHandler() {
         return inputHandler;
     }

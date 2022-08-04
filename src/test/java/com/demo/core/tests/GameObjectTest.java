@@ -3,7 +3,7 @@ package com.demo.core.tests;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import com.demo.core.GameObject;
+import com.demo.core.entity.GameObject;
 import org.junit.jupiter.api.Test;
 
 import java.awt.Color;

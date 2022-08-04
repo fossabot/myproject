@@ -1,4 +1,8 @@
-package com.demo.core;
+package com.demo.core.services.gfx;
+
+import com.demo.core.Application;
+import com.demo.core.services.config.Configuration;
+import com.demo.core.entity.GameObject;
 
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
@@ -20,7 +24,7 @@ public class Renderer {
      *     <li></li>
      * </ul>
      *
-     * @param config
+     * @param config the current application {@link Configuration} object.
      */
     public Renderer(Configuration config) {
         this.buffer = new BufferedImage((int) config.getGameArea().getWidth(), (int) config.getGameArea().getHeight(), BufferedImage.TYPE_INT_ARGB);
@@ -45,7 +49,7 @@ public class Renderer {
     }
 
     /**
-     * Draw one GameObject according to its drawing {@link com.demo.core.GameObject.ObjectType}
+     * Draw one GameObject according to its drawing {@link GameObject.ObjectType}
      *
      * @param g the Graphics API
      * @param o the {@link Application} container
@@ -68,18 +72,16 @@ public class Renderer {
                 Ellipse2D ellipse = new Ellipse2D.Double(5, 10, 100, 150);
                 drawShape(g, o, ellipse);
             }
-            case IMAGE -> {
-                g.drawImage(o.image, (int) o.x, (int) o.y, null);
-            }
+            case IMAGE -> g.drawImage(o.image, (int) o.x, (int) o.y, null);
         }
     }
 
     /**
      * helper on drawing simple shape.
      *
-     * @param g
-     * @param o
-     * @param shape
+     * @param g     the Graphics2D API to be used.
+     * @param o     the GameObject to be drawn
+     * @param shape the current shape for this GameObject
      */
     private void drawShape(Graphics2D g, GameObject o, Shape shape) {
         g.setColor(o.fillColor);

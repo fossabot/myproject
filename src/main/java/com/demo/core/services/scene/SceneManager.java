@@ -1,4 +1,7 @@
-package com.demo.core;
+package com.demo.core.services.scene;
+
+import com.demo.core.Application;
+import com.demo.core.services.config.Configuration;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
@@ -26,7 +29,7 @@ public class SceneManager {
     /**
      * Create the SceneManager upon the {@link Application} container
      *
-     * @param app
+     * @param app the container {@link Application}
      */
     public SceneManager(Application app) {
         initialize(app.getConfiguration());
@@ -46,7 +49,7 @@ public class SceneManager {
             });
             activateScene(config.getSceneDefault());
         } else {
-            System.out.printf("ERR : SceneManager | No scene defined into the configuration");
+            System.out.println("ERR : SceneManager | No scene defined into the configuration");
         }
 
     }
@@ -56,7 +59,7 @@ public class SceneManager {
     }
 
     public void add(Class<? extends Scene> sceneClass) {
-        Scene scn = null;
+        Scene scn;
         try {
             scn = sceneClass.getConstructor().newInstance();
             scenes.put(scn.getName(), scn);
@@ -77,7 +80,7 @@ public class SceneManager {
     /**
      * Return the list of scenes loaded from configuration into SceneManager.
      *
-     * @return
+     * @return the current instantiated Scene list
      */
     public Collection<Scene> getSceneList() {
         return this.scenes.values();
@@ -87,7 +90,7 @@ public class SceneManager {
      * Return a specific scene by its name from tha scenes list.
      *
      * @param sceneName the scene name to be retrieved from the list.
-     * @return
+     * @return the Scene instance corresponding to the sceneName.
      */
     public Scene getScene(String sceneName) {
         return scenes.get(sceneName);

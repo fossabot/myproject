@@ -1,6 +1,7 @@
-package com.demo.core;
+package com.demo.core.services.gameloop;
 
-import java.awt.event.KeyEvent;
+import com.demo.core.Application;
+
 import java.util.Optional;
 
 public class StandardGameLoop implements GameLoop {
@@ -10,8 +11,8 @@ public class StandardGameLoop implements GameLoop {
     /**
      * Process game loop and return duration time for this cycle.
      *
-     * @param app
-     * @return
+     * @param app the container {@link Application}
+     * @return the measured execution duration time
      */
     @Override
     public long process(Application app) {
@@ -49,7 +50,7 @@ public class StandardGameLoop implements GameLoop {
     public void update(Application app, long elapsed) {
         app.getObjects().forEach(go -> {
             go.update(elapsed);
-            go.contrainedBy(app.getGameArea());
+            go.constrainedBy(app.getGameArea());
         });
     }
 

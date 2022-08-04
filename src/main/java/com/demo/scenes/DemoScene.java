@@ -1,9 +1,9 @@
 package com.demo.scenes;
 
 import com.demo.core.Application;
-import com.demo.core.GameObject;
-import com.demo.core.InputHandler;
-import com.demo.core.Scene;
+import com.demo.core.entity.GameObject;
+import com.demo.core.services.io.InputHandler;
+import com.demo.core.services.scene.Scene;
 
 import java.awt.event.KeyEvent;
 
