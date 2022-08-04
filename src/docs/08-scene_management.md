@@ -154,7 +154,7 @@ And now the scenes list if provisioned by the 2 configuration keys :
 
 ```properties
 # Scenes management
-app.scenes.list=demo:com.demo.core.scenes.DemoScene,
+app.scenes.list=demo:DemoScene,
 app.scenes.default=demo
 ```
 

@@ -7,13 +7,71 @@ All the step of a game loop can be defined following multiple strategy :
 
 So the game loop implementation must be delegated to a dedicated component. This where we propose a GameLoop interface.
 
+## Requirements
+
+|  UC    | Description                                        |
+|:------:|:---------------------------------------------------|
+| UC0401 | Game loop must support input management delegation |
+| UC0402 | Game loop delegates update of entities             |
+| UC0403 | Game loop triggers scene drawing                   |
+| UC0405 | Game loop must provide a execution duration metric |
+
+So all those specific processing topic must be processed from only one call.
+It needs to propose an interface to define a such game loop:
+
 ```java
 public interface GameLoop {
-    public process(Application app);
-} 
+    long process(Application app);
+
+    void input(Application app);
+
+    void update(Application app, long elapsed);
+
+    void render(Application app, long elapsed);
+}
 ```
 
-Our first implementation will be a very simple one, without any constrain on time and FPS:
+- `process` will return a number of nanosecond as a duration of execution.
+
+## Standard implementation
+
+To understand where is the GameLoop in our design, let's introduce it through a Sequence diagram:
+
+```plantuml
+@startuml "Sequence diagram for GameLoop"
+!theme plain
+loop GameLoop processing
+    Application --> GameLoop:process(app)
+    GameLoop --> GameLoop:input(app) 
+    GameLoop --> Scene:input()
+    GameLoop --> GameLoop:update(app,t)
+    GameLoop --> GameObject:update(t) 
+    GameLoop --> Renderer:draw()
+    GameLoop --> GameLoop:render(app,t) 
+end
+@enduml
+```
+And a class diagram :
+
+```plantuml
+@startuml
+!theme plain
+hide methods
+hide attributes
+class Game
+class GameLoop
+class Renderer
+class Window
+class GameObject
+Game "1" --> "*" Window: window
+Game "1" --> "1" Renderer: renderer
+Game "1" --> "1" SceneManager: scm
+Game "1" --> "1" GameLoop: gameLoop
+Game "1" -> "*" GameObject: objects
+@enduml
+```
+
+Let's dive into our first simple implementation, without FPS or time constrain.
 
 ```java
 public class StandardGameLoop implements GameLoop {
@@ -30,19 +88,17 @@ public class StandardGameLoop implements GameLoop {
         return System.nanoTime() - startTime;
     }
 
-    private void input(Application app) {
+    public void input(Application app) {
         // todo Implement the required processing for managing input
     }
 
-    private void update(Application app, long elapsed) {
+    public void update(Application app, long elapsed) {
         // todo Implement the required processing for updating
     }
 
-    private void render(Application app, long elapsed) {
+    public void render(Application app, long elapsed) {
         // todo Implement the required processing for rendering
     }
-
-
 }
 ```
 
@@ -60,7 +116,7 @@ details.
 ```java
 public class StandardGameLoop implements GameLoop {
     //...
-    private void input(Application app) {
+    public void input(Application app) {
         // todo Implement the required processing for managing input
     }
     //...
@@ -75,7 +131,7 @@ chapter [06](06-manage_game_object.md).
 ```java
 public class StandardGameLoop implements GameLoop {
     //...
-    private void update(Application app, long elapsed) {
+    public void update(Application app, long elapsed) {
         
         /* parse all objects from application and update themselves.
         
@@ -96,7 +152,7 @@ The rendering will be delegated to the Renderer component (see chapter [07](07-c
 ```java
 public class StandardGameLoop implements GameLoop {
     //...
-    private void render(Application app, long elapsed) {
+    public void render(Application app, long elapsed) {
         app.getRender().draw(app);
         app.getRender().drawToWindow(app.getWindow());
     }
