@@ -65,6 +65,4 @@ public class StandardGameLoop implements GameLoop {
         app.getRender().draw(app);
         app.getRender().drawToWindow(app.getWindow());
     }
-
-
 }

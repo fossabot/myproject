@@ -2,6 +2,20 @@ package com.demo.core.services.gameloop;
 
 import com.demo.core.Application;
 
+/**
+ * The {@link GameLoop} interface defining the entrypoint to execute loop from
+ * {@link Application}, and define the  main steps of the game loop.
+ * <p>
+ * the {@link GameLoop#process(Application)} is called from a looping Application method.
+ * <ul>
+ * <li>The exit condition will be maintained by the hosting Application itself,</li>
+ * <li>the looping condition is also maintained by the hosting Application.</li>
+ * </ul>
+ *
+ * @author Frédéric Delorme
+ * @version 1.0.0
+ * @since 2022
+ */
 public interface GameLoop {
     /**
      * describe game loop  processing

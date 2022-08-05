@@ -36,7 +36,6 @@ public class Window extends JFrame {
         setPreferredSize(dim);
         setMaximumSize(dim);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
         pack();
         setVisible(true);
     }

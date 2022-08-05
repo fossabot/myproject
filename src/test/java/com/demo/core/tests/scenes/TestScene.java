@@ -1,4 +1,4 @@
-package com.demo.core.tests;
+package com.demo.core.tests.scenes;
 
 import com.demo.core.Application;
 import com.demo.core.services.scene.Scene;

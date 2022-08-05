@@ -81,7 +81,6 @@ public class Application {
      *                              configuration file.
      */
     public Application(String[] args, String configurationFilename) {
-
         config = new Configuration(configurationFilename);
         config.parseArguments(args);
     }

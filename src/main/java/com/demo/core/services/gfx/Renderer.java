@@ -19,9 +19,12 @@ public class Renderer {
     private final BufferedImage buffer;
 
     /**
-     * Initialize the Renderer component according to defined configuration key :
+     * Initialize the {@link Renderer} component according to defined configuration key :
+     * <p>
+     * 2 configuration attributes are defining the internal graphic buffer size:
      * <ul>
-     *     <li></li>
+     *     <li><code>app.window.width</code> set its width,</li>
+     *     <li><code>app.window.height</code> set its height.</li>
      * </ul>
      *
      * @param config the current application {@link Configuration} object.
@@ -49,9 +52,9 @@ public class Renderer {
     }
 
     /**
-     * Draw one GameObject according to its drawing {@link GameObject.ObjectType}
+     * Draw one {@link GameObject} according to its drawing {@link GameObject.ObjectType}
      *
-     * @param g the Graphics API
+     * @param g the Graphics API (see {@link Graphics2D}
      * @param o the {@link Application} container
      */
     private void drawGameObject(Graphics2D g, GameObject o) {
@@ -79,8 +82,8 @@ public class Renderer {
     /**
      * helper on drawing simple shape.
      *
-     * @param g     the Graphics2D API to be used.
-     * @param o     the GameObject to be drawn
+     * @param g     the {@link Graphics2D} API to be used.
+     * @param o     the {@link GameObject} to be drawn
      * @param shape the current shape for this GameObject
      */
     private void drawShape(Graphics2D g, GameObject o, Shape shape) {
