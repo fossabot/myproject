@@ -238,7 +238,7 @@ public class GameObject {
      *
      * @param elapsed the elapsed time since previous call.
      */
-    public void update(long elapsed) {
+    public void update(double elapsed) {
         x += dx * elapsed;
         y += dy * elapsed;
     }
@@ -250,27 +250,28 @@ public class GameObject {
      * @return true if constrained, else false.
      */
     public boolean constrainedBy(Rectangle2D area) {
+        boolean collide = false;
         if (area.contains(x, y, w, h)) {
-            return false;
+            collide = false;
         } else {
-            if (x < area.getX()) {
-                x = area.getX();
-                return true;
+            if (x < 0.0) {
+                x = 0.0;
+                collide = true;
             }
             if (x > area.getWidth() - w) {
                 x = area.getWidth() - w;
-                return true;
+                collide = true;
             }
-            if (y < area.getY()) {
-                y = area.getY();
-                return true;
+            if (y < 0.0) {
+                y = 0.0;
+                collide = true;
             }
             if (y > area.getHeight() - h) {
                 y = area.getHeight() - h;
-                return true;
+                collide = true;
             }
-            return true;
         }
+        return collide;
     }
 
 }

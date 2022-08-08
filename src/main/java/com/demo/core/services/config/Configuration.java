@@ -9,7 +9,7 @@ import java.util.Properties;
 
 public class Configuration {
 
-    private Properties props = new Properties();
+    private final Properties props = new Properties();
 
     /**
      * Internal title of this application to b used as displat or as logging
@@ -30,6 +30,7 @@ public class Configuration {
      * Window preferred dimension.
      */
     private Dimension windowDimension;
+    private double scale;
     private Rectangle2D gameArea;
 
     /**
@@ -40,6 +41,10 @@ public class Configuration {
      * the default scene name to be activated.
      */
     private String sceneDefault;
+    /**
+     * Frame Per second display rate.
+     */
+    private double fps;
 
 
     /**
@@ -80,12 +85,14 @@ public class Configuration {
         this.windowDimension = new Dimension(
                 getInteger("app.window.width", "320"),
                 getInteger("app.window.height", "200"));
+        this.scale = getDouble("app.window.scale", "2.0");
         this.gameArea = new Rectangle2D.Double(
                 0.0, 0.0,
-                getDouble("app.game.area.width", "320"),
-                getDouble("app.game.area.height", "200"));
+                getDouble("app.game.area.width", "320.0"),
+                getDouble("app.game.area.height", "200.0"));
         this.sceneList = props.getProperty("app.scenes.list", "");
         this.sceneDefault = props.getProperty("app.scenes.default", "");
+        this.fps = getDouble("app.graphics.fps", "60.0");
     }
 
     /**
@@ -132,6 +139,8 @@ public class Configuration {
         this.mode = "run";
         this.debugLevel = 0;
         this.windowDimension = new Dimension(320, 200);
+        this.scale = 1.0;
+        this.fps = 60.0;
         this.gameArea = new Rectangle2D.Double(0.0, 0.0, 320.0, 200.0);
     }
 
@@ -144,9 +153,7 @@ public class Configuration {
      */
     public void parseArgument(String key, String value) {
         switch (key.toLowerCase()) {
-            case "title" -> {
-                this.title = value;
-            }
+            case "title" -> this.title = value;
             case "mode" -> {
                 if ("test,run".contains(value.toLowerCase())) {
                     this.mode = value;
@@ -166,9 +173,7 @@ public class Configuration {
                             key, value);
                 }
             }
-            default -> {
-                System.out.printf("ERROR : Unknown parameter %s%n", key);
-            }
+            default -> System.out.printf("ERROR : Unknown parameter %s%n", key);
         }
     }
 
@@ -243,5 +248,13 @@ public class Configuration {
      */
     public String getSceneDefault() {
         return sceneDefault;
+    }
+
+    public double getScale() {
+        return scale;
+    }
+
+    public double getFPS() {
+        return this.fps;
     }
 }
