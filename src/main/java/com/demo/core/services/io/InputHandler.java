@@ -30,6 +30,8 @@ public class InputHandler implements KeyListener, MouseListener, MouseMotionList
      * mouse position
      */
     private Point mousePosition;
+    private boolean ctrlPressed;
+    private boolean shiftPressed;
 
     /**
      * Initialize the InputHandler internal input status caches.
@@ -47,11 +49,15 @@ public class InputHandler implements KeyListener, MouseListener, MouseMotionList
     @Override
     public void keyPressed(KeyEvent e) {
         keys[e.getKeyCode()] = true;
+        ctrlPressed = e.isControlDown();
+        shiftPressed = e.isShiftDown();
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
         keys[e.getKeyCode()] = false;
+        ctrlPressed = e.isControlDown();
+        shiftPressed = e.isShiftDown();
     }
 
     @Override
@@ -119,4 +125,11 @@ public class InputHandler implements KeyListener, MouseListener, MouseMotionList
         return this.mousePosition;
     }
 
+    public boolean isCtrlPressed() {
+        return ctrlPressed;
+    }
+
+    public boolean isShiftPressed() {
+        return shiftPressed;
+    }
 }

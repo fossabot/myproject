@@ -111,7 +111,7 @@ public class Application {
     private void create() {
         window = new Window(
                 config.getTitle(),
-                config.getWindowDimension())
+                config.getWindowDimension(),config.getScale())
                 .attachHandler(new InputHandler());
         render = new Renderer(config);
         gameLoop = new StandardGameLoop();

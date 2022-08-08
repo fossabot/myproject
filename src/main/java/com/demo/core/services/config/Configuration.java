@@ -30,6 +30,7 @@ public class Configuration {
      * Window preferred dimension.
      */
     private Dimension windowDimension;
+    private double scale;
     private Rectangle2D gameArea;
 
     /**
@@ -80,6 +81,7 @@ public class Configuration {
         this.windowDimension = new Dimension(
                 getInteger("app.window.width", "320"),
                 getInteger("app.window.height", "200"));
+        this.scale = getDouble("app.window.scale", "2.0");
         this.gameArea = new Rectangle2D.Double(
                 0.0, 0.0,
                 getDouble("app.game.area.width", "320"),
@@ -132,6 +134,7 @@ public class Configuration {
         this.mode = "run";
         this.debugLevel = 0;
         this.windowDimension = new Dimension(320, 200);
+        this.scale = 1.0;
         this.gameArea = new Rectangle2D.Double(0.0, 0.0, 320.0, 200.0);
     }
 
@@ -243,5 +246,9 @@ public class Configuration {
      */
     public String getSceneDefault() {
         return sceneDefault;
+    }
+
+    public double getScale() {
+        return scale;
     }
 }

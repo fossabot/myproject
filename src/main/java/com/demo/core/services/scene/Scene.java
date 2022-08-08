@@ -1,6 +1,7 @@
 package com.demo.core.services.scene;
 
 import com.demo.core.Application;
+import com.demo.core.entity.Camera;
 
 /**
  * Scene interface to define Scene creation.
@@ -10,6 +11,7 @@ import com.demo.core.Application;
  * @since 2022
  */
 public interface Scene {
+
     /**
      * Retrieve the Scene name.
      *
@@ -26,7 +28,15 @@ public interface Scene {
 
     /**
      * Manage input for that scene.
+     *
      * @param app the {@link Application} container.
      */
     void input(Application app);
+
+    /**
+     * Return the current active {@link Camera}.
+     *
+     * @return the active Camera.
+     */
+    Camera getCamera();
 }

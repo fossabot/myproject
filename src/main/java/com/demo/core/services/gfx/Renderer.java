@@ -1,13 +1,16 @@
 package com.demo.core.services.gfx;
 
 import com.demo.core.Application;
+import com.demo.core.entity.Camera;
 import com.demo.core.services.config.Configuration;
 import com.demo.core.entity.GameObject;
+import com.demo.core.services.scene.Scene;
 
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
+import java.util.Optional;
 
 /**
  * The {@link Renderer} component will support all drawing processing for the game.
@@ -17,6 +20,7 @@ import java.awt.image.BufferedImage;
  */
 public class Renderer {
     private final BufferedImage buffer;
+    private double scale = 1.0;
 
     /**
      * Initialize the Renderer component according to defined configuration key :
@@ -28,6 +32,7 @@ public class Renderer {
      */
     public Renderer(Configuration config) {
         this.buffer = new BufferedImage((int) config.getGameArea().getWidth(), (int) config.getGameArea().getHeight(), BufferedImage.TYPE_INT_ARGB);
+        this.scale = config.getScale();
     }
 
     /**
@@ -35,17 +40,44 @@ public class Renderer {
      *
      * @param app the {@link Application} container
      */
-    public void draw(Application app) {
+    public void draw(Application app, Scene scene) {
         Graphics2D g = buffer.createGraphics();
-        // clear rendering area.
-        g.setColor(Color.BLACK);
-        g.fillRect(0, 0, buffer.getWidth(), buffer.getHeight());
+        clearBuffer(g, Color.BLACK, 0, 0, buffer.getWidth(), buffer.getHeight());
+
+        Camera currentCam = scene.getCamera();
+        if (Optional.ofNullable(currentCam).isPresent()) {
+            g.translate(-currentCam.x, -currentCam.y);
+        }
+        // draw game area zone
+        drawPlayArea(g);
+
         // draw things with higher layer / higher priority draw first.
         app.getObjects().stream()
                 .sorted((a, b) -> a.layer > b.layer ? (a.priority > b.priority ? 1 : -1) : -1)
                 .forEach(o -> drawGameObject(g, o));
+
+        if (Optional.ofNullable(currentCam).isPresent()) {
+            g.translate(currentCam.x, currentCam.y);
+        }
+
         // release Graphics component.
         g.dispose();
+    }
+
+    private void drawPlayArea(Graphics2D g) {
+        g.setColor(Color.BLUE);
+        for (int tx = 0; tx < buffer.getWidth(); tx += 16) {
+            g.drawRect(tx, 0, 16, buffer.getHeight());
+        }
+        for (int ty = 0; ty < buffer.getHeight(); ty += 16) {
+            g.drawRect(0, ty, buffer.getWidth(), 16);
+        }
+    }
+
+    private void clearBuffer(Graphics2D g, Color clearColor, int x, int x1, int buffer, int buffer1) {
+        // clear rendering area.
+        g.setColor(clearColor);
+        g.fillRect(x, x1, buffer, buffer1);
     }
 
     /**
@@ -57,8 +89,7 @@ public class Renderer {
     private void drawGameObject(Graphics2D g, GameObject o) {
         switch (o.type) {
             case POINT -> {
-                g.setColor(o.borderColor);
-                g.fillRect((int) o.x, (int) o.y, 1, 1);
+                clearBuffer(g, o.borderColor, (int) o.x, (int) o.y, 1, 1);
             }
             case LINE -> {
                 g.setColor(o.borderColor);
@@ -97,8 +128,12 @@ public class Renderer {
      */
     public void drawToWindow(Window window) {
         window.getGraphics().drawImage(buffer,
-                0, 0, window.getWidth(), window.getHeight(),
-                0, 0, buffer.getWidth(), buffer.getHeight(),
+                0, 0,
+                window.getWidth(),
+                window.getHeight(),
+                0, 0,
+                (int) (window.getWidth() * (1.0 / this.scale)),
+                (int) (window.getHeight() * (1.0 / this.scale)),
                 null
         );
     }
