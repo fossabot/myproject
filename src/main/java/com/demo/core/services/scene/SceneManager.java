@@ -24,7 +24,7 @@ public class SceneManager {
     /**
      * list of available scene loaded from configuration.
      */
-    private Map<String, Scene> scenes = new ConcurrentHashMap<>();
+    private final Map<String, Scene> scenes = new ConcurrentHashMap<>();
 
     /**
      * Create the SceneManager upon the {@link Application} container
@@ -33,6 +33,15 @@ public class SceneManager {
      */
     public SceneManager(Application app) {
         initialize(app.getConfiguration());
+    }
+
+    /**
+     * Create the SceneManager upon the {@link Configuration} component
+     *
+     * @param config the configuration component {@link Configuration}
+     */
+    public SceneManager(Configuration config) {
+        initialize(config);
     }
 
     private void initialize(Configuration config) {
@@ -49,7 +58,7 @@ public class SceneManager {
             });
             activateScene(config.getSceneDefault());
         } else {
-            System.out.println("ERR : SceneManager | No scene defined into the configuration");
+            System.err.println("ERR : SceneManager | No scene defined into the configuration");
         }
 
     }
