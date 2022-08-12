@@ -32,7 +32,7 @@ public class WindowTest {
      * @return the curent Window object.
      */
     private Window createWindow(String windowTitle) {
-        Window win = new Window(windowTitle, new Dimension(320, 200));
+        Window win = new Window(windowTitle, new Dimension(320, 200),1.0);
         InputHandler ih = new InputHandler();
         win.addKeyListener(ih);
         return win;
@@ -81,7 +81,7 @@ public class WindowTest {
 
 
     @Test
-    @Disabled("Must be fixed to be executed")
+    @Disabled("Window:Mouse test must be fixed to be executed")
     public void aWindowCanCaptureMouseInput() {
         window = createWindow("MouseButtonWindow");
         try {

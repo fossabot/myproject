@@ -12,12 +12,12 @@ public class Configuration {
     private final Properties props = new Properties();
 
     /**
-     * Internal title of this application to b used as displat or as logging
+     * Internal title of this application to b used as display or as logging
      * purpose.
      */
     private String title = "defaultName";
     /**
-     * flag to start the applicaiton in test mode.
+     * flag to start the application in test mode.
      */
     private String mode;
 
@@ -70,13 +70,13 @@ public class Configuration {
             InputStream is = this.getClass().getClassLoader().getResourceAsStream("./" + configurationFilename);
             props.load(is);
             populateValues();
-        } catch (IOException ioe) {
-            System.err.println("Unable ti read configuration file " + configurationFilename);
+        } catch (NullPointerException | IOException ioe) {
+            System.err.printf("ERR : Configuration | Unable to read configuration file '%s'%n", configurationFilename);
         }
     }
 
     /**
-     * After loading the confguration properties file, assign current loaded values
+     * After loading the configuration properties file, assign current loaded values
      * to configuration attributes.
      */
     private void populateValues() {
@@ -112,7 +112,7 @@ public class Configuration {
      *
      * @param key          key of the property to be loaded
      * @param defaultValue a default value if no value exists.
-     * @return the Double value of the paramater.
+     * @return the Double value of the parameter.
      */
     private double getDouble(String key, String defaultValue) {
         return Double.parseDouble(
@@ -158,7 +158,7 @@ public class Configuration {
                 if ("test,run".contains(value.toLowerCase())) {
                     this.mode = value;
                 } else {
-                    System.out.printf("ERROR : Unknown value %s for parameter %s%n", value, key);
+                    System.err.printf("ERROR : Configuration | Unknown value %s for parameter %s%n", value, key);
                 }
             }
             case "window" -> {
@@ -168,12 +168,12 @@ public class Configuration {
                             Integer.getInteger(wh[0], 320),
                             Integer.getInteger(wh[1], 200));
                 } else {
-                    System.out.printf(
-                            "ERROR : window dimension format is [width]x[height]: current parameter is %s=%s%n",
+                    System.err.printf(
+                            "ERROR : Configuration | window dimension format is [width]x[height]: current parameter is %s=%s%n",
                             key, value);
                 }
             }
-            default -> System.out.printf("ERROR : Unknown parameter %s%n", key);
+            default -> System.err.printf("ERROR : Configuration | Unknown parameter %s%n", key);
         }
     }
 

@@ -1,6 +1,7 @@
 package com.demo.core.tests;
 
 import com.demo.core.Application;
+import com.demo.core.entity.Camera;
 import com.demo.core.services.scene.Scene;
 
 public class TestScene implements Scene {
@@ -17,5 +18,10 @@ public class TestScene implements Scene {
     @Override
     public void input(Application app) {
 
+    }
+
+    @Override
+    public Camera getCamera() {
+        return null;
     }
 }
