@@ -4,17 +4,13 @@ import com.demo.core.Application;
 import com.demo.core.entity.Camera;
 import com.demo.core.entity.GameObject;
 import com.demo.core.services.io.InputHandler;
+import com.demo.core.services.scene.AbstractScene;
 import com.demo.core.services.scene.Scene;
 
 import java.awt.event.KeyEvent;
 import java.awt.geom.Rectangle2D;
 
-public class DemoScene implements Scene {
-
-    /**
-     * Internal current active Camera.
-     */
-    private Camera camera;
+public class DemoScene extends AbstractScene implements Scene {
 
     @Override
     public String getName() {
@@ -38,12 +34,8 @@ public class DemoScene implements Scene {
                 .setFOV(new Rectangle2D.Double(0, 0,
                         app.getConfiguration().getWindowDimension().getWidth(),
                         app.getConfiguration().getWindowDimension().getHeight()));
-        setCamera(camera);
+        addCamera(camera);
 
-    }
-
-    private void setCamera(Camera camera) {
-        this.camera = camera;
     }
 
     @Override
@@ -81,8 +73,4 @@ public class DemoScene implements Scene {
         player.setSpeed(dx, dy);
     }
 
-    @Override
-    public Camera getCamera() {
-        return camera;
-    }
 }

@@ -1,10 +1,11 @@
-package com.demo.core.tests;
+package com.demo.core.tests.scenes;
 
 import com.demo.core.Application;
 import com.demo.core.entity.Camera;
+import com.demo.core.services.scene.AbstractScene;
 import com.demo.core.services.scene.Scene;
 
-public class TestScene implements Scene {
+public class TestScene extends AbstractScene {
     @Override
     public String getName() {
         return "test";
@@ -18,10 +19,5 @@ public class TestScene implements Scene {
     @Override
     public void input(Application app) {
 
-    }
-
-    @Override
-    public Camera getCamera() {
-        return null;
     }
 }
