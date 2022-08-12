@@ -1,4 +1,4 @@
-package com.demo.core;
+package com.demo.core.services.config;
 
 import java.awt.Dimension;
 import java.awt.geom.Rectangle2D;
@@ -9,15 +9,15 @@ import java.util.Properties;
 
 public class Configuration {
 
-    private Properties props = new Properties();
+    private final Properties props = new Properties();
 
     /**
-     * Internal title of this application to b used as displat or as logging
+     * Internal title of this application to b used as display or as logging
      * purpose.
      */
     private String title = "defaultName";
     /**
-     * flag to start the applicaiton in test mode.
+     * flag to start the application in test mode.
      */
     private String mode;
 
@@ -30,6 +30,7 @@ public class Configuration {
      * Window preferred dimension.
      */
     private Dimension windowDimension;
+    private double scale;
     private Rectangle2D gameArea;
 
     /**
@@ -40,6 +41,10 @@ public class Configuration {
      * the default scene name to be activated.
      */
     private String sceneDefault;
+    /**
+     * Frame Per second display rate.
+     */
+    private double fps;
 
 
     /**
@@ -65,13 +70,13 @@ public class Configuration {
             InputStream is = this.getClass().getClassLoader().getResourceAsStream("./" + configurationFilename);
             props.load(is);
             populateValues();
-        } catch (IOException ioe) {
-            System.err.println("Unable ti read configuration file " + configurationFilename);
+        } catch (NullPointerException | IOException ioe) {
+            System.err.printf("ERR : Configuration | Unable to read configuration file '%s'%n", configurationFilename);
         }
     }
 
     /**
-     * After loading the confguration properties file, assign current loaded values
+     * After loading the configuration properties file, assign current loaded values
      * to configuration attributes.
      */
     private void populateValues() {
@@ -80,20 +85,22 @@ public class Configuration {
         this.windowDimension = new Dimension(
                 getInteger("app.window.width", "320"),
                 getInteger("app.window.height", "200"));
+        this.scale = getDouble("app.window.scale", "2.0");
         this.gameArea = new Rectangle2D.Double(
                 0.0, 0.0,
-                getDouble("app.game.area.width", "320"),
-                getDouble("app.game.area.height", "200"));
+                getDouble("app.game.area.width", "320.0"),
+                getDouble("app.game.area.height", "200.0"));
         this.sceneList = props.getProperty("app.scenes.list", "");
         this.sceneDefault = props.getProperty("app.scenes.default", "");
+        this.fps = getDouble("app.graphics.fps", "60.0");
     }
 
     /**
-     * Convert an integer value from its property value in the configruation file.
+     * Convert an integer value from its property value in the configuration file.
      *
      * @param key          key of the property to be loaded
      * @param defaultValue a default value if no value exists.
-     * @return
+     * @return the Integer value of the parameter.
      */
     private Integer getInteger(String key, String defaultValue) {
         return Integer.parseInt(
@@ -101,11 +108,11 @@ public class Configuration {
     }
 
     /**
-     * Convert an double value from its property value in the configruation file.
+     * Convert an double value from its property value in the configuration file.
      *
      * @param key          key of the property to be loaded
      * @param defaultValue a default value if no value exists.
-     * @return
+     * @return the Double value of the parameter.
      */
     private double getDouble(String key, String defaultValue) {
         return Double.parseDouble(
@@ -115,23 +122,25 @@ public class Configuration {
     /**
      * Parse all argument from list of args and try and match known ones.
      *
-     * @param args
+     * @param args the list of arguments from java command line.
      */
     public void parseArguments(String[] args) {
-        Arrays.asList(args).stream().forEach(s -> {
+        Arrays.stream(args).forEach(s -> {
             String[] kv = s.split("=");
             parseArgument(kv[0], kv[1]);
         });
     }
 
     /**
-     * Initialize default values if no configration file or argument are set.
+     * Initialize default values if no configuration file or argument are set.
      */
     private void initDefaultValues() {
         this.title = "NoTitle";
         this.mode = "run";
         this.debugLevel = 0;
         this.windowDimension = new Dimension(320, 200);
+        this.scale = 1.0;
+        this.fps = 60.0;
         this.gameArea = new Rectangle2D.Double(0.0, 0.0, 320.0, 200.0);
     }
 
@@ -144,14 +153,12 @@ public class Configuration {
      */
     public void parseArgument(String key, String value) {
         switch (key.toLowerCase()) {
-            case "title" -> {
-                this.title = value;
-            }
+            case "title" -> this.title = value;
             case "mode" -> {
                 if ("test,run".contains(value.toLowerCase())) {
                     this.mode = value;
                 } else {
-                    System.out.printf("ERROR : Unkown value %s for parameter %s%n", value, key);
+                    System.err.printf("ERROR : Configuration | Unknown value %s for parameter %s%n", value, key);
                 }
             }
             case "window" -> {
@@ -161,21 +168,19 @@ public class Configuration {
                             Integer.getInteger(wh[0], 320),
                             Integer.getInteger(wh[1], 200));
                 } else {
-                    System.out.printf(
-                            "ERROR : window dimension format is [width]x[height]: current parameter is %s=%s%n",
+                    System.err.printf(
+                            "ERROR : Configuration | window dimension format is [width]x[height]: current parameter is %s=%s%n",
                             key, value);
                 }
             }
-            default -> {
-                System.out.printf("ERROR : Unkown parameter %s%n", key);
-            }
+            default -> System.err.printf("ERROR : Configuration | Unknown parameter %s%n", key);
         }
     }
 
     /**
      * Retrieve default configured mode value
      *
-     * @return
+     * @return the current game mode
      */
     public String getMode() {
         return mode;
@@ -184,7 +189,7 @@ public class Configuration {
     /**
      * Retrieve default configured window {@link Dimension} value
      *
-     * @return
+     * @return the dimension of the window
      */
     public Dimension getWindowDimension() {
         return windowDimension;
@@ -193,7 +198,7 @@ public class Configuration {
     /**
      * Retrieve default configured title value
      *
-     * @return
+     * @return the current title for this application
      */
     public String getTitle() {
         return title;
@@ -202,7 +207,7 @@ public class Configuration {
     /**
      * return current configured debug level.
      *
-     * @return
+     * @return the level of debug (from 0 to 5)
      */
     public int getDebugLevel() {
         return this.debugLevel;
@@ -211,7 +216,7 @@ public class Configuration {
     /**
      * Return true if request i level debug is active
      *
-     * @param i
+     * @param i the target debug level to check with current application debug level
      * @return true if current debug level is lower than i
      */
     public boolean isDebugLevel(int i) {
@@ -221,17 +226,35 @@ public class Configuration {
     /**
      * Retrieve the game area Rectangle2D.
      *
-     * @return
+     * @return the current Game area represented by a Rectangle2D
      */
     public Rectangle2D getGameArea() {
         return this.gameArea;
     }
 
+    /**
+     * Retrieve the current Scenes list
+     *
+     * @return a list of Scene instances
+     */
     public String getSceneList() {
         return sceneList;
     }
 
+    /**
+     * Retrieve he default active scene at start
+     *
+     * @return the scene name to be activated at start
+     */
     public String getSceneDefault() {
         return sceneDefault;
+    }
+
+    public double getScale() {
+        return scale;
+    }
+
+    public double getFPS() {
+        return this.fps;
     }
 }

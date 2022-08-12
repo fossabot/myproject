@@ -1,5 +1,7 @@
 # Rendering things
 
+## Requirements
+
 The `Renderer` component will support all drawing operation for the `Application`
 we are designing.
 
@@ -15,10 +17,40 @@ app.game.area.width=320
 app.game.area.height=200
 ```
 
-And the `Renderer` will offer 2 methods:
+And the `Renderer` will offer 2 public methods:
 
 - `draw()` drawing all the application object on buffer,
 - `drawToWindow(Window)` to copy buffer content to window frame.
+
+```plantuml
+@startuml
+!theme plain
+hide attributes
+class Renderer{
+    +draw(app:Application):void
+    +drawToWindow(win:Window):void
+}
+@enduml
+```
+
+And its integration will be done at application level:
+
+```plantuml
+@startuml
+!theme plain
+hide attributes
+hide methods
+class Application
+class Renderer
+class Window
+class Configuration
+Application "1"-->"1" Configuration:config
+Application "1"-->"1" Window:window
+Application "1"-->"1" Renderer:renderer
+@enduml
+```
+
+## Design
 
 The global overview (without implementation details) of the Renderer class:
 
@@ -55,6 +87,8 @@ public class Renderer {
 }
 ```
 
+### Drawing the objects
+
 Drawing operations consists in
 
 - clear the buffer,
@@ -77,6 +111,38 @@ public class Renderer {
     //...
 }
 ```
+
+And a detailed method will draw GameObject according to its `ObjectType`:
+
+```java
+public class Renderer {
+    //...
+    private void drawGameObject(Graphics2D g, GameObject o) {
+        switch (o.type) {
+            case POINT -> {
+                g.setColor(o.borderColor);
+                g.fillRect((int) o.x, (int) o.y, 1, 1);
+            }
+            case LINE -> {
+                g.setColor(o.borderColor);
+                g.drawLine((int) o.x, (int) o.y, (int) (o.x + o.w), (int) (o.y + o.h));
+            }
+            case RECTANGLE -> {
+                Rectangle2D rect = new Rectangle2D.Double(o.x, o.y, o.w, o.h);
+                drawShape(g, o, rect);
+            }
+            case ELLIPSE -> {
+                Ellipse2D ellipse = new Ellipse2D.Double(5, 10, 100, 150);
+                drawShape(g, o, ellipse);
+            }
+            case IMAGE -> g.drawImage(o.image, (int) o.x, (int) o.y, null);
+        }
+    }
+    //...
+}
+```
+
+### Draw to window
 
 drawToWindow() copy buffer to the window frame, like seen before.
 
@@ -143,3 +209,19 @@ public class Application {
 }
 ```
 
+And at the renderer implementation, at rendering time, the objects list is sorted according to layer and priority.
+
+```java
+public class Renderer {
+    //...
+    public void draw(Application app) {
+        //...
+        // draw things with higher layer / higher priority draw first.
+        app.getObjects().stream()
+                .sorted((a, b) -> a.layer > b.layer ? (a.priority > b.priority ? 1 : -1) : -1)
+                .forEach(o -> drawGameObject(g, o));
+        //...
+    }
+    //...
+}
+```

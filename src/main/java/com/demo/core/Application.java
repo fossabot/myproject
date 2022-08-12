@@ -1,10 +1,17 @@
 package com.demo.core;
 
+import com.demo.core.entity.GameObject;
+import com.demo.core.services.config.Configuration;
+import com.demo.core.services.gameloop.FixFPSGameLoop;
+import com.demo.core.services.gameloop.StandardGameLoop;
+import com.demo.core.services.gfx.Renderer;
+import com.demo.core.services.gfx.Window;
+import com.demo.core.services.io.InputHandler;
+import com.demo.core.services.scene.SceneManager;
+
 import java.awt.geom.Rectangle2D;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
-
-import static com.demo.core.GameObject.ObjectType.RECTANGLE;
 
 /**
  * A Very Simple Application.
@@ -19,7 +26,7 @@ public class Application {
      * Internationalized messages read according to default locale from
      * i18n/messages.properties
      */
-    private ResourceBundle messages = ResourceBundle.getBundle("i18n.messages", Locale.ROOT);
+    private final ResourceBundle messages = ResourceBundle.getBundle("i18n.messages", Locale.ROOT);
 
     /**
      * Flag to request quitting the main application loop;
@@ -29,7 +36,7 @@ public class Application {
      * Configuration component where all configuration are read or set from config
      * file overloaded by arguments from command line
      */
-    private Configuration config;
+    private final Configuration config;
 
     /**
      * The Window used to display application.
@@ -53,7 +60,7 @@ public class Application {
     /**
      * The list of internal object maintained by the Application.
      */
-    private Map<String, GameObject> objects = new ConcurrentHashMap<>();
+    private final Map<String, GameObject> objects = new ConcurrentHashMap<>();
 
     /**
      * Initialize the application with default configuration file ad then parse args
@@ -75,7 +82,6 @@ public class Application {
      *                              configuration file.
      */
     public Application(String[] args, String configurationFilename) {
-
         config = new Configuration(configurationFilename);
         config.parseArguments(args);
     }
@@ -93,7 +99,7 @@ public class Application {
     public void run() {
         System.out.printf("INFO : Application | %s started%n", config.getTitle());
         create();
-        if (!isTestMode()) {
+        if (isNotTestMode()) {
             loop();
             dispose();
         }
@@ -105,10 +111,10 @@ public class Application {
     private void create() {
         window = new Window(
                 config.getTitle(),
-                config.getWindowDimension())
+                config.getWindowDimension(),config.getScale())
                 .attachHandler(new InputHandler());
         render = new Renderer(config);
-        gameLoop = new StandardGameLoop();
+        gameLoop = new FixFPSGameLoop(config.getFPS());
         scm = new SceneManager(this);
 
         createScene();
@@ -127,7 +133,7 @@ public class Application {
         do {
             gameLoop.process(this);
             // Nothing to do right now
-        } while (!isExit() && !isTestMode());
+        } while (!isExit() && isNotTestMode());
     }
 
     /**
@@ -151,7 +157,7 @@ public class Application {
     /**
      * Does exit requested ?
      *
-     * @return
+     * @return return true is exiting is requested.
      */
     public boolean isExit() {
         return exit;
@@ -160,16 +166,16 @@ public class Application {
     /**
      * Is Test mode activated ?
      *
-     * @return
+     * @return true if test mode is currently set.
      */
-    public boolean isTestMode() {
-        return "test".equals(config.getMode());
+    public boolean isNotTestMode() {
+        return !"test".equals(config.getMode());
     }
 
     /**
      * Is run mode activated
      *
-     * @return
+     * @return return true if run mode is currently set.
      */
     public boolean isRunMode() {
         return "run".equals(config.getMode());
@@ -178,7 +184,7 @@ public class Application {
     /**
      * Return the configuration instance.
      *
-     * @return Configuration
+     * @return the current Configuration instance of this application.
      */
     public Configuration getConfiguration() {
         return config;
@@ -187,7 +193,7 @@ public class Application {
     /**
      * return the Renderer instance.
      *
-     * @return
+     * @return the current Renderer instance of this application.
      */
     public Renderer getRender() {
         return this.render;

@@ -1,7 +1,7 @@
 package com.demo.core.tests;
 
-import com.demo.core.InputHandler;
-import com.demo.core.Window;
+import com.demo.core.services.io.InputHandler;
+import com.demo.core.services.gfx.Window;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -29,10 +29,10 @@ public class WindowTest {
      * Create a window with a defined windowTitle.
      *
      * @param windowTitle the window title to be set.
-     * @return
+     * @return the curent Window object.
      */
     private Window createWindow(String windowTitle) {
-        Window win = new Window(windowTitle, new Dimension(320, 200));
+        Window win = new Window(windowTitle, new Dimension(320, 200),1.0);
         InputHandler ih = new InputHandler();
         win.addKeyListener(ih);
         return win;
@@ -42,12 +42,11 @@ public class WindowTest {
      * Retrieve the created InputHandler for the current window.
      *
      * @param window the window to retrieve InputHandler from.
-     * @return
+     * @return the curent InputHandler object.
      */
     private InputHandler getInputHandler(Window window) {
         KeyListener kls = window.getListeners(KeyListener.class)[0];
-        InputHandler ih = (InputHandler) kls;
-        return ih;
+        return (InputHandler) kls;
     }
 
     @Test
@@ -82,7 +81,7 @@ public class WindowTest {
 
 
     @Test
-    @Disabled("Must be fixed to be executed")
+    @Disabled("Window:Mouse test must be fixed to be executed")
     public void aWindowCanCaptureMouseInput() {
         window = createWindow("MouseButtonWindow");
         try {
