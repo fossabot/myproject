@@ -1,4 +1,6 @@
-package com.demo.core;
+package com.demo.core.services.scene;
+
+import com.demo.core.Application;
 
 /**
  * Scene interface to define Scene creation.

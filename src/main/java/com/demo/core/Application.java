@@ -1,10 +1,16 @@
 package com.demo.core;
 
+import com.demo.core.entity.GameObject;
+import com.demo.core.services.config.Configuration;
+import com.demo.core.services.gameloop.StandardGameLoop;
+import com.demo.core.services.gfx.Renderer;
+import com.demo.core.services.gfx.Window;
+import com.demo.core.services.io.InputHandler;
+import com.demo.core.services.scene.SceneManager;
+
 import java.awt.geom.Rectangle2D;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
-
-import static com.demo.core.GameObject.ObjectType.RECTANGLE;
 
 /**
  * A Very Simple Application.
@@ -75,7 +81,6 @@ public class Application {
      *                              configuration file.
      */
     public Application(String[] args, String configurationFilename) {
-
         config = new Configuration(configurationFilename);
         config.parseArguments(args);
     }
@@ -151,7 +156,7 @@ public class Application {
     /**
      * Does exit requested ?
      *
-     * @return
+     * @return return true is exiting is requested.
      */
     public boolean isExit() {
         return exit;
@@ -160,7 +165,7 @@ public class Application {
     /**
      * Is Test mode activated ?
      *
-     * @return
+     * @return true if test mode is currently set.
      */
     public boolean isTestMode() {
         return "test".equals(config.getMode());
@@ -169,7 +174,7 @@ public class Application {
     /**
      * Is run mode activated
      *
-     * @return
+     * @return return true if run mode is currently set.
      */
     public boolean isRunMode() {
         return "run".equals(config.getMode());
@@ -178,7 +183,7 @@ public class Application {
     /**
      * Return the configuration instance.
      *
-     * @return Configuration
+     * @return the current Configuration instance of this application.
      */
     public Configuration getConfiguration() {
         return config;
@@ -187,7 +192,7 @@ public class Application {
     /**
      * return the Renderer instance.
      *
-     * @return
+     * @return the current Renderer instance of this application.
      */
     public Renderer getRender() {
         return this.render;

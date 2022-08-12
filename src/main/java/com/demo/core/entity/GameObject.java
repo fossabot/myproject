@@ -1,4 +1,7 @@
-package com.demo.core;
+package com.demo.core.entity;
+
+import com.demo.core.Application;
+import com.demo.core.services.gfx.Renderer;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
@@ -40,7 +43,7 @@ public class GameObject {
         // draw an ellipse
         ELLIPSE,
         // draw an image
-        IMAGE;
+        IMAGE
     }
 
     /**
@@ -110,7 +113,7 @@ public class GameObject {
      *
      * @param x horizontal position of this GameObject.
      * @param y vertical position of this GameObject.
-     * @return the updated GameObject (Fluent API)
+     * @return the current GameObject updated (fluent API).
      */
     public GameObject setPosition(double x, double y) {
         this.x = x;
@@ -124,7 +127,7 @@ public class GameObject {
      *
      * @param w width of this GameObject.
      * @param h height of this GameObject.
-     * @return the updated GameObject (Fluent API)
+     * @return the current GameObject updated (fluent API).
      */
     public GameObject setDimension(double w, double h) {
         this.w = w;
@@ -137,7 +140,7 @@ public class GameObject {
      *
      * @param dx horizontal speed of this GameObject.
      * @param dy vertical speed of this GameObject.
-     * @return the updated GameObject (Fluent API)
+     * @return the current GameObject updated (fluent API).
      */
     public GameObject setSpeed(double dx, double dy) {
         this.dx = dx;
@@ -145,16 +148,34 @@ public class GameObject {
         return this;
     }
 
+    /**
+     * Set the type of object for rendering purpose.
+     *
+     * @param t the type of the object to be set (see {@link ObjectType}.
+     * @return the current GameObject updated (fluent API).
+     */
     public GameObject setType(ObjectType t) {
         this.type = t;
         return this;
     }
 
+    /**
+     * Set the layer were the object must evolve
+     *
+     * @param l the layer number.
+     * @return the current GameObject updated (fluent API).
+     */
     public GameObject setLayer(int l) {
         this.layer = l;
         return this;
     }
 
+    /**
+     * Set the rendering priority in the layer of this object.
+     *
+     * @param p the priority number
+     * @return the current GameObject updated (fluent API).
+     */
     public GameObject setPriority(int p) {
         this.priority = p;
         return this;
@@ -181,9 +202,9 @@ public class GameObject {
 
     /**
      * set the Border color
-     * 
+     *
      * @param c the {@link Color} to be used.
-     * @return
+     * @return the current GameObject updated (fluent API.
      */
     public GameObject setBorderColor(Color c) {
         this.borderColor = c;
@@ -192,9 +213,9 @@ public class GameObject {
 
     /**
      * set the Fill color
-     * 
+     *
      * @param c the {@link Color} to be used.
-     * @return
+     * @return the current GameObject updated (fluent API.
      */
     public GameObject setFillColor(Color c) {
         this.fillColor = c;
@@ -203,9 +224,9 @@ public class GameObject {
 
     /**
      * set the mage to be used for this GameObject drawing
-     * 
+     *
      * @param bf
-     * @return
+     * @return the current GameObject updated (fluent API.
      */
     public GameObject setImage(BufferedImage bf) {
         this.image = bf;
@@ -224,11 +245,11 @@ public class GameObject {
 
     /**
      * Contrains the current object into a Rectangle area.
-     * 
+     *
      * @param area the play area for the application.
-     * @return true if contrained, else false.
+     * @return true if constrained, else false.
      */
-    public boolean contrainedBy(Rectangle2D area) {
+    public boolean constrainedBy(Rectangle2D area) {
         if (area.contains(x, y, w, h)) {
             return false;
         } else {

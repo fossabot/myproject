@@ -6,13 +6,32 @@ mouse.
 The purpose of that new component is to build and maintain key state cache, mouse button cache and latest known mouse
 position.
 
-```java
-public class InputHandler implements KeyListener, MouseListener, MouseMoveListener {
-    //...
-}
+```plantuml
+@startuml "Class Diagram for InputHandler"
+!theme plain
+hide methods
+hide attributes
+class InputHandler implements KeyListener, MouseListener, MouseMoveListener
+@enduml
 ```
 
-And then, add some caches:
+And then, add some internal input caches and getters:
+
+```plantuml
+@startuml "Internal private attributes"
+!theme plain
+class InputHandler {
+    -keys[]:boolean
+    -mouseButton[]:boolean
+    -mousePosition:Point
+    +getMouseButton(mouseBNum:int):boolean
+    +getKey(keyCode:int):boolean
+    +getMousePosition():Point
+}
+@enduml
+```
+
+Some detailed implementation around cache sizing at construction:
 
 ```java
 public class InputHandler implements KeyListener, MouseListener, MouseMoveListener {
@@ -92,7 +111,21 @@ public class InputHandler implements KeyListener, MouseListener, MouseMoveListen
 }
 ```
 
-Then, this InputHandler must be declared and added into the `JFrame` under layer of our `Window`'s class:
+### Application integration
+
+Then, this `InputHandler` must be declared at `Application` initialization and added into the `JFrame` under layer of our `Window`'s class:
+
+```plantuml
+@startuml "InputHandler sequence Diagram intiatizaion"
+group initialization
+  Application --> Window:Window():window
+  Application --> InputHandler:InputHandler():inpurHandler
+  Application --> Window:attachHandler(inputHandler)
+end
+@enduml
+```
+
+And the corresponding implementation, simplified by the fluent Window API:
 
 ```java
 public class Application {
@@ -105,7 +138,9 @@ public class Application {
 }
 ```
 
-And in the Window component:
+### Window integration
+
+In the Window component (see chapter [03](03-display_window.md)):
 
 ```java
 public class Window extends JFrame {

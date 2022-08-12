@@ -1,7 +1,7 @@
 package com.demo.core.tests;
 
 import com.demo.core.Application;
-import com.demo.core.SceneManager;
+import com.demo.core.services.scene.SceneManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

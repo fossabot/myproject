@@ -1,6 +1,6 @@
 package com.demo.core.tests;
 
-import com.demo.core.Configuration;
+import com.demo.core.services.config.Configuration;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -8,8 +8,7 @@ import org.junit.jupiter.api.Test;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ConfigurationTest {
 
@@ -46,14 +45,14 @@ public class ConfigurationTest {
     public void testModeForConfiguration() {
         Configuration config = new Configuration(DEFAULT_TEST_CONFIGURATION_FILE);
         config.parseArguments(new String[]{"mode=test"});
-        assertTrue(config.getMode().equals("test"), "The application is not in test mode");
+        assertEquals("test", config.getMode(), "The application is not in test mode");
     }
 
     @Test
     public void unknownModeForConfiguration() {
         Configuration config = new Configuration(DEFAULT_TEST_CONFIGURATION_FILE);
         config.parseArguments(new String[]{"mode=unknown"});
-        assertTrue(config.getMode().equals("run"), "The application mode is unknown, got to run fallback mode");
+        assertEquals("run", config.getMode(), "The application mode is unknown, got to run fallback mode");
     }
 
     @Test
@@ -62,12 +61,8 @@ public class ConfigurationTest {
         config.parseArguments(new String[]{"window=320x200"});
 
         assertAll(
-                () -> assertTrue(
-                        config.getWindowDimension().width == 320,
-                        "The window application width size is not set !"),
-                () -> assertTrue(
-                        config.getWindowDimension().height == 200,
-                        "The window application height size is not set !"));
+                () -> assertEquals(320, config.getWindowDimension().width, "The window application width size is not set !"),
+                () -> assertEquals(200, config.getWindowDimension().height, "The window application height size is not set !"));
     }
 
     @Test
@@ -75,11 +70,7 @@ public class ConfigurationTest {
         Configuration config = new Configuration(DEFAULT_TEST_CONFIGURATION_FILE);
 
         assertAll(
-                () -> assertTrue(
-                        config.getWindowDimension().width == 640,
-                        "The window application width size is not set !"),
-                () -> assertTrue(
-                        config.getWindowDimension().height == 400,
-                        "The window application height size is not set !"));
+                () -> assertEquals(640, config.getWindowDimension().width, "The window application width size is not set !"),
+                () -> assertEquals(400, config.getWindowDimension().height, "The window application height size is not set !"));
     }
 }

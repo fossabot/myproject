@@ -1,4 +1,4 @@
-package com.demo.core;
+package com.demo.core.services.config;
 
 import java.awt.Dimension;
 import java.awt.geom.Rectangle2D;
@@ -89,11 +89,11 @@ public class Configuration {
     }
 
     /**
-     * Convert an integer value from its property value in the configruation file.
+     * Convert an integer value from its property value in the configuration file.
      *
      * @param key          key of the property to be loaded
      * @param defaultValue a default value if no value exists.
-     * @return
+     * @return the Integer value of the parameter.
      */
     private Integer getInteger(String key, String defaultValue) {
         return Integer.parseInt(
@@ -101,11 +101,11 @@ public class Configuration {
     }
 
     /**
-     * Convert an double value from its property value in the configruation file.
+     * Convert an double value from its property value in the configuration file.
      *
      * @param key          key of the property to be loaded
      * @param defaultValue a default value if no value exists.
-     * @return
+     * @return the Double value of the paramater.
      */
     private double getDouble(String key, String defaultValue) {
         return Double.parseDouble(
@@ -115,17 +115,17 @@ public class Configuration {
     /**
      * Parse all argument from list of args and try and match known ones.
      *
-     * @param args
+     * @param args the list of arguments from java command line.
      */
     public void parseArguments(String[] args) {
-        Arrays.asList(args).stream().forEach(s -> {
+        Arrays.stream(args).forEach(s -> {
             String[] kv = s.split("=");
             parseArgument(kv[0], kv[1]);
         });
     }
 
     /**
-     * Initialize default values if no configration file or argument are set.
+     * Initialize default values if no configuration file or argument are set.
      */
     private void initDefaultValues() {
         this.title = "NoTitle";
@@ -151,7 +151,7 @@ public class Configuration {
                 if ("test,run".contains(value.toLowerCase())) {
                     this.mode = value;
                 } else {
-                    System.out.printf("ERROR : Unkown value %s for parameter %s%n", value, key);
+                    System.out.printf("ERROR : Unknown value %s for parameter %s%n", value, key);
                 }
             }
             case "window" -> {
@@ -167,7 +167,7 @@ public class Configuration {
                 }
             }
             default -> {
-                System.out.printf("ERROR : Unkown parameter %s%n", key);
+                System.out.printf("ERROR : Unknown parameter %s%n", key);
             }
         }
     }
@@ -175,7 +175,7 @@ public class Configuration {
     /**
      * Retrieve default configured mode value
      *
-     * @return
+     * @return the current game mode
      */
     public String getMode() {
         return mode;
@@ -184,7 +184,7 @@ public class Configuration {
     /**
      * Retrieve default configured window {@link Dimension} value
      *
-     * @return
+     * @return the dimension of the window
      */
     public Dimension getWindowDimension() {
         return windowDimension;
@@ -193,7 +193,7 @@ public class Configuration {
     /**
      * Retrieve default configured title value
      *
-     * @return
+     * @return the current title for this application
      */
     public String getTitle() {
         return title;
@@ -202,7 +202,7 @@ public class Configuration {
     /**
      * return current configured debug level.
      *
-     * @return
+     * @return the level of debug (from 0 to 5)
      */
     public int getDebugLevel() {
         return this.debugLevel;
@@ -211,7 +211,7 @@ public class Configuration {
     /**
      * Return true if request i level debug is active
      *
-     * @param i
+     * @param i the target debug level to check with current application debug level
      * @return true if current debug level is lower than i
      */
     public boolean isDebugLevel(int i) {
@@ -221,16 +221,26 @@ public class Configuration {
     /**
      * Retrieve the game area Rectangle2D.
      *
-     * @return
+     * @return the current Game area represented by a Rectangle2D
      */
     public Rectangle2D getGameArea() {
         return this.gameArea;
     }
 
+    /**
+     * Retrieve the current Scenes list
+     *
+     * @return a list of Scene instances
+     */
     public String getSceneList() {
         return sceneList;
     }
 
+    /**
+     * Retrieve he default active scene at start
+     *
+     * @return the scene name to be activated at start
+     */
     public String getSceneDefault() {
         return sceneDefault;
     }

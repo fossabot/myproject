@@ -74,7 +74,7 @@ public enum ObjectType {
     LINE,
     RECTANGLE,
     ELLIPSE,
-    IMAGE;
+    IMAGE
 }
 ```
 
@@ -184,9 +184,7 @@ Reading back the newton's law, we need to update the objects. this is achieved f
 public class StandardGameLoop implements GameLoop {
     //...
     private void update(Application app, long elapsed) {
-        app.getObjects.values().forEach(go -> {
-            go.update(elapsed);
-        });
+        app.getObjects.values().forEach(go -> go.update(elapsed));
     }
     //...
 }
@@ -195,7 +193,7 @@ public class StandardGameLoop implements GameLoop {
 And at GameObject level:
 
 ```java
-public class StandardGameLoop implements GameLoop {
+public class GameObject {
     //...
     public void update(long elapsed) {
         x += dx * elapsed;

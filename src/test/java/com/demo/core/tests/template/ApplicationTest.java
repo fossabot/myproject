@@ -1,4 +1,4 @@
-package com.demo.core.tests;
+package com.demo.core.tests.template;
 
 import com.demo.core.Application;
 import org.junit.jupiter.api.AfterEach;
