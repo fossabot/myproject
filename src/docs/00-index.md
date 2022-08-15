@@ -59,3 +59,4 @@ end
 6. [Managing Game objects](06-manage_game_object.md)
 7. [Rendering things](07-create_renderer.md)
 8. [Scene Management](08-scene_management.md)
+9. [Adding Camera to Scene](09-add_camera_to_scene. md) 
