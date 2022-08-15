@@ -22,7 +22,7 @@ Code will appear without its javadoc or comment to simplify visibility and reada
 
 And we won't rely on some complex external library, but only use what the JDK proposes.
 
->**NOTE**: An exception is done for Unit test capability by introducing JUnit5.
+> **NOTE**: An exception is done for Unit test capability by introducing JUnit5.
 
 As a choice, we will use only the `System.out` as a log capability.
 
@@ -36,7 +36,8 @@ public class Application {
 }
 ```
 
-And using the [PlantUML](https://plantuml.org "go and discover this fanstatic tool") to draw sequence diagram or class diagram:
+And using the [PlantUML](https://plantuml.org "go and discover this fanstatic tool") to draw sequence diagram or class
+diagram:
 
 ```plantuml
 @startuml "Application initialization"
@@ -59,4 +60,4 @@ end
 6. [Managing Game objects](06-manage_game_object.md)
 7. [Rendering things](07-create_renderer.md)
 8. [Scene Management](08-scene_management.md)
-9. [Adding Camera to Scene](09-add_camera_to_scene. md) 
+9. [Adding Camera to Scene](09-add_camera_to_scene.md)
