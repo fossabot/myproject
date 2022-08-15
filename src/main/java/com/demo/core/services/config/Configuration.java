@@ -67,7 +67,7 @@ public class Configuration {
      */
     private void loadProperties(String configurationFilename) {
         try {
-            InputStream is = this.getClass().getClassLoader().getResourceAsStream("./" + configurationFilename);
+            InputStream is = this.getClass().getClassLoader().getResourceAsStream( configurationFilename);
             props.load(is);
             populateValues();
         } catch (NullPointerException | IOException ioe) {
