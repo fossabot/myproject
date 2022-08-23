@@ -10,7 +10,8 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
 /**
- * The {@link Renderer} component will support all drawing processing for the game.
+ * The {@link Renderer} component will support all drawing processing for the
+ * game.
  *
  * @author Frédéric Delorme
  * @version 1.0
@@ -19,18 +20,20 @@ public class Renderer {
     private final BufferedImage buffer;
 
     /**
-     * Initialize the {@link Renderer} component according to defined configuration key :
+     * Initialize the {@link Renderer} component according to defined configuration
+     * key :
      * <p>
      * 2 configuration attributes are defining the internal graphic buffer size:
      * <ul>
-     *     <li><code>app.window.width</code> set its width,</li>
-     *     <li><code>app.window.height</code> set its height.</li>
+     * <li><code>app.window.width</code> set its width,</li>
+     * <li><code>app.window.height</code> set its height.</li>
      * </ul>
      *
      * @param config the current application {@link Configuration} object.
      */
     public Renderer(Configuration config) {
-        this.buffer = new BufferedImage((int) config.getGameArea().getWidth(), (int) config.getGameArea().getHeight(), BufferedImage.TYPE_INT_ARGB);
+        this.buffer = new BufferedImage((int) config.getGameArea().getWidth(), (int) config.getGameArea().getHeight(),
+                BufferedImage.TYPE_INT_ARGB);
     }
 
     /**
@@ -52,7 +55,8 @@ public class Renderer {
     }
 
     /**
-     * Draw one {@link GameObject} according to its drawing {@link GameObject.ObjectType}
+     * Draw one {@link GameObject} according to its drawing
+     * {@link GameObject.ObjectType}
      *
      * @param g the Graphics API (see {@link Graphics2D}
      * @param o the {@link Application} container
@@ -61,21 +65,21 @@ public class Renderer {
         switch (o.type) {
             case POINT -> {
                 g.setColor(o.borderColor);
-                g.fillRect((int) o.x, (int) o.y, 1, 1);
+                g.fillRect((int) o.pos.x, (int) o.pos.y, 1, 1);
             }
             case LINE -> {
                 g.setColor(o.borderColor);
-                g.drawLine((int) o.x, (int) o.y, (int) (o.x + o.w), (int) (o.y + o.h));
+                g.drawLine((int) o.pos.x, (int) o.pos.y, (int) (o.pos.x + o.w), (int) (o.pos.y + o.h));
             }
             case RECTANGLE -> {
-                Rectangle2D rect = new Rectangle2D.Double(o.x, o.y, o.w, o.h);
+                Rectangle2D rect = new Rectangle2D.Double(o.pos.x, o.pos.y, o.w, o.h);
                 drawShape(g, o, rect);
             }
             case ELLIPSE -> {
-                Ellipse2D ellipse = new Ellipse2D.Double(5, 10, 100, 150);
+                Ellipse2D ellipse = new Ellipse2D.Double(5, 10, o.w, o.h);
                 drawShape(g, o, ellipse);
             }
-            case IMAGE -> g.drawImage(o.image, (int) o.x, (int) o.y, null);
+            case IMAGE -> g.drawImage(o.image, (int) o.pos.x, (int) o.pos.y, null);
         }
     }
 
@@ -94,7 +98,7 @@ public class Renderer {
     }
 
     /**
-     * Copy rendering buffer content  to {@link Window}
+     * Copy rendering buffer content to {@link Window}
      *
      * @param window the window where to copy buffer to.
      */
@@ -102,7 +106,6 @@ public class Renderer {
         window.getGraphics().drawImage(buffer,
                 0, 0, window.getWidth(), window.getHeight(),
                 0, 0, buffer.getWidth(), buffer.getHeight(),
-                null
-        );
+                null);
     }
 }

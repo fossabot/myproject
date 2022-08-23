@@ -2,6 +2,7 @@ package com.demo.scenes;
 
 import com.demo.core.Application;
 import com.demo.core.entity.GameObject;
+import com.demo.core.math.Vec2d;
 import com.demo.core.services.io.InputHandler;
 import com.demo.core.services.scene.Scene;
 
@@ -20,36 +21,33 @@ public class DemoScene implements Scene {
                 .setType(GameObject.ObjectType.RECTANGLE)
                 .setPosition(160.0, 100.0)
                 .setDimension(16.0, 16.0)
-                .setSpeed(0.0, 0.0)
+                .setMass(100.0)
+                .setElasticity(0.13)
                 .setLayer(1)
-                .setPriority(1)
-        );
+                .setPriority(1));
     }
 
     @Override
     public void input(Application app) {
         GameObject player = app.getObject("player");
         InputHandler ih = app.getWindow().getInputHandler();
-        double dx = 0;
-        double dy = 0;
 
-        double step = 0.0000001;
+        double step = 0.5;
         if (ih.getKey(KeyEvent.VK_UP)) {
-            dy = -step;
+            player.addForce(new Vec2d(0, -step));
         }
         if (ih.getKey(KeyEvent.VK_DOWN)) {
-            dy = step;
+            player.addForce(new Vec2d(0, step));
         }
         if (ih.getKey(KeyEvent.VK_LEFT)) {
-            dx = -step;
+            player.addForce(new Vec2d(-step, 0));
         }
         if (ih.getKey(KeyEvent.VK_RIGHT)) {
-            dx = step;
+            player.addForce(new Vec2d(step, 0));
         }
 
         if (ih.getKey(KeyEvent.VK_ESCAPE)) {
             app.requestExit();
         }
-        player.setSpeed(dx, dy);
     }
 }
