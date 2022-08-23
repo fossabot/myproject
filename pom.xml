@@ -12,7 +12,7 @@
         <maven.compiler.target>18</maven.compiler.target>
         <maven.compiler.source>18</maven.compiler.source>
         <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
-        <mainClass>com.demo.core.Application</mainClass>
+        <project.mainClass>com.demo.core.Application</project.mainClass>
     </properties>
 
     <dependencyManagement>
@@ -44,6 +44,14 @@
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.0.0-M7</version>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.1.0</version>
+                <configuration>
+                    <mainClass>${project.mainClass}</mainClass>
+                </configuration>
             </plugin>
         </plugins>
     </build>
