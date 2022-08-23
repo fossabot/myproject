@@ -73,7 +73,8 @@ public class Application {
     }
 
     /**
-     * Initialize the application with <code>configurationFilename</code> and then parse <code>args</code>
+     * Initialize the application with <code>configurationFilename</code> and then
+     * parse <code>args</code>
      * from command line.
      *
      * @param args                  list of arguments from command line.
@@ -198,7 +199,6 @@ public class Application {
         return this.render;
     }
 
-
     public Window getWindow() {
         return window;
     }
@@ -220,16 +220,6 @@ public class Application {
     }
 
     /**
-     * Main method for the Application class.
-     *
-     * @param args list of java command line arguments.
-     */
-    public static void main(String[] args) {
-        Application app = new Application(args);
-        app.run();
-    }
-
-    /**
      * Request application to exit.
      */
     public void requestExit() {
@@ -243,4 +233,15 @@ public class Application {
     public SceneManager getSceneManager() {
         return scm;
     }
+
+    /**
+     * Main method for the Application class.
+     *
+     * @param args list of java command line arguments.
+     */
+    public static void main(String[] args) {
+        Application app = new Application(args);
+        app.run();
+    }
+
 }
