@@ -20,11 +20,14 @@ public class Window extends JFrame {
      * Initialize the Window with its new title and a default Dimension.
      *
      * @param title title of the window
-     * @param dim   Dimension of the wnidow.
+     * @param dim   Dimension of the window.
      */
-    public Window(String title, Dimension dim) {
+    public Window(String title, Dimension dim, double scale) {
         setTitle(title);
-        createWindow(dim);
+        Dimension winDim = new Dimension(
+                (int) (dim.width * scale),
+                (int) (dim.height * scale));
+        createWindow(winDim);
     }
 
     /**

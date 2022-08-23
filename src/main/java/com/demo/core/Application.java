@@ -2,6 +2,7 @@ package com.demo.core;
 
 import com.demo.core.entity.GameObject;
 import com.demo.core.services.config.Configuration;
+import com.demo.core.services.gameloop.FixFPSGameLoop;
 import com.demo.core.services.gameloop.StandardGameLoop;
 import com.demo.core.services.gfx.Renderer;
 import com.demo.core.services.gfx.Window;
@@ -25,7 +26,7 @@ public class Application {
      * Internationalized messages read according to default locale from
      * i18n/messages.properties
      */
-    private ResourceBundle messages = ResourceBundle.getBundle("i18n.messages", Locale.ROOT);
+    private final ResourceBundle messages = ResourceBundle.getBundle("i18n.messages", Locale.ROOT);
 
     /**
      * Flag to request quitting the main application loop;
@@ -35,7 +36,7 @@ public class Application {
      * Configuration component where all configuration are read or set from config
      * file overloaded by arguments from command line
      */
-    private Configuration config;
+    private final Configuration config;
 
     /**
      * The Window used to display application.
@@ -59,7 +60,7 @@ public class Application {
     /**
      * The list of internal object maintained by the Application.
      */
-    private Map<String, GameObject> objects = new ConcurrentHashMap<>();
+    private final Map<String, GameObject> objects = new ConcurrentHashMap<>();
 
     /**
      * Initialize the application with default configuration file ad then parse args
@@ -99,7 +100,7 @@ public class Application {
     public void run() {
         System.out.printf("INFO : Application | %s started%n", config.getTitle());
         create();
-        if (!isTestMode()) {
+        if (isNotTestMode()) {
             loop();
             dispose();
         }
@@ -111,10 +112,10 @@ public class Application {
     private void create() {
         window = new Window(
                 config.getTitle(),
-                config.getWindowDimension())
+                config.getWindowDimension(),config.getScale())
                 .attachHandler(new InputHandler());
         render = new Renderer(config);
-        gameLoop = new StandardGameLoop();
+        gameLoop = new FixFPSGameLoop(config.getFPS());
         scm = new SceneManager(this);
 
         createScene();
@@ -133,7 +134,7 @@ public class Application {
         do {
             gameLoop.process(this);
             // Nothing to do right now
-        } while (!isExit() && !isTestMode());
+        } while (!isExit() && isNotTestMode());
     }
 
     /**
@@ -168,8 +169,8 @@ public class Application {
      *
      * @return true if test mode is currently set.
      */
-    public boolean isTestMode() {
-        return "test".equals(config.getMode());
+    public boolean isNotTestMode() {
+        return !"test".equals(config.getMode());
     }
 
     /**
