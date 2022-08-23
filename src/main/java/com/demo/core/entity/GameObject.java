@@ -289,7 +289,7 @@ public class GameObject {
      *
      * @param elapsed the elapsed time since previous call.
      */
-    public void update(long elapsed) {
+    public void update(double elapsed) {
         double t = elapsed / 1000000.0;
         Vec2d force = new Vec2d(0, 0);
         for (Vec2d f : forces) {
@@ -308,37 +308,37 @@ public class GameObject {
      * @return true if constrained, else false.
      */
     public boolean constrainedBy(Rectangle2D area) {
-        boolean status = false;
+        boolean collide = false;
         double fx = 1.0, fy = 1.0;
         if (!area.contains(this.pos.x, this.pos.y, w, h)) {
             if (this.pos.x < area.getX()) {
                 this.pos.x = area.getX();
                 fx = -1.0;
-                status = true;
+                collide = true;
             }
             if (this.pos.x > area.getWidth() - w) {
                 this.pos.x = area.getWidth() - w;
                 fx = -1.0;
-                status = true;
+                collide = true;
             }
             if (this.pos.y < area.getY()) {
                 this.pos.y = area.getY();
                 fy = -1.0;
-                status = true;
+                collide = true;
             }
             if (this.pos.y > area.getHeight() - h) {
                 this.pos.y = area.getHeight() - h;
                 fy = -1.0;
-                status = true;
+                collide = true;
             }
         }
-        if (status) {
+        if (collide) {
             this.forces.clear();
             this.acc = new Vec2d(0, 0);
             this.speed.x *= fx * this.elasticity;
             this.speed.y *= fy * this.elasticity;
         }
-        return status;
+        return collide;
     }
 
 }

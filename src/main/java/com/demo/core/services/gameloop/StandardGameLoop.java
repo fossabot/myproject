@@ -6,7 +6,7 @@ import java.util.Optional;
 
 public class StandardGameLoop implements GameLoop {
 
-    long previousTime = System.nanoTime();
+    protected long previousTime = System.nanoTime();
 
     /**
      * Process game loop and return duration time for this cycle.
@@ -47,11 +47,12 @@ public class StandardGameLoop implements GameLoop {
      * @param elapsed the elapsed time since previous call.
      */
     @Override
-    public void update(Application app, long elapsed) {
+    public void update(Application app, double elapsed) {
         app.getObjects().forEach(go -> {
             go.update(elapsed);
             go.constrainedBy(app.getGameArea());
         });
+        app.getSceneManager().getCurrent().getCamera().update(elapsed);
     }
 
     /**
@@ -61,8 +62,8 @@ public class StandardGameLoop implements GameLoop {
      * @param elapsed the elapsed time since previous call.
      */
     @Override
-    public void render(Application app, long elapsed) {
-        app.getRender().draw(app);
+    public void render(Application app, double elapsed) {
+        app.getRender().draw(app, app.getSceneManager().getCurrent());
         app.getRender().drawToWindow(app.getWindow());
     }
 }
