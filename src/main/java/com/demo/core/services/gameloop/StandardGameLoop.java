@@ -48,10 +48,7 @@ public class StandardGameLoop implements GameLoop {
      */
     @Override
     public void update(Application app, double elapsed) {
-        app.getObjects().forEach(go -> {
-            go.update(elapsed);
-            go.constrainedBy(app.getGameArea());
-        });
+        app.getPhysicEngine().update(elapsed);
         app.getSceneManager().getCurrent().getCamera().update(elapsed);
     }
 

@@ -1,6 +1,7 @@
 package com.demo.core;
 
 import com.demo.core.entity.GameObject;
+import com.demo.core.math.PhysicEngine;
 import com.demo.core.services.config.Configuration;
 import com.demo.core.services.gameloop.FixFPSGameLoop;
 import com.demo.core.services.gameloop.StandardGameLoop;
@@ -63,6 +64,11 @@ public class Application {
     private final Map<String, GameObject> objects = new ConcurrentHashMap<>();
 
     /**
+     * The internal physic engine to update objects.
+     */
+    private PhysicEngine physicEngine;
+
+    /**
      * Initialize the application with default configuration file ad then parse args
      * from command line.
      *
@@ -112,11 +118,13 @@ public class Application {
     private void create() {
         window = new Window(
                 config.getTitle(),
-                config.getWindowDimension(),config.getScale())
+                config.getWindowDimension(), config.getScale())
                 .attachHandler(new InputHandler());
+
         render = new Renderer(config);
         gameLoop = new FixFPSGameLoop(config.getFPS());
         scm = new SceneManager(this);
+        physicEngine = new PhysicEngine(this);
 
         createScene();
     }
@@ -142,7 +150,9 @@ public class Application {
      */
     public void dispose() {
         System.out.printf("INFO : Application | %s ended%n", config.getTitle());
-        window.dispose();
+        if(Optional.ofNullable(window).isPresent()){
+            window.dispose();
+        }
     }
 
     /**
@@ -231,8 +241,20 @@ public class Application {
         return this.config.getGameArea();
     }
 
+    /**
+     * Retrieve the SceneManager
+     *
+     * @return
+     */
     public SceneManager getSceneManager() {
         return scm;
+    }
+
+    /**
+     * Retrieve the PhysicEngine
+     */
+    public PhysicEngine getPhysicEngine() {
+        return this.physicEngine;
     }
 
     /**

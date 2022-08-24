@@ -37,7 +37,10 @@ public class Renderer {
      * @param config the current application {@link Configuration} object.
      */
     public Renderer(Configuration config) {
-        this.buffer = new BufferedImage((int) config.getGameArea().getWidth(), (int) config.getGameArea().getHeight(), BufferedImage.TYPE_INT_ARGB);
+        this.buffer = new BufferedImage(
+                (int) config.getGameArea().getWidth(),
+                (int) config.getGameArea().getHeight(),
+                BufferedImage.TYPE_INT_ARGB);
         this.scale = config.getScale();
     }
 
@@ -52,7 +55,9 @@ public class Renderer {
                 RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON,
                 RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON
         ));
-        fillRect(g, Color.BLACK, 0, 0, buffer.getWidth(), buffer.getHeight());
+        fillRect(g, Color.BLACK,
+                0, 0,
+                buffer.getWidth(), buffer.getHeight());
 
         Camera currentCam = scene.getCamera();
         if (Optional.ofNullable(currentCam).isPresent()) {

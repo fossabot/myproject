@@ -24,9 +24,24 @@ You will see appearing such a window:
 
 ![A screenshot of the demo](src/docs/images/demoapp-screenshot-01.png "A simple screenshot of the demo")
 
+> _**NOTE**_<br/>
+> _You can also use the maven command line:_
+> ```shell
+> mvn exec:java
+> ```
 
-## Edit
+## Usage
 
-You will see 
+Basic commands:
+
+|       key        | description       |
+|:----------------:|:------------------|
+|  <kbd>UP</kbd>   | move up player    |
+| <kbd>DOWN</kbd>  | move down player  |
+| <kbd>LEFT</kbd>  | move left player  |
+| <kbd>RIGHT</kbd> | move right player |
+| <kbd>CTRL</kbd>  | player speed x 2  |
+| <kbd>SHIFT</kbd> | player speed x 6  |
+
 
 McG.

@@ -3,6 +3,7 @@ package com.demo.scenes;
 import com.demo.core.Application;
 import com.demo.core.entity.Camera;
 import com.demo.core.entity.GameObject;
+import com.demo.core.math.Material;
 import com.demo.core.math.Vec2d;
 import com.demo.core.services.io.InputHandler;
 import com.demo.core.services.scene.AbstractScene;
@@ -25,7 +26,7 @@ public class DemoScene extends AbstractScene implements Scene {
                 .setPosition(160.0, 100.0)
                 .setDimension(16.0, 16.0)
                 .setMass(100.0)
-                .setElasticity(0.13)
+                .setMaterial(Material.RUBBER)
                 .setLayer(1)
                 .setPriority(1);
         app.add(player);
@@ -37,7 +38,6 @@ public class DemoScene extends AbstractScene implements Scene {
                         app.getConfiguration().getWindowDimension().getWidth(),
                         app.getConfiguration().getWindowDimension().getHeight()));
         addCamera(camera);
-
     }
 
     @Override
@@ -45,7 +45,8 @@ public class DemoScene extends AbstractScene implements Scene {
         GameObject player = app.getObject("player");
         InputHandler ih = app.getWindow().getInputHandler();
 
-        double step = 0.05;
+        double step = 0.040;
+
 
         if (ih.isCtrlPressed()) {
             step *= 2;
@@ -54,7 +55,8 @@ public class DemoScene extends AbstractScene implements Scene {
             step *= 4;
         }
         if (ih.getKey(KeyEvent.VK_UP)) {
-            player.addForce(new Vec2d(0, -step));
+            player.addForce(new Vec2d(0, -4*step));
+
         }
         if (ih.getKey(KeyEvent.VK_DOWN)) {
             player.addForce(new Vec2d(0, step));
