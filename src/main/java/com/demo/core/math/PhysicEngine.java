@@ -20,6 +20,9 @@ public class PhysicEngine {
      */
     private Application app;
 
+
+    private World world = new World();
+
     /**
      * Create a new Physic Engine.
      *
@@ -50,6 +53,7 @@ public class PhysicEngine {
     public void updateObject(GameObject go, double elapsed) {
         double t = elapsed / 1000000.0;
         Vec2d force = new Vec2d(0, 0);
+        go.forces.add(world.gravity.multiply(0.1));
         for (Vec2d f : go.forces) {
             force.add(f);
         }
@@ -92,7 +96,9 @@ public class PhysicEngine {
         }
         if (collide) {
             go.forces.clear();
-            go.acc = new Vec2d(0, 0);
+            go.speed.x *= go.material.friction;
+            go.speed.y *= go.material.friction;
+
             go.speed.x *= fx * go.material.elasticity;
             go.speed.y *= fy * go.material.elasticity;
         }
