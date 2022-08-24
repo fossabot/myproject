@@ -1,6 +1,7 @@
 package com.demo.core.entity;
 
 import com.demo.core.Application;
+import com.demo.core.math.Material;
 import com.demo.core.math.Vec2d;
 import com.demo.core.services.gfx.Renderer;
 
@@ -32,6 +33,7 @@ import java.util.List;
  * </ul>
  */
 public class GameObject {
+
 
     /**
      * The type of GameObject to be used, defining the rendering algorithm.
@@ -79,9 +81,9 @@ public class GameObject {
     public List<Vec2d> forces = new ArrayList<>();
 
     /**
-     * Material characteristics
+     * Material for this object
      */
-    private double elasticity = 1.0;
+    public Material material;
 
     /**
      * Dimension of this GameObject
@@ -253,7 +255,7 @@ public class GameObject {
 
     /**
      * Set mass for thie GameObject.
-     * 
+     *
      * @param m the new mass for this object.
      * @return the current GameObject updated (fluent API).
      */
@@ -263,19 +265,19 @@ public class GameObject {
     }
 
     /**
-     * Set the material elasticity for thie GameObject.
-     * 
-     * @param e the new Elasticity for the material of this GameObject.
-     * @return
+     * Set the material for this GameObject.
+     *
+     * @param m the new Material of this GameObject.
+     * @return the current GameObject updated (fluent API).
      */
-    public GameObject setElasticity(double e) {
-        this.elasticity = e;
+    public GameObject setMaterial(Material m) {
+        this.material = m;
         return this;
     }
 
     /**
      * Apply a force to this <code>GameObject</code>.
-     * 
+     *
      * @param f the force to be applied.
      * @return the current GameObject updated (fluent API).
      */
@@ -285,60 +287,10 @@ public class GameObject {
     }
 
     /**
-     * Update physic and display attributes according to newton's laws.
+     * update the {@link GameObject}
      *
      * @param elapsed the elapsed time since previous call.
      */
     public void update(double elapsed) {
-        double t = elapsed / 1000000.0;
-        Vec2d force = new Vec2d(0, 0);
-        for (Vec2d f : forces) {
-            force.add(f);
-        }
-        acc = force.multiply(t / mass);
-        speed = speed.add(acc.multiply(0.5 * t));
-        pos = pos.add(speed.multiply(t));
-        forces.clear();
     }
-
-    /**
-     * Contrains the current object into a Rectangle area.
-     *
-     * @param area the play area for the application.
-     * @return true if constrained, else false.
-     */
-    public boolean constrainedBy(Rectangle2D area) {
-        boolean collide = false;
-        double fx = 1.0, fy = 1.0;
-        if (!area.contains(this.pos.x, this.pos.y, w, h)) {
-            if (this.pos.x < area.getX()) {
-                this.pos.x = area.getX();
-                fx = -1.0;
-                collide = true;
-            }
-            if (this.pos.x > area.getWidth() - w) {
-                this.pos.x = area.getWidth() - w;
-                fx = -1.0;
-                collide = true;
-            }
-            if (this.pos.y < area.getY()) {
-                this.pos.y = area.getY();
-                fy = -1.0;
-                collide = true;
-            }
-            if (this.pos.y > area.getHeight() - h) {
-                this.pos.y = area.getHeight() - h;
-                fy = -1.0;
-                collide = true;
-            }
-        }
-        if (collide) {
-            this.forces.clear();
-            this.acc = new Vec2d(0, 0);
-            this.speed.x *= fx * this.elasticity;
-            this.speed.y *= fy * this.elasticity;
-        }
-        return collide;
-    }
-
 }

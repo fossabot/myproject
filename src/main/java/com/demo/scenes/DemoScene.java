@@ -3,6 +3,7 @@ package com.demo.scenes;
 import com.demo.core.Application;
 import com.demo.core.entity.Camera;
 import com.demo.core.entity.GameObject;
+import com.demo.core.math.Material;
 import com.demo.core.math.Vec2d;
 import com.demo.core.services.io.InputHandler;
 import com.demo.core.services.scene.AbstractScene;
@@ -25,7 +26,7 @@ public class DemoScene extends AbstractScene implements Scene {
                 .setPosition(160.0, 100.0)
                 .setDimension(16.0, 16.0)
                 .setMass(100.0)
-                .setElasticity(0.13)
+                .setMaterial(Material.SUPER_BALL)
                 .setLayer(1)
                 .setPriority(1);
         app.add(player);
