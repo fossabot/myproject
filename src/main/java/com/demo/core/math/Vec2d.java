@@ -73,4 +73,14 @@ public class Vec2d {
         return String.format("(%4.2f,%4.2f)", x, y);
     }
 
+    public void ceil(double v) {
+        x = MathUtils.ceilValue(x,v);
+        y = MathUtils.ceilValue(y,v);
+    }
+
+    public void ceilAndMax(double v, double max) {
+
+        x = MathUtils.ceilMinMaxValue(x,v,max);
+        y = MathUtils.ceilMinMaxValue(y,v,max);
+    }
 }

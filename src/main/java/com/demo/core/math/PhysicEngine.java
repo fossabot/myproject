@@ -58,7 +58,9 @@ public class PhysicEngine {
             force.add(f);
         }
         go.acc = force.multiply(t / (go.mass * go.material.density));
+        go.acc.ceilAndMax(0.001,0.5);
         go.speed = go.speed.add(go.acc.multiply(0.5 * t).multiply(go.material.friction));
+        go.speed.ceilAndMax(0.01,0.5);
         go.pos = go.pos.add(go.speed.multiply(t));
         go.forces.clear();
     }
@@ -103,5 +105,9 @@ public class PhysicEngine {
             go.speed.y *= fy * go.material.elasticity;
         }
         return collide;
+    }
+
+    public World getWorld() {
+        return world;
     }
 }

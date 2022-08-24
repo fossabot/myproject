@@ -150,7 +150,9 @@ public class Application {
      */
     public void dispose() {
         System.out.printf("INFO : Application | %s ended%n", config.getTitle());
-        window.dispose();
+        if(Optional.ofNullable(window).isPresent()){
+            window.dispose();
+        }
     }
 
     /**
