@@ -115,14 +115,20 @@ public class Renderer {
                         (int) (o.pos.x + o.w), (int) (o.pos.y + o.h));
             }
             case RECTANGLE -> {
-                Rectangle2D rect = new Rectangle2D.Double(o.pos.x, o.pos.y, o.w, o.h);
+                Rectangle2D rect = new Rectangle2D.Double(
+                        o.pos.x, o.pos.y,
+                        o.w, o.h);
                 drawShape(g, o, rect);
             }
             case ELLIPSE -> {
-                Ellipse2D ellipse = new Ellipse2D.Double(o.pos.x, o.pos.y, o.w, o.h);
+                Ellipse2D ellipse = new Ellipse2D.Double(
+                        o.pos.x, o.pos.y,
+                        o.w, o.h);
                 drawShape(g, o, ellipse);
             }
-            case IMAGE -> g.drawImage(o.image, (int) o.pos.x, (int) o.pos.y, null);
+            case IMAGE -> g.drawImage(o.image,
+                    (int) o.pos.x, (int) o.pos.y,
+                    null);
         }
     }
 
