@@ -1,10 +1,10 @@
 # Adding Physics
 
-We had an `GameObject` easy to move with speed. but if we want to go further in terme of simulation, we need to enhance
+We had an `GameObject` easy to move with speed. but if we want to go further in terms of simulation, we need to enhance
 the way we compute the resulting position of our `GameObject`.
 
-We need to propose a more realistic move and behavior. to satify this enew requirement, we are going to stay ans stick
-to some physical laws of simultaion in terms of speed, acceleration and materials.
+We need to propose a more realistic move and behavior. to satisfy this new requirement, we are going to stay and stick
+to some physical laws of simulation in terms of speed, acceleration and materials.
 
 ## Moving from simple coordinate to vector
 
@@ -34,7 +34,7 @@ class from one of my preview project.
 
 Now we are going to be able to apply the Newtons laws on move equation:
 
-The acceleration of applied on a GameObject s the sum of all applied forces, devided by its mass:
+The acceleration of applied on a GameObject s the sum of all applied forces, divided by its mass:
 
 ```Math
 a = {\sum(F)\over m} t
@@ -60,7 +60,7 @@ where :
 - `v0` the previous speed value,
 - `v` the resulting new speed.
 
-And, finaly our `GameObject`'s position is :
+And, finally our `GameObject`'s position is :
 
 ```Math
 p = p_0 + v * t
