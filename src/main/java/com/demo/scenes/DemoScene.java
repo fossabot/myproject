@@ -47,15 +47,16 @@ public class DemoScene extends AbstractScene implements Scene {
 
         double step = 0.040;
 
+
         if (ih.isCtrlPressed()) {
             step *= 2;
         }
         if (ih.isShiftPressed()) {
             step *= 4;
         }
-
         if (ih.getKey(KeyEvent.VK_UP)) {
             player.addForce(new Vec2d(0, -4*step));
+
         }
         if (ih.getKey(KeyEvent.VK_DOWN)) {
             player.addForce(new Vec2d(0, step));

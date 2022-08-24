@@ -59,7 +59,7 @@ public class StandardGameLoop implements GameLoop {
      * @param elapsed the elapsed time since previous call.
      */
     @Override
-    public void render(Application app, long elapsed) {
+    public void render(Application app, double elapsed) {
         app.getRender().draw(app, app.getSceneManager().getCurrent());
         app.getRender().drawToWindow(app.getWindow());
     }

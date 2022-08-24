@@ -254,7 +254,29 @@ public class GameObject {
     }
 
     /**
-     * Set mass for thie GameObject.
+     * Set the material elasticity for thie GameObject.
+     * 
+     * @param e the new Elasticity for the material of this GameObject.
+     * @return
+     */
+    public GameObject setElasticity(double e) {
+        this.elasticity = e;
+        return this;
+    }
+
+    /**
+     * Apply a force to this <code>GameObject</code>.
+     * 
+     * @param f the force to be applied.
+     * @return the current GameObject updated (fluent API).
+     */
+    public GameObject addForce(Vec2d f) {
+        this.forces.add(f);
+        return this;
+    }
+
+    /**
+     * Update physic and display attributes according to newton's laws.
      *
      * @param m the new mass for this object.
      * @return the current GameObject updated (fluent API).
