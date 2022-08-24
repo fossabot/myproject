@@ -2,6 +2,7 @@ package com.demo.core.entity;
 
 import com.demo.core.Application;
 import com.demo.core.math.Material;
+import com.demo.core.math.PhysicType;
 import com.demo.core.math.Vec2d;
 import com.demo.core.services.gfx.Renderer;
 
@@ -34,6 +35,23 @@ import java.util.List;
  */
 public class GameObject {
 
+
+    public boolean stickToCamera=false;
+    private PhysicType physicType;
+
+    public GameObject setPhysicType(PhysicType physicType) {
+        this.physicType = physicType;
+        return this;
+    }
+
+    public GameObject setStickToCamera(boolean stick) {
+        stickToCamera = stick;
+        return this;
+    }
+
+    public PhysicType getPhysicType() {
+        return physicType;
+    }
 
     /**
      * The type of {@link GameObject} to be used, defining the rendering algorithm.
@@ -115,6 +133,7 @@ public class GameObject {
      *             {@link Application} container.
      */
     public GameObject(String name) {
+        physicType = PhysicType.DYNAMIC;
         this.name = name;
     }
 

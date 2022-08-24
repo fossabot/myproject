@@ -52,21 +52,30 @@ public class PhysicEngine {
      */
     public void updateObject(GameObject go, double elapsed) {
         double t = elapsed / 1000000.0;
-        Vec2d force = new Vec2d(0, 0);
-        go.forces.add(world.gravity.multiply(0.1));
-        for (Vec2d f : go.forces) {
-            force.add(f);
+        switch(go.getPhysicType()){
+            case NONE:
+            case STATIC:
+                break;
+            case DYNAMIC:
+                Vec2d force = new Vec2d(0, 0);
+                go.forces.add(world.gravity.multiply(0.1));
+                for (Vec2d f : go.forces) {
+                    force.add(f);
+                }
+                go.acc = force.multiply(t / (go.mass * go.material.density));
+                go.acc.ceilAndMax(0.001,0.5);
+
+                go.speed = go.speed.add(go.acc.multiply(0.5 * t).multiply(go.material.friction));
+                go.speed.ceilAndMax(0.01,0.5);
+
+                go.pos = go.pos.add(go.speed.multiply(t));
+                go.forces.clear();
+                break;
         }
-        go.acc = force.multiply(t / (go.mass * go.material.density));
-        go.acc.ceilAndMax(0.001,0.5);
-        go.speed = go.speed.add(go.acc.multiply(0.5 * t).multiply(go.material.friction));
-        go.speed.ceilAndMax(0.01,0.5);
-        go.pos = go.pos.add(go.speed.multiply(t));
-        go.forces.clear();
     }
 
     /**
-     * Contrains the current object into a Rectangle area.
+     * Constrains the current object into a Rectangle area.
      *
      * @param area the play area for the application.
      * @return true if constrained, else false.

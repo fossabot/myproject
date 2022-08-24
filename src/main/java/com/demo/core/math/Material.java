@@ -48,6 +48,7 @@ public class Material {
      * @param f    friction for this new material
      */
     public Material(String name, double e, double d, double f) {
+        this(name);
         setDensity(d);
         setElasticity(e);
         setFriction(f);

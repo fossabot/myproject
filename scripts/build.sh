@@ -94,7 +94,7 @@ function executeTests(){
   find ./src/test -name '*.java' >$TARGET/test-sources.lst
   javac -source 17 -encoding $SRC_ENCODING $COMPILATION_OPTS -cp "$LIB_TEST;$CLASSES;." -d $TARGET/test-classes @$TARGET/test-sources.lst
   echo "execute tests through JUnit"
-  java $JAR_OPTS -jar "$LIB_TEST" --class-path "$CLASSES;$TARGET/test-classes;$SRC/test/resources;" --scan-class-path
+  java $JAR_OPTS -jar "$LIB_TEST" --class-path "$CLASSES;$TARGET/test-classes;$TARGET/classes;$SRC/test/resources;" --scan-class-path
   echo "done."
 }
 #

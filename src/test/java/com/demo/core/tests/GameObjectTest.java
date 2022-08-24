@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import com.demo.core.entity.GameObject;
+import com.demo.core.math.Material;
+import com.demo.core.math.PhysicType;
 import org.junit.jupiter.api.Test;
 
 import java.awt.Color;
@@ -40,9 +42,30 @@ public class GameObjectTest {
     }
 
     @Test
+    public void gameObjectHasAcceleration() {
+        GameObject go = new GameObject("go-name").setAcc(0.01, -0.01);
+        assertEquals(0.01, go.acc.x, 0.0000001, "the GameObject acceleration on x axis has not been set");
+        assertEquals(-0.01, go.acc.y, 0.0000001, "the GameObject acceleration on y axis has not been set");
+    }
+
+    @Test
     public void gameObjectHasAType() {
         GameObject go = new GameObject("go-name").setType(GameObject.ObjectType.IMAGE);
         assertEquals(GameObject.ObjectType.IMAGE, go.type, "the GameObject type has not been set");
+    }
+
+    @Test
+    public void gameObjectHasAPhysicType() {
+        GameObject go = new GameObject("go-name").setPhysicType(PhysicType.STATIC);
+        assertEquals(PhysicType.STATIC, go.getPhysicType(), "the GameObject physicType has not been set");
+    }
+
+
+    @Test
+    public void gameObjectHasAMaterial() {
+        GameObject go = new GameObject("go-name").setMaterial(Material.DEFAULT);
+        assertNotNull(go.material, "the GameObject material has not been set");
+        assertEquals("default", go.material.name, "the GameObject material has not been set to default");
     }
 
     @Test

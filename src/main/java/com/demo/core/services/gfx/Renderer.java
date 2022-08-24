@@ -66,14 +66,15 @@ public class Renderer {
         // draw game area zone
         drawPlayArea(g);
 
-        // draw things with higher layer / higher priority draw first.
-        app.getObjects().stream()
-                .sorted((a, b) -> a.layer > b.layer ? (a.priority > b.priority ? 1 : -1) : -1)
-                .forEach(o -> drawGameObject(g, o));
-
         if (Optional.ofNullable(currentCam).isPresent()) {
             g.translate(currentCam.pos.x, currentCam.pos.y);
         }
+
+        // draw things with higher layer / higher priority draw first.
+        app.getObjects().stream()
+                .sorted((a, b) -> a.layer > b.layer ? (a.priority > b.priority ? 1 : -1) : -1)
+                .forEach(o -> drawGameObject(scene, g, o));
+
 
         // release Graphics component.
         g.dispose();
@@ -102,7 +103,14 @@ public class Renderer {
      * @param g the Graphics API (see {@link Graphics2D}
      * @param o the {@link Application} container
      */
-    private void drawGameObject(Graphics2D g, GameObject o) {
+    private void drawGameObject(Scene scene, Graphics2D g, GameObject o) {
+
+        Camera currentCam = scene.getCamera();
+        if (Optional.ofNullable(currentCam).isPresent() && !o.stickToCamera) {
+            g.translate(-currentCam.pos.x, -currentCam.pos.y);
+        }
+
+
         switch (o.type) {
             case POINT -> {
                 g.setColor(o.borderColor);
@@ -130,6 +138,11 @@ public class Renderer {
                     (int) o.pos.x, (int) o.pos.y,
                     null);
         }
+
+        if (Optional.ofNullable(currentCam).isPresent() && !o.stickToCamera) {
+            g.translate(currentCam.pos.x, currentCam.pos.y);
+        }
+
     }
 
     /**
