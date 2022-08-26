@@ -22,6 +22,7 @@ public class PhysicEngine {
 
 
     private World world = new World();
+    private double speedFactor = 1.3;
 
     /**
      * Create a new Physic Engine.
@@ -51,7 +52,7 @@ public class PhysicEngine {
      * @param elapsed the elapsed time since previous call.
      */
     public void updateObject(GameObject go, double elapsed) {
-        double t = elapsed / 1000000.0;
+        double t = elapsed / (1000000.0*speedFactor);
         switch(go.getPhysicType()){
             case NONE:
             case STATIC:
