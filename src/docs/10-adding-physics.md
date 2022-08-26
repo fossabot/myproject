@@ -111,18 +111,18 @@ public class PhysicEngine {
 And this service is instantiated into the `Application.create()` :
 
 ```java
-import com.demo.core.math.PhysicEngine;
+import com.demoapp.core.services.physic.PhysicEngine;
 
 public class Application {
-    //...
-    private PhysicEngine physicEngine;
+  //...
+  private PhysicEngine physicEngine;
 
-    public void create() {
-        //...
-        this.physicEngine = new PhysicEngine(this);
-        //...
-    }
+  public void create() {
     //...
+    this.physicEngine = new PhysicEngine(this);
+    //...
+  }
+  //...
 }
 ```
 

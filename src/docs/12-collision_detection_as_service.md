@@ -27,8 +27,10 @@ This `alive` boolean flag depends on the `duration` integer value, corresponding
 By default, the value of `duration` is initialized to `-1`, meaning it will never die.
 
 But setting a value greater than zero (0) will define a life duration in nanos for this `GameObject`. And until this
-duration value is
-greater than `0` and is not equals to `-1`, the `alive` flag will be `true`.
+duration value is greater than `0` and is not equals to `-1`, the `alive` flag will be `true`.
+
+We will also add a `box`, corresponding to the containing box for our `GameObject`, it will be updated each time
+the `dimension` or the position (`pos`) are changing. :
 
 ```plantuml
 @startuml
@@ -49,7 +51,7 @@ class GameObject {
     - alive:boolean
     ---
     + isAlive():boolean
-    + isNeverDie():boolean
+    + isPersistent():boolean
 }
 @enduml
 ```
@@ -59,15 +61,17 @@ And the corresponding code for the new attributes and corresponding methods:
 ```java
 public class GameObject {
     //...
+    public Rectangle2D box;
     public boolean alive;
     public int duration = -1;
 
     //...
     public boolean isAlive() {
-        this.alive = isNeverDie() || duration > 0;
+        this.alive = isPersistent() || duration > 0;
         return this.alive;
     }
-    public boolean isNeverDie() {
+
+    public boolean isPersistent() {
         return this.duration == -1;
     }
     //...
@@ -77,6 +81,10 @@ public class GameObject {
         return this;
     }
     //...
+    
+    public void update(deouble elapsed) {
+        box.setRect(pos.x, pos.y, width, height);
+    }
 }
 ```
 
@@ -88,10 +96,17 @@ collision detection and resolution.
 The implementation for colliding object will be based on the `Shape` variant object `Rectangle2D` and `Ellipse2D`
 from the `java.awt.geom` package.
 
-We need to add a collision box (`cbox`) which will be computed accordingly to the ObjectType as a Rectangle2D or an Ellipse2D:
+We need to add a collision box (`cbox`) based on a Boundary box `bbox` for the relative `GameObject` which will be
+computed accordingly to the `ObjectType` as a `Rectangle2D` or an `Ellipse2D`:
 
 ```java
 public static class GameObject {
+    //...
+    // Boundary box
+    public Shape bbox;
+    // Collision box
+    public Shape cbox;
+
     //...
     // initialize the default collision box equals to the existing bounding box
     public GameObject setDimension(double w, double h) {
@@ -115,12 +130,12 @@ public static class GameObject {
     public void update(double elapsed) {
         //...
         switch (type) {
-            case RECTANGLE, IMAGE, default -> cbox = new Rectangle2D.Double(
+            case RECTANGLE, IMAGE, default -> this.cbox = new Rectangle2D.Double(
                     box.getX() + bbox.getBounds().getX(),
                     box.getY() + bbox.getBounds().getY(),
                     box.getWidth() - (bbox.getBounds().getWidth() + bbox.getBounds().getX()),
                     box.getHeight() - (bbox.getBounds().getHeight() + bbox.getBounds().getY()));
-            case ELLIPSE -> cbox = new Ellipse2D.Double(
+            case ELLIPSE -> this.cbox = new Ellipse2D.Double(
                     box.getX() + bbox.getBounds().getX(),
                     box.getY() + bbox.getBounds().getY(),
                     box.getWidth() - (bbox.getBounds().getWidth() + bbox.getBounds().getX()),
@@ -141,7 +156,7 @@ public static class CollisionDetector {
     private void detect() {
         List<GameObject> targets = colliders.values()
                 .stream()
-                .filter(e -> e.isAlive() || e.isNeverDying())
+                .filter(e -> e.isAlive() || e.isPersistent())
                 .toList();
         for (GameObject e1 : colliders.values()) {
             e1.collide = false;
@@ -303,6 +318,6 @@ _figure $fig+ - `app.properties` file modified with new `PhysicEngine` threshold
 
 Here is a screen capture from the new CollisionDetector with platforms implementation:
 
-![Collision Detecion and platforms](images/collision-detection-and-platform.png "Collision detection and platforms")
+![Collision Detection and platforms](images/012-collision-detection-and-platform.png "Collision detection and platforms")
 
 _figure $fig+ - Collision detection and platforms_

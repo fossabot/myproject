@@ -127,8 +127,8 @@ class DemoScene extends AbstractScene
 So the `Camera`'s management is delegated to the `AbstractScene`.
 
 ```java
-import com.demo.core.Application;
-import com.demo.core.services.scene.AbstractScene;
+import com.demoapp.core.Application;
+import com.demoapp.core.services.scene.AbstractScene;
 
 class DemoScene extends AbstractScene {
     @Override
