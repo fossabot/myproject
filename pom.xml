@@ -1,8 +1,8 @@
 <project>
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.demo</groupId>
-    <artifactId>demoapp</artifactId>
-    <version>1.0.0</version>
+    <artifactId>DemoApp</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
     <inceptionYear>2022</inceptionYear>
     <name>DemoApplication</name>
     <description>This is a simple implementation of an application providing good practices in terms of development and

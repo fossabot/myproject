@@ -49,12 +49,12 @@ public class DemoScene extends AbstractScene implements Scene {
         app.add(stickToCam);
 
         // draw some platforms
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 20; i++) {
             GameObject pf = new GameObject("pf_" + i)
                     .setType(GameObject.ObjectType.RECTANGLE)
                     .setPhysicType(PhysicType.STATIC)
-                    .setPosition(((int)(Math.random() * 38) * 16)+1, (int)((Math.random() * 22) * 16)+1)
-                    .setDimension(((int)(Math.random() * 5) + 1) * 16, 16)
+                    .setPosition(((int) (1 + (Math.random() * 38)) * 16), (int) (1 + (Math.random() * 11)) * 32)
+                    .setDimension(((int) (Math.random() * 7) + 3) * 16, 8)
                     .setBorderColor(Color.DARK_GRAY)
                     .setFillColor(Color.GRAY)
                     .setMaterial(Material.DEFAULT)
@@ -63,6 +63,18 @@ public class DemoScene extends AbstractScene implements Scene {
                     .setPriority(1);
             app.add(pf);
         }
+        GameObject pfFloor = new GameObject("pf_floor")
+                .setType(GameObject.ObjectType.RECTANGLE)
+                .setPhysicType(PhysicType.STATIC)
+                .setPosition(0.0, (25 * 16) - 8)
+                .setDimension(40 * 16, 8)
+                .setBorderColor(new Color(0.0f, 0.5f, 0.0f, 0.0f))
+                .setFillColor(Color.GREEN)
+                .setMaterial(Material.DEFAULT)
+                .setMass(0.0)
+                .setLayer(2)
+                .setPriority(1);
+        app.add(pfFloor);
 
         // and the mandatory camera.
         camera = new Camera("cam01")
@@ -79,7 +91,7 @@ public class DemoScene extends AbstractScene implements Scene {
         GameObject player = app.getObject("player");
         InputHandler ih = app.getWindow().getInputHandler();
 
-        double step = 0.040;
+        double step = 0.020;
 
 
         if (ih.isCtrlPressed()) {
@@ -89,7 +101,7 @@ public class DemoScene extends AbstractScene implements Scene {
             step *= 4;
         }
         if (ih.getKey(KeyEvent.VK_UP)) {
-            player.addForce(new Vec2d(0, -4 * step));
+            player.addForce(new Vec2d(0, -5 * step));
 
         }
         if (ih.getKey(KeyEvent.VK_DOWN)) {
