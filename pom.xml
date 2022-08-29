@@ -1,8 +1,8 @@
 <project>
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.demo</groupId>
-    <artifactId>demoapp</artifactId>
-    <version>1.0.0</version>
+    <artifactId>DemoApp</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
     <inceptionYear>2022</inceptionYear>
     <name>DemoApplication</name>
     <description>This is a simple implementation of an application providing good practices in terms of development and
@@ -12,7 +12,7 @@
         <maven.compiler.target>18</maven.compiler.target>
         <maven.compiler.source>18</maven.compiler.source>
         <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
-        <project.mainClass>com.demo.core.Application</project.mainClass>
+        <project.mainClass>com.demoapp.core.Application</project.mainClass>
     </properties>
 
     <dependencyManagement>
@@ -38,8 +38,14 @@
     <build>
         <plugins>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
+                <version>3.10.1</version>
+                <configuration>
+                    <source>18</source>
+                    <target>18</target>
+                    <compilerArgs>--enable-preview</compilerArgs>
+                </configuration>
             </plugin>
             <!-- Resource parsing -->
             <plugin>
@@ -136,6 +142,7 @@
                     <mainClass>${project.mainClass}</mainClass>
                 </configuration>
             </plugin>
+
         </plugins>
     </build>
 </project>
