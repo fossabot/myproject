@@ -1,4 +1,4 @@
-package com.demoapp.demo.scenes;
+package com.demoapp.core.services.scene.scenes;
 
 import com.demoapp.core.Application;
 import com.demoapp.core.entity.Camera;
@@ -35,7 +35,7 @@ public class DemoScene extends AbstractScene implements Scene {
         app.add(player);
 
         // add an object stick to camera
-        GameObject stickToCam = new GameObject("stick")
+        GameObject score = new GameObject("score")
                 .setType(GameObject.ObjectType.RECTANGLE)
                 .setPhysicType(PhysicType.NONE)
                 .setPosition(10.0, 20.0)
@@ -46,23 +46,8 @@ public class DemoScene extends AbstractScene implements Scene {
                 .setLayer(0)
                 .setPriority(1)
                 .setStickToCamera(true);
-        app.add(stickToCam);
+        app.add(score);
 
-        // draw some platforms
-        for (int i = 0; i < 20; i++) {
-            GameObject pf = new GameObject("pf_" + i)
-                    .setType(GameObject.ObjectType.RECTANGLE)
-                    .setPhysicType(PhysicType.STATIC)
-                    .setPosition(((int) (1 + (Math.random() * 38)) * 16), (int) (1 + (Math.random() * 11)) * 32)
-                    .setDimension(((int) (Math.random() * 7) + 3) * 16, 8)
-                    .setBorderColor(Color.DARK_GRAY)
-                    .setFillColor(Color.GRAY)
-                    .setMaterial(Material.STEEL)
-                    .setMass(0.0)
-                    .setLayer(2)
-                    .setPriority(1);
-            app.add(pf);
-        }
         GameObject pfFloor = new GameObject("pf_floor")
                 .setType(GameObject.ObjectType.RECTANGLE)
                 .setPhysicType(PhysicType.STATIC)
@@ -76,6 +61,13 @@ public class DemoScene extends AbstractScene implements Scene {
                 .setPriority(1);
         app.add(pfFloor);
 
+        generatePlatforms(app,
+                20,
+                40, 22,
+                1,
+                2, 2,
+                8);
+
         // and the mandatory camera.
         camera = new Camera("cam01")
                 .setTarget(player)
@@ -86,16 +78,54 @@ public class DemoScene extends AbstractScene implements Scene {
         addCamera(camera);
     }
 
+    /**
+     * Generate platforms (in tile size of 16x16) in the areaPlatform[Width/Height] with
+     * a [min/max]PlatformWidth and a [min/max]PlatformHeight with respecting a safeBorderWidth space.
+     *
+     * @param app                the parent Application
+     * @param nbPlatforms        the nb of platforms to be generated
+     * @param areaPlatformWidth  the width of the platform area (in tile)
+     * @param areaPlatformHeight the height of the platform area (in tile)
+     * @param safeBorderWidth    the safe space border around the platform area
+     * @param minPlatformWidth   the minimal height  of a platform (in tile)
+     * @param minPlatformHeight  the minimal width of a platform (in tile)
+     * @param maxPlatformWidth   the maximal Width of a platform (in tile)
+     */
+    private void generatePlatforms(Application app,
+                                   int nbPlatforms,
+                                   int areaPlatformWidth, int areaPlatformHeight,
+                                   int safeBorderWidth,
+                                   int minPlatformWidth, int minPlatformHeight,
+                                   int maxPlatformWidth) {
+        for (int i = 0; i < nbPlatforms; i++) {
+            GameObject pf = new GameObject("pf_" + i)
+                    .setType(GameObject.ObjectType.RECTANGLE)
+                    .setPhysicType(PhysicType.STATIC)
+                    .setPosition(
+                            (int) (safeBorderWidth + (Math.random() * (areaPlatformWidth - (2 * safeBorderWidth)))) * 16,
+                            (int) (safeBorderWidth + (Math.random() * (areaPlatformHeight - (2 * safeBorderWidth) / 2))) * 32)
+                    .setDimension(
+                            ((int) (minPlatformWidth + Math.random() * (maxPlatformWidth - minPlatformWidth))) * 16,
+                            16)
+                    .setBorderColor(Color.DARK_GRAY)
+                    .setFillColor(Color.GRAY)
+                    .setMaterial(Material.DEFAULT)
+                    .setMass(0.0)
+                    .setLayer(2)
+                    .setPriority(1);
+            app.add(pf);
+        }
+    }
+
     @Override
     public void input(Application app) {
         GameObject player = app.getObject("player");
         InputHandler ih = app.getWindow().getInputHandler();
 
-        double step = 0.020;
-
+        double step = 0.030;
 
         if (ih.isCtrlPressed()) {
-            step *= 2;
+            step *= 2.5;
         }
         if (ih.isShiftPressed()) {
             step *= 4;
