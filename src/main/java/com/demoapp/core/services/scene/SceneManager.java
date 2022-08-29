@@ -8,6 +8,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -75,7 +76,9 @@ public class SceneManager {
         try {
             scn = sceneClass.getConstructor().newInstance();
             scenes.put(scn.getName(), scn);
-            app.getWindow().getInputHandler().add((OnKeyReleaseHandler) scn);
+            if (Optional.ofNullable(app.getWindow()).isPresent()) {
+                app.getWindow().getInputHandler().add((OnKeyReleaseHandler) scn);
+            }
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException |
                  NoSuchMethodException e) {
             System.out.printf("ERR: unable to ass scene %s%n", sceneClass.getName());

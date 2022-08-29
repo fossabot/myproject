@@ -163,10 +163,14 @@ public class Configuration {
      * @param args the list of arguments from java command line.
      */
     public void parseArguments(String[] args) {
-        Arrays.stream(args).forEach(s -> {
-            String[] kv = s.split("=");
-            parseArgument(kv[0], kv[1]);
-        });
+        if (args.length > 0) {
+            Arrays.stream(args).forEach(s -> {
+                String[] kv = s.split("=");
+                if (kv.length == 2) {
+                    parseArgument(kv[0], kv[1]);
+                }
+            });
+        }
     }
 
     /**
