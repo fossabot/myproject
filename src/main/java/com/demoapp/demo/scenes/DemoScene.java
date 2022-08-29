@@ -135,7 +135,7 @@ public class DemoScene extends AbstractScene implements Scene, OnKeyReleaseHandl
             step *= 4;
         }
         if (ih.getKey(KeyEvent.VK_UP)) {
-            player.addForce(new Vec2d(0, -2 * step));
+            player.addForce(new Vec2d(0, -3 * step));
 
         }
         if (ih.getKey(KeyEvent.VK_DOWN)) {
