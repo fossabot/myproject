@@ -58,27 +58,34 @@ public class PhysicEngine {
      * @param elapsed the elapsed time since previous call.
      */
     public void updateObject(GameObject go, double elapsed) {
-        double t = elapsed / (1000000.0*0.9);
+        double t = elapsed / (1000000.0 * 0.9);
         switch (go.getPhysicType()) {
+
             case NONE:
             case STATIC:
                 break;
+
             case DYNAMIC:
                 Vec2d force = new Vec2d(0, 0);
-                go.forces.add(world.gravity.multiply(0.1));
+                go.forces.add(world.gravity);
                 for (Vec2d f : go.forces) {
                     force.add(f);
                 }
                 go.acc = force.multiply(t / (go.mass * go.material.density));
                 go.acc.minMax(config.accMinValue, config.accMaxValue);
 
-                go.speed = go.speed.add(go.acc.multiply(0.5 * t).multiply(go.material.friction));
-                go.speed.minMax(config.speedMinValue, config.speedMaxValue);
+                go.speed.add(go.acc.multiply(0.5 * t).multiply(go.material.friction));
+                if (go.collide) {
+                    go.speed = go.speed.multiply(go.colliders.get(0).material.friction);
+                }
+                go.speed = go.speed.minMax(config.speedMinValue, config.speedMaxValue);
 
                 go.pos = go.pos.add(go.speed.multiply(t));
                 go.forces.clear();
                 break;
         }
+
+        go.collide = false;
     }
 
     /**

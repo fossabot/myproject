@@ -8,6 +8,8 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * The Input handler service will implement all the processing upon {@link KeyEvent}, {@link MouseEvent} to manage
@@ -33,12 +35,18 @@ public class InputHandler implements KeyListener, MouseListener, MouseMotionList
     private boolean ctrlPressed;
     private boolean shiftPressed;
 
+    private List<OnKeyReleaseHandler> keyReleasedHandlers = new CopyOnWriteArrayList<>();
+
     /**
      * Initialize the InputHandler internal input status caches.
      */
     public InputHandler() {
         keys = new boolean[65635];
         mouseButton = new boolean[MouseInfo.getNumberOfButtons()];
+    }
+
+    public void add(OnKeyReleaseHandler oKRH) {
+        this.keyReleasedHandlers.add(oKRH);
     }
 
     @Override
@@ -58,6 +66,9 @@ public class InputHandler implements KeyListener, MouseListener, MouseMotionList
         keys[e.getKeyCode()] = false;
         ctrlPressed = e.isControlDown();
         shiftPressed = e.isShiftDown();
+        for (OnKeyReleaseHandler oKRH : keyReleasedHandlers) {
+            oKRH.onKeyReleased(e);
+        }
     }
 
     @Override

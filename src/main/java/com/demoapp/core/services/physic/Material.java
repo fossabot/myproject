@@ -16,7 +16,7 @@ public class Material {
     public static final Material SUPER_BALL =
             new Material("superBall", 0.98, 0.7, 0.98);
     public static final Material STEEL =
-            new Material("steel", 0.12, 1.5, 0.9);
+            new Material("steel", 0.67, 1.2, 0.98);
     /**
      * Name of this Material
      */

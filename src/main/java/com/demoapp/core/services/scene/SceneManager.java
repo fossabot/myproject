@@ -2,6 +2,7 @@ package com.demoapp.core.services.scene;
 
 import com.demoapp.core.Application;
 import com.demoapp.core.services.config.Configuration;
+import com.demoapp.core.services.io.OnKeyReleaseHandler;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
@@ -17,6 +18,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @since 2022
  */
 public class SceneManager {
+    private Application app;
     /**
      * Current active Scene
      */
@@ -32,6 +34,7 @@ public class SceneManager {
      * @param app the container {@link Application}
      */
     public SceneManager(Application app) {
+        this.app = app;
         initialize(app.getConfiguration());
     }
 
@@ -72,6 +75,7 @@ public class SceneManager {
         try {
             scn = sceneClass.getConstructor().newInstance();
             scenes.put(scn.getName(), scn);
+            app.getWindow().getInputHandler().add((OnKeyReleaseHandler) scn);
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException |
                  NoSuchMethodException e) {
             System.out.printf("ERR: unable to ass scene %s%n", sceneClass.getName());

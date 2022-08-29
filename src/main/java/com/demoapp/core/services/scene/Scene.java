@@ -3,6 +3,8 @@ package com.demoapp.core.services.scene;
 import com.demoapp.core.Application;
 import com.demoapp.core.entity.Camera;
 
+import java.awt.event.KeyEvent;
+
 /**
  * Scene interface to define Scene creation.
  *
@@ -64,4 +66,10 @@ public interface Scene {
      */
     Scene setCamera(String camName);
 
+    /**
+     * Event sent when a key is released.
+     *
+     * @param e the KeyEvent sent.
+     */
+    void onKeyReleased(KeyEvent e);
 }

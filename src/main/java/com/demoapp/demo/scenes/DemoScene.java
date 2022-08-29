@@ -1,12 +1,13 @@
-package com.demoapp.core.services.scene.scenes;
+package com.demoapp.demo.scenes;
 
 import com.demoapp.core.Application;
 import com.demoapp.core.entity.Camera;
 import com.demoapp.core.entity.GameObject;
-import com.demoapp.core.services.physic.Material;
-import com.demoapp.core.services.physic.PhysicType;
 import com.demoapp.core.math.Vec2d;
 import com.demoapp.core.services.io.InputHandler;
+import com.demoapp.core.services.io.OnKeyReleaseHandler;
+import com.demoapp.core.services.physic.Material;
+import com.demoapp.core.services.physic.PhysicType;
 import com.demoapp.core.services.scene.AbstractScene;
 import com.demoapp.core.services.scene.Scene;
 
@@ -14,7 +15,9 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.geom.Rectangle2D;
 
-public class DemoScene extends AbstractScene implements Scene {
+public class DemoScene extends AbstractScene implements Scene, OnKeyReleaseHandler {
+
+    private Application app;
 
     @Override
     public String getName() {
@@ -23,13 +26,14 @@ public class DemoScene extends AbstractScene implements Scene {
 
     @Override
     public void create(Application app) {
+        this.app = app;
         // add the movable player
         GameObject player = new GameObject("player")
                 .setType(GameObject.ObjectType.RECTANGLE)
                 .setPosition(160.0, 100.0)
                 .setDimension(16.0, 16.0)
                 .setMass(100.0)
-                .setMaterial(Material.RUBBER)
+                .setMaterial(new Material("player", 0.98, 0.6, 0.95))
                 .setLayer(1)
                 .setPriority(1);
         app.add(player);
@@ -109,7 +113,7 @@ public class DemoScene extends AbstractScene implements Scene {
                             16)
                     .setBorderColor(Color.DARK_GRAY)
                     .setFillColor(Color.GRAY)
-                    .setMaterial(Material.DEFAULT)
+                    .setMaterial(Material.STEEL)
                     .setMass(0.0)
                     .setLayer(2)
                     .setPriority(1);
@@ -131,7 +135,7 @@ public class DemoScene extends AbstractScene implements Scene {
             step *= 4;
         }
         if (ih.getKey(KeyEvent.VK_UP)) {
-            player.addForce(new Vec2d(0, -5 * step));
+            player.addForce(new Vec2d(0, -2 * step));
 
         }
         if (ih.getKey(KeyEvent.VK_DOWN)) {
@@ -146,6 +150,21 @@ public class DemoScene extends AbstractScene implements Scene {
 
         if (ih.getKey(KeyEvent.VK_ESCAPE)) {
             app.requestExit();
+        }
+        if (player.forces.size() == 0) {
+            player.speed.multiply(player.material.friction);
+        }
+    }
+
+    @Override
+    public void onKeyReleased(KeyEvent e) {
+        switch (e.getKeyCode()) {
+            case KeyEvent.VK_Z:
+
+                create(app);
+                break;
+            default:
+                break;
         }
     }
 

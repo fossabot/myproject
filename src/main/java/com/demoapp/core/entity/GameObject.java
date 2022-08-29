@@ -404,7 +404,7 @@ public class GameObject {
      */
     public void update(double elapsed) {
         // update the bounding box.
-        box.setRect(pos.x, pos.y, w, h);
+        box.setRect(pos.x, pos.y, w-1, h);
 
         // update the collision box.
         switch (type) {

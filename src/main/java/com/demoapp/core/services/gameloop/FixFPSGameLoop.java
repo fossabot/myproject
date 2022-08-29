@@ -7,7 +7,7 @@ public class FixFPSGameLoop extends StandardGameLoop {
     private final double frameTime;
 
     public FixFPSGameLoop(double fps) {
-        this.frameTime = 1000.0 / fps;
+        this.frameTime = 1000000.0 / fps;
     }
 
     @Override
@@ -20,12 +20,11 @@ public class FixFPSGameLoop extends StandardGameLoop {
         update(app, elapsed);
         render(app, elapsed);
 
-        /*
         try {
-            Thread.sleep((int) ((frameTime - elapsed / 1000000.0) > 0 ? (frameTime - elapsed / 1000000.0) : 1));
+            Thread.sleep((int) ((frameTime - elapsed ) > 0.0 ? (frameTime - elapsed ) : 1000000.0)/1000000);
         } catch (InterruptedException e) {
             System.err.printf("ERR : Unable to sleep during frameTime=%f%n", frameTime);
-        }*/
+        }
 
         previousTime = startTime;
         return System.nanoTime() - startTime;

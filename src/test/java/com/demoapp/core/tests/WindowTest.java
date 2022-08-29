@@ -67,11 +67,11 @@ public class WindowTest {
             window.setFocusable(true);
             window.setVisible(true);
             robot.keyPress(KeyEvent.VK_ESCAPE);
-            robot.delay(100);
+            robot.delay(300);
             assertTrue(getInputHandler(window).getKey(KeyEvent.VK_ESCAPE),
                     "The Window ESCAPE key has not been pressed");
             robot.keyRelease(KeyEvent.VK_ESCAPE);
-            robot.delay(100);
+            robot.delay(300);
             assertFalse(getInputHandler(window).getKey(KeyEvent.VK_ESCAPE),
                     "The Window ESCAPE key has not been released");
         } catch (AWTException e) {
