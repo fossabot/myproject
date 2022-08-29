@@ -118,9 +118,10 @@ public class CollisionDetection {
             e2.speed.y += MathUtils.ceilMinMaxValue(impulse * e1.mass * e2.material.density * colSpeed * colNorm.y,
                     config.colSpeedMinValue, config.colSpeedMaxValue);
 
+            /*
             System.out.printf("e1.%s collides e2.%s Vp=%s / dist=%f / norm=%s%n", e1.getName(),
                     e2.getName(), vp, distance, colNorm);
-
+            */
         } else {
 
             if (e1.getPhysicType().equals(PhysicType.DYNAMIC)
@@ -135,7 +136,9 @@ public class CollisionDetection {
                         e1.acc.y = -e1.acc.y * e1.material.density * e2.material.density;
                         e1.pos.y = e2.pos.y + e2.h;
                     }
+                    /*
                     System.out.printf("e1.%s collides static e2.%s%n", e1.getName(), e2.getName());
+                    */
                 }
             }
             if (e1.getPhysicType().equals(PhysicType.DYNAMIC)
