@@ -5,6 +5,7 @@ import com.demoapp.core.entity.Camera;
 import com.demoapp.core.entity.GameObject;
 import com.demoapp.core.math.Vec2d;
 import com.demoapp.core.services.io.InputHandler;
+import com.demoapp.core.services.io.OnKeyPressedHandler;
 import com.demoapp.core.services.io.OnKeyReleaseHandler;
 import com.demoapp.core.services.physic.Material;
 import com.demoapp.core.services.physic.PhysicType;
@@ -15,9 +16,12 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.geom.Rectangle2D;
 
-public class DemoScene extends AbstractScene implements Scene, OnKeyReleaseHandler {
+public class DemoScene extends AbstractScene implements Scene, OnKeyReleaseHandler, OnKeyPressedHandler {
 
     private Application app;
+    private int scoreValue = 0;
+
+    double step = 0.020;
 
     @Override
     public String getName() {
@@ -29,27 +33,32 @@ public class DemoScene extends AbstractScene implements Scene, OnKeyReleaseHandl
         this.app = app;
         // add the movable player
         GameObject player = new GameObject("player")
-                .setType(GameObject.ObjectType.RECTANGLE)
+                .setType(GameObject.ObjectType.ELLIPSE)
                 .setPosition(160.0, 100.0)
                 .setDimension(16.0, 16.0)
                 .setMass(100.0)
                 .setMaterial(new Material("player", 0.98, 0.6, 0.95))
                 .setLayer(1)
-                .setPriority(1);
+                .setPriority(1)
+                .setBorderColor(Color.BLUE)
+                .setFillColor(Color.CYAN);
         app.add(player);
 
         // add an object stick to camera
-        GameObject score = new GameObject("score")
-                .setType(GameObject.ObjectType.RECTANGLE)
-                .setPhysicType(PhysicType.NONE)
-                .setPosition(10.0, 20.0)
-                .setDimension(64.0, 16.0)
-                .setBorderColor(Color.BLACK)
-                .setFillColor(Color.CYAN)
-                .setMass(0.0)
-                .setLayer(0)
-                .setPriority(1)
-                .setStickToCamera(true);
+        GameObject score = new GameObject("score");
+        score.setType(GameObject.ObjectType.TEXT);
+        score.setPhysicType(PhysicType.NONE);
+        score.setPosition(8.0, 36.0);
+        score.setDimension(64.0, 16.0);
+        score.setBorderColor(Color.WHITE);
+        score.setFillColor(Color.CYAN);
+        score.setMass(0.0);
+        score.setLayer(10);
+        score.setPriority(1);
+        score.setStickToCamera(true);
+        score.setAttribute("textFormat", "%06d");
+        score.setAttribute("textValue", scoreValue);
+        score.setAttribute("textFontSize", 20.0f);
         app.add(score);
 
         GameObject pfFloor = new GameObject("pf_floor")
@@ -60,7 +69,7 @@ public class DemoScene extends AbstractScene implements Scene, OnKeyReleaseHandl
                 .setBorderColor(new Color(0.0f, 0.5f, 0.0f, 0.0f))
                 .setFillColor(Color.GREEN)
                 .setMaterial(Material.STEEL)
-                .setMass(0.0)
+                .setMass(1000.0)
                 .setLayer(2)
                 .setPriority(1);
         app.add(pfFloor);
@@ -80,6 +89,8 @@ public class DemoScene extends AbstractScene implements Scene, OnKeyReleaseHandl
                         app.getConfiguration().getWindowDimension().getWidth(),
                         app.getConfiguration().getWindowDimension().getHeight()));
         addCamera(camera);
+        app.getWindow().getInputHandler().addKeyReleasedHandler(this);
+        app.getWindow().getInputHandler().addKeyPressedHandler(this);
     }
 
     /**
@@ -116,7 +127,7 @@ public class DemoScene extends AbstractScene implements Scene, OnKeyReleaseHandl
                     .setMaterial(Material.STEEL)
                     .setMass(0.0)
                     .setLayer(2)
-                    .setPriority(1);
+                    .setPriority(5);
             app.add(pf);
         }
     }
@@ -125,8 +136,7 @@ public class DemoScene extends AbstractScene implements Scene, OnKeyReleaseHandl
     public void input(Application app) {
         GameObject player = app.getObject("player");
         InputHandler ih = app.getWindow().getInputHandler();
-
-        double step = 0.030;
+        Vec2d gravity = app.getPhysicEngine().getWorld().gravity;
 
         if (ih.isCtrlPressed()) {
             step *= 2.5;
@@ -134,10 +144,13 @@ public class DemoScene extends AbstractScene implements Scene, OnKeyReleaseHandl
         if (ih.isShiftPressed()) {
             step *= 4;
         }
-        if (ih.getKey(KeyEvent.VK_UP)) {
-            player.addForce(new Vec2d(0, -3 * step));
-
+        // if no gravity, allow object to move up freely
+        if (gravity.isZero()) {
+            if (ih.getKey(KeyEvent.VK_UP)) {
+                player.addForce(new Vec2d(0, -step));
+            }
         }
+
         if (ih.getKey(KeyEvent.VK_DOWN)) {
             player.addForce(new Vec2d(0, step));
         }
@@ -166,6 +179,33 @@ public class DemoScene extends AbstractScene implements Scene, OnKeyReleaseHandl
             default:
                 break;
         }
+    }
+
+
+    @Override
+    public void onKeyPressed(KeyEvent e) {
+        switch (e.getKeyCode()) {
+            case KeyEvent.VK_UP:
+                double jumpImpulsion = app.getConfiguration().jupImpulsion;
+                GameObject player = app.getObject("player");
+                Vec2d gravity = app.getPhysicEngine().getWorld().gravity;
+                if (!gravity.isZero()) {
+                    Vec2d jumpVector = gravity
+                            .multiply(0.3 * 0.1) // attenuation factor
+                            .multiply(jumpImpulsion); // jump factor
+                    player.addForce(jumpVector);
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
+
+    @Override
+    public void update(Application app, double elapsed) {
+        scoreValue += 10;
+        app.getObject("score").setAttribute("textValue", scoreValue);
     }
 
 }

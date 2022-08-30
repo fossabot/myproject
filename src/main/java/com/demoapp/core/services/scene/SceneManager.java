@@ -77,7 +77,7 @@ public class SceneManager {
             scn = sceneClass.getConstructor().newInstance();
             scenes.put(scn.getName(), scn);
             if (Optional.ofNullable(app.getWindow()).isPresent()) {
-                app.getWindow().getInputHandler().add((OnKeyReleaseHandler) scn);
+                app.getWindow().getInputHandler().addKeyReleasedHandler((OnKeyReleaseHandler) scn);
             }
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException |
                  NoSuchMethodException e) {

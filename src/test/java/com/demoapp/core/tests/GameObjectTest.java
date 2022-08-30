@@ -101,4 +101,18 @@ public class GameObjectTest {
         assertEquals(bf, go.image, "the GameObject fill color has not been set");
     }
 
+    @Test
+    public void gameObjectHasAttributes() {
+        GameObject go = new GameObject("go-name");
+        go.setAttribute("test-int", 12345);
+        go.setAttribute("test-boolean", true);
+        go.setAttribute("test-double", 23.89);
+        go.setAttribute("test-float", 56.1234f);
+        go.setAttribute("test-string", "This is String test");
+        assertEquals(12345, go.attributes.get("test-int"), "The 'test-int' attributes is not correctly set");
+        assertEquals(true, go.attributes.get("test-boolean"), "The 'test-boolean' attributes is not correctly set");
+        assertEquals(23.89, go.attributes.get("test-double"), "The 'test-double' attributes is not correctly set");
+        assertEquals(56.1234f, go.attributes.get("test-float"), "The 'test-float' attributes is not correctly set");
+        assertEquals("This is String test", go.attributes.get("test-string"), "The 'test-string' attributes is not correctly set");
+    }
 }

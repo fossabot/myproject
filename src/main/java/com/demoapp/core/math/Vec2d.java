@@ -54,8 +54,8 @@ public class Vec2d {
     }
 
     public Vec2d minMax(double minVal, double maxVal) {
-        this.x = MathUtils.ceilMinMaxValue(x, minVal, maxVal);
-        this.y = MathUtils.ceilMinMaxValue(y, minVal, maxVal);
+        this.x = MathUtils.ceilMinMaxValue(this.x, minVal, maxVal);
+        this.y = MathUtils.ceilMinMaxValue(this.y, minVal, maxVal);
         return this;
     }
 
@@ -71,5 +71,9 @@ public class Vec2d {
 
     public String toString() {
         return String.format("(%4.2f,%4.2f)", x, y);
+    }
+
+    public boolean isZero() {
+        return (x == 0.0 && y == 0.0);
     }
 }

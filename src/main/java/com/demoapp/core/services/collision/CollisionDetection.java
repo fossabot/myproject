@@ -49,7 +49,7 @@ public class CollisionDetection {
     }
 
     /**
-     * Remove an {@link GameObject} and all its child object from the collision
+     * Remove an {@link GameObject}
      * detection service.
      *
      * @param e the {@link GameObject} to be removed from the collision detection
@@ -57,6 +57,17 @@ public class CollisionDetection {
      */
     public void remove(GameObject e) {
         colliders.remove(e.getName());
+    }
+
+    /**
+     * Remove a {@link GameObject} on its name
+     * detection service.
+     *
+     * @param gameObjectName the name of the {@link GameObject} to be removed from the collision detection
+     *                       system.
+     */
+    public void remove(String gameObjectName) {
+        colliders.remove(gameObjectName);
     }
 
     /**
@@ -131,10 +142,10 @@ public class CollisionDetection {
                     // 4 = nb min pixel to authorise going upper e2 object.
                     if (e1.pos.y + e1.h > e2.pos.y && vp.y > 0) {
                         e1.pos.y = e2.pos.y - e1.h;
-                        e1.acc.y = -e1.acc.y * e1.material.density * e2.material.density;
+                        e1.speed.y = -e1.speed.y * e1.material.elasticity * e2.material.elasticity;
                     } else {
-                        e1.acc.y = -e1.acc.y * e1.material.density * e2.material.density;
                         e1.pos.y = e2.pos.y + e2.h;
+                        e1.speed.y = -e1.speed.y * e1.material.elasticity * e2.material.elasticity;
                     }
                     /*
                     System.out.printf("e1.%s collides static e2.%s%n", e1.getName(), e2.getName());

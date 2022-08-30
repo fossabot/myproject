@@ -61,3 +61,7 @@ end
 7. [Rendering things](07-create_renderer.md)
 8. [Scene Management](08-scene_management.md)
 9. [Adding Camera to Scene](09-add_camera_to_scene.md)
+10. [Implement a physic engine](10-adding-physics.md)
+11. [bring new rendering capabilities](11-enhanced-renderer.md)
+12. [Make objects collide](12-collision_detection_as_service.md)
+13. [Drawing TEXT with GameObject](13-drawing_text_and_image.md)

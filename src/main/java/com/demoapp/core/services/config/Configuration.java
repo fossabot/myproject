@@ -68,6 +68,8 @@ public class Configuration {
     public double accMaxValue = 0.35;
 
 
+    public double jupImpulsion = -100;
+
     /**
      * Initialize the configuration component with values from the properties file
      * <code>configurationFilename</code>.
@@ -131,6 +133,9 @@ public class Configuration {
         // Collision detection parameters
         this.colSpeedMaxValue = getDouble("app.collision.speed.max", "0.0");
         this.colSpeedMinValue = getDouble("app.collision.speed.min", "0.0");
+
+        // Input handler properties
+        this.jupImpulsion = getDouble("app.io.input.jump.impulsion", "-50.0");
     }
 
     /**

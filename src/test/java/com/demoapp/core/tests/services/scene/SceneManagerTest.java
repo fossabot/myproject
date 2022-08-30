@@ -1,4 +1,4 @@
-package com.demoapp.core.tests;
+package com.demoapp.core.tests.services.scene;
 
 import com.demoapp.core.Application;
 import com.demoapp.core.services.config.Configuration;
@@ -15,10 +15,6 @@ import static org.junit.jupiter.api.Assertions.*;
 public class SceneManagerTest {
     Application app;
     SceneManager scm;
-    /**
-     * The default configuration file name for test.
-     */
-    private static final String DEFAULT_TEST_CONFIGURATION_FILE = "test-app.properties";
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
     private final ByteArrayOutputStream errContent = new ByteArrayOutputStream();
     private final PrintStream originalOut = System.out;
@@ -51,7 +47,7 @@ public class SceneManagerTest {
     @Test
     public void sceneManageHasTheRightTestScene() {
         scm = new SceneManager(app);
-        assertEquals("test", scm.getScene("test").getName(), "The scene 'test' has not been declared");
+        assertNotNull(scm.getScene("test"), "The scene 'test' has not been declared");
     }
 
     @Test

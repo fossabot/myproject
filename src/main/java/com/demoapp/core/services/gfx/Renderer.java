@@ -137,6 +137,16 @@ public class Renderer {
             case IMAGE -> g.drawImage(o.image,
                     (int) o.pos.x, (int) o.pos.y,
                     null);
+            case TEXT -> {
+                g.setColor(o.borderColor);
+                if (Optional.ofNullable(o.font).isPresent()) {
+                    g.setFont(o.font);
+                }
+                if (o.attributes.containsKey("textFontSize")) {
+                    g.setFont(g.getFont().deriveFont((float) o.attributes.get("textFontSize")));
+                }
+                g.drawString(o.textValue, (int) o.pos.x, (int) o.pos.y);
+            }
         }
 
         if (Optional.ofNullable(currentCam).isPresent() && !o.stickToCamera) {

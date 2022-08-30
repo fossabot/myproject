@@ -72,4 +72,12 @@ public interface Scene {
      * @param e the KeyEvent sent.
      */
     void onKeyReleased(KeyEvent e);
+
+    /**
+     * Update for this scene to implement some gameplay mechanism.
+     *
+     * @param app     the parent Application
+     * @param elapsed the elapsed time since previous call.
+     */
+    void update(Application app, double elapsed);
 }

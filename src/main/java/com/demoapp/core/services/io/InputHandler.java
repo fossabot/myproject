@@ -36,6 +36,7 @@ public class InputHandler implements KeyListener, MouseListener, MouseMotionList
     private boolean shiftPressed;
 
     private List<OnKeyReleaseHandler> keyReleasedHandlers = new CopyOnWriteArrayList<>();
+    private List<OnKeyPressedHandler> keyPressedHandlers = new CopyOnWriteArrayList<>();
 
     /**
      * Initialize the InputHandler internal input status caches.
@@ -45,8 +46,12 @@ public class InputHandler implements KeyListener, MouseListener, MouseMotionList
         mouseButton = new boolean[MouseInfo.getNumberOfButtons()];
     }
 
-    public void add(OnKeyReleaseHandler oKRH) {
+    public void addKeyReleasedHandler(OnKeyReleaseHandler oKRH) {
         this.keyReleasedHandlers.add(oKRH);
+    }
+
+    public void addKeyPressedHandler(OnKeyPressedHandler oKPH) {
+        this.keyPressedHandlers.add(oKPH);
     }
 
     @Override
@@ -59,6 +64,9 @@ public class InputHandler implements KeyListener, MouseListener, MouseMotionList
         keys[e.getKeyCode()] = true;
         ctrlPressed = e.isControlDown();
         shiftPressed = e.isShiftDown();
+        for (OnKeyPressedHandler oKPH : keyPressedHandlers) {
+            oKPH.onKeyPressed(e);
+        }
     }
 
     @Override
