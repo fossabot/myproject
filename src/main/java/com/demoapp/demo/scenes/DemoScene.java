@@ -39,7 +39,9 @@ public class DemoScene extends AbstractScene implements Scene, OnKeyReleaseHandl
                 .setMass(100.0)
                 .setMaterial(new Material("player", 0.98, 0.6, 0.95))
                 .setLayer(1)
-                .setPriority(1);
+                .setPriority(1)
+                .setBorderColor(Color.BLUE)
+                .setFillColor(Color.CYAN);
         app.add(player);
 
         // add an object stick to camera
@@ -51,7 +53,7 @@ public class DemoScene extends AbstractScene implements Scene, OnKeyReleaseHandl
         score.setBorderColor(Color.WHITE);
         score.setFillColor(Color.CYAN);
         score.setMass(0.0);
-        score.setLayer(0);
+        score.setLayer(10);
         score.setPriority(1);
         score.setStickToCamera(true);
         score.setAttribute("textFormat", "%06d");
@@ -125,7 +127,7 @@ public class DemoScene extends AbstractScene implements Scene, OnKeyReleaseHandl
                     .setMaterial(Material.STEEL)
                     .setMass(0.0)
                     .setLayer(2)
-                    .setPriority(1);
+                    .setPriority(5);
             app.add(pf);
         }
     }
