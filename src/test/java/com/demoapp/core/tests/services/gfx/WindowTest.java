@@ -1,4 +1,4 @@
-package com.demoapp.core.tests;
+package com.demoapp.core.tests.services.gfx;
 
 import com.demoapp.core.services.io.InputHandler;
 import com.demoapp.core.services.gfx.Window;

@@ -1,4 +1,4 @@
-package com.demoapp.core.tests;
+package com.demoapp.core.tests.services.physic;
 
 import com.demoapp.core.Application;
 import com.demoapp.core.entity.GameObject;

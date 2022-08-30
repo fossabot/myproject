@@ -49,7 +49,7 @@ public class CollisionDetection {
     }
 
     /**
-     * Remove an {@link GameObject} and all its child object from the collision
+     * Remove an {@link GameObject}
      * detection service.
      *
      * @param e the {@link GameObject} to be removed from the collision detection
@@ -57,6 +57,17 @@ public class CollisionDetection {
      */
     public void remove(GameObject e) {
         colliders.remove(e.getName());
+    }
+
+    /**
+     * Remove a {@link GameObject} on its name
+     * detection service.
+     *
+     * @param gameObjectName the name of the {@link GameObject} to be removed from the collision detection
+     *                       system.
+     */
+    public void remove(String gameObjectName) {
+        colliders.remove(gameObjectName);
     }
 
     /**

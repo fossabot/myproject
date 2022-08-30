@@ -1,4 +1,4 @@
-package com.demoapp.core.tests;
+package com.demoapp.core.tests.services.config;
 
 import com.demoapp.core.services.config.Configuration;
 import org.junit.jupiter.api.AfterEach;
