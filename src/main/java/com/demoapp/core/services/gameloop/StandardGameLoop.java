@@ -50,6 +50,7 @@ public class StandardGameLoop implements GameLoop {
     public void update(Application app, double elapsed) {
         app.getPhysicEngine().update(elapsed);
         app.getCollisionDetection().update(elapsed);
+        app.getSceneManager().getCurrent().update(app, elapsed);
         app.getSceneManager().getCurrent().getCamera().update(elapsed);
     }
 

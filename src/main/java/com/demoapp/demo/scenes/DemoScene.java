@@ -18,6 +18,7 @@ import java.awt.geom.Rectangle2D;
 public class DemoScene extends AbstractScene implements Scene, OnKeyReleaseHandler {
 
     private Application app;
+    private int scoreValue = 0;
 
     @Override
     public String getName() {
@@ -29,7 +30,7 @@ public class DemoScene extends AbstractScene implements Scene, OnKeyReleaseHandl
         this.app = app;
         // add the movable player
         GameObject player = new GameObject("player")
-                .setType(GameObject.ObjectType.RECTANGLE)
+                .setType(GameObject.ObjectType.ELLIPSE)
                 .setPosition(160.0, 100.0)
                 .setDimension(16.0, 16.0)
                 .setMass(100.0)
@@ -39,17 +40,20 @@ public class DemoScene extends AbstractScene implements Scene, OnKeyReleaseHandl
         app.add(player);
 
         // add an object stick to camera
-        GameObject score = new GameObject("score")
-                .setType(GameObject.ObjectType.RECTANGLE)
-                .setPhysicType(PhysicType.NONE)
-                .setPosition(10.0, 20.0)
-                .setDimension(64.0, 16.0)
-                .setBorderColor(Color.BLACK)
-                .setFillColor(Color.CYAN)
-                .setMass(0.0)
-                .setLayer(0)
-                .setPriority(1)
-                .setStickToCamera(true);
+        GameObject score = new GameObject("score");
+        score.setType(GameObject.ObjectType.TEXT);
+        score.setPhysicType(PhysicType.NONE);
+        score.setPosition(8.0, 36.0);
+        score.setDimension(64.0, 16.0);
+        score.setBorderColor(Color.WHITE);
+        score.setFillColor(Color.CYAN);
+        score.setMass(0.0);
+        score.setLayer(0);
+        score.setPriority(1);
+        score.setStickToCamera(true);
+        score.setAttribute("textFormat", "%06d");
+        score.setAttribute("textValue", scoreValue);
+        score.setAttribute("textFontSize", 20.0f);
         app.add(score);
 
         GameObject pfFloor = new GameObject("pf_floor")
@@ -60,7 +64,7 @@ public class DemoScene extends AbstractScene implements Scene, OnKeyReleaseHandl
                 .setBorderColor(new Color(0.0f, 0.5f, 0.0f, 0.0f))
                 .setFillColor(Color.GREEN)
                 .setMaterial(Material.STEEL)
-                .setMass(0.0)
+                .setMass(1000.0)
                 .setLayer(2)
                 .setPriority(1);
         app.add(pfFloor);
@@ -168,4 +172,9 @@ public class DemoScene extends AbstractScene implements Scene, OnKeyReleaseHandl
         }
     }
 
+    @Override
+    public void update(Application app, double elapsed) {
+        scoreValue += 10;
+        app.getObject("score").setAttribute("textValue", scoreValue);
+    }
 }

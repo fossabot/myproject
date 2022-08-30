@@ -1,19 +1,20 @@
 package com.demoapp.core.entity;
 
 import com.demoapp.core.Application;
+import com.demoapp.core.math.Vec2d;
+import com.demoapp.core.services.gfx.Renderer;
 import com.demoapp.core.services.physic.Material;
 import com.demoapp.core.services.physic.PhysicEngine;
 import com.demoapp.core.services.physic.PhysicType;
-import com.demoapp.core.math.Vec2d;
-import com.demoapp.core.services.gfx.Renderer;
 
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
@@ -37,11 +38,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * <li>image</li>
  * </ul>
  */
-public class GameObject {
-
-    public void onCollision(GameObject e1, GameObject e2) {
-
-    }
+public class GameObject implements OnCollisionEvent {
 
     /**
      * The type of {@link GameObject} to be used, defining the rendering algorithm.
@@ -56,7 +53,9 @@ public class GameObject {
         // draw an ellipse
         ELLIPSE,
         // draw an image
-        IMAGE
+        IMAGE,
+        // draw a Text from textValue
+        TEXT
     }
 
     /**
@@ -135,8 +134,32 @@ public class GameObject {
      */
     public BufferedImage image;
 
+    /**
+     * Text to be drawn
+     */
+    public String textValue;
+
+    /**
+     * A possible font to render text.
+     */
+    public Font font;
+
+    /**
+     * Layer number where to display the object:
+     * <pre><code>layer 0 -> n = front -> back</code></pre>
+     */
     public int layer;
+
+    /**
+     * Rendering priority in the same layer:
+     * <pre><code>0->n = back -> front</code></pre>
+     */
     public int priority;
+
+    /**
+     * Map of specific attributes to be set at Scene creation, to add new values attached to a {@link GameObject}
+     */
+    public Map<String, Object> attributes = new HashMap<>();
 
     /**
      * Create a new {@link GameObject} named <code>name</code>.
@@ -398,13 +421,27 @@ public class GameObject {
     }
 
     /**
+     * Add a new entry in the {@link GameObject#attributes} map, with <code>key</code> and <code>value</code>.
+     *
+     * @param key   the key for this attribute.
+     * @param value the value of this attribute.
+     * @return
+     */
+    public GameObject setAttribute(String key, Object value) {
+        attributes.put(key, value);
+        return this;
+    }
+
+
+    /**
      * update the {@link GameObject}
      *
      * @param elapsed the elapsed time since previous call.
      */
     public void update(double elapsed) {
         // update the bounding box.
-        box.setRect(pos.x, pos.y, w-1, h);
+        box.setRect(pos.x, pos.y, w - 1, h);
+        updateText();
 
         // update the collision box.
         switch (type) {
@@ -420,4 +457,27 @@ public class GameObject {
                     box.getHeight() - (offsetBox.getBounds().getHeight() + offsetBox.getBounds().getY()));
         }
     }
+
+    /**
+     * Convert the exiting attribute <code>textValue</code> with the existing attribute <code>textFormat</code>
+     * to feed {@link GameObject#textValue}. If none of those attributes exist, nothing is done.
+     */
+    private void updateText() {
+        if (attributes.containsKey("textFormat") && attributes.containsKey("textValue")) {
+            this.textValue = String.format(
+                    (String) attributes.get("textFormat"),
+                    attributes.get("textValue"));
+        }
+    }
+
+    /**
+     * Define a specific processing in case of collision between this {@link GameObject} (e1) and another one (e2).
+     *
+     * @param e1 the primary {@link GameObject} in collision.
+     * @param e2 the secondary {@link GameObject} in the collision.
+     */
+    public void onCollision(GameObject e1, GameObject e2) {
+
+    }
+
 }

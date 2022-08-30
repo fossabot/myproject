@@ -12,11 +12,11 @@ public class Material {
     public static final Material DEFAULT =
             new Material("default", 0.0, 1.0, 1.0);
     public static final Material RUBBER =
-            new Material("rubber", 0.60, 0.7, 0.98);
+            new Material("rubber", 0.90, 0.7, 0.98);
     public static final Material SUPER_BALL =
             new Material("superBall", 0.98, 0.7, 0.98);
     public static final Material STEEL =
-            new Material("steel", 0.67, 1.2, 0.98);
+            new Material("steel", 0.25, 1.2, 0.96);
     /**
      * Name of this Material
      */

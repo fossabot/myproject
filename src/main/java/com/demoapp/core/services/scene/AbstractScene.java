@@ -1,5 +1,6 @@
 package com.demoapp.core.services.scene;
 
+import com.demoapp.core.Application;
 import com.demoapp.core.entity.Camera;
 
 import java.util.Map;
@@ -45,5 +46,10 @@ public abstract class AbstractScene implements Scene {
     @Override
     public Camera getCamera(String name) {
         return this.cameras.get(name);
+    }
+
+    @Override
+    public void update(Application app, double elapsed) {
+
     }
 }
