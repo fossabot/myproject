@@ -22,7 +22,7 @@ java -jar target/demoapp-1.0.0.jar
 
 You will see appearing such a window:
 
-![A screenshot of the demo](src/docs/images/demoapp-screenshot-01.png "A simple screenshot of the demo")
+![A screenshot of the demo](src/docs/images/012-collision-detection-and-platform.png "A simple screenshot of the demo")
 
 > _**NOTE**_<br/>
 > _You can also use the maven command line:_
@@ -34,14 +34,15 @@ You will see appearing such a window:
 
 Basic commands:
 
-|       key        | description       |
-|:----------------:|:------------------|
-|  <kbd>UP</kbd>   | move up player    |
-| <kbd>DOWN</kbd>  | move down player  |
-| <kbd>LEFT</kbd>  | move left player  |
-| <kbd>RIGHT</kbd> | move right player |
-| <kbd>CTRL</kbd>  | player speed x 2  |
-| <kbd>SHIFT</kbd> | player speed x 6  |
-
+|       key        | description          |
+|:----------------:|:---------------------|
+|  <kbd>UP</kbd>   | move up player       |
+| <kbd>DOWN</kbd>  | move down player     |
+| <kbd>LEFT</kbd>  | move left player     |
+| <kbd>RIGHT</kbd> | move right player    |
+| <kbd>CTRL</kbd>  | player speed x 2     |
+| <kbd>SHIFT</kbd> | player speed x 6     |
+|   <kbd>Z</kbd>   | regenerate platforms |
+|  <kbd>Esc</kbd>  | quit demo            |
 
 McG.
