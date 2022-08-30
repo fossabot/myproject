@@ -67,16 +67,22 @@ public class PhysicEngine {
 
             case DYNAMIC:
                 Vec2d force = new Vec2d(0, 0);
-                go.forces.add(world.gravity);
+                go.forces.add(world.gravity.multiply(0.3 * 0.1));
                 for (Vec2d f : go.forces) {
                     force.add(f);
                 }
+                double density = go.material.density * world.defaultWorldMaterial.density;
+                double friction = go.material.friction * world.defaultWorldMaterial.friction;
+
                 go.acc = force.multiply(t / (go.mass * go.material.density));
                 go.acc.minMax(config.accMinValue, config.accMaxValue);
 
-                go.speed.add(go.acc.multiply(0.5 * t).multiply(go.material.friction));
+                go.speed.add(go.acc.multiply(0.5 * t));
+
                 if (go.collide) {
                     go.speed = go.speed.multiply(go.colliders.get(0).material.friction);
+                } else {
+                    go.speed.multiply( density);
                 }
                 go.speed = go.speed.minMax(config.speedMinValue, config.speedMaxValue);
 

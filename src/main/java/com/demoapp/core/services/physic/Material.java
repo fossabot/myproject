@@ -11,6 +11,8 @@ public class Material {
 
     public static final Material DEFAULT =
             new Material("default", 0.0, 1.0, 1.0);
+    public static final Material AIR =
+            new Material("air", 0.1, 0.01, 1.0);
     public static final Material RUBBER =
             new Material("rubber", 0.90, 0.7, 0.98);
     public static final Material SUPER_BALL =
