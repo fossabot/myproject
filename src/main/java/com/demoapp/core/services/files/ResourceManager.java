@@ -41,7 +41,7 @@ public class ResourceManager {
                 }
                 break;
             default:
-                System.err.printf("ResourceManager | ERR | Unknown resource type %s%n", path);
+                System.err.printf("ERR : ResourceManager | Unknown resource type for %s%n", path);
                 break;
         }
     }
