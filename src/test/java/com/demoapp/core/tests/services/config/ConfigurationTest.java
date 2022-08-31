@@ -1,10 +1,12 @@
 package com.demoapp.core.tests.services.config;
 
+import com.demoapp.core.math.Vec2d;
 import com.demoapp.core.services.config.Configuration;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.awt.*;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
@@ -115,5 +117,32 @@ public class ConfigurationTest {
         assertTrue(errContent.toString().contains(
                         "ERROR : Configuration | Unknown value "),
                 "The application mode arg has been not correctly detected !");
+    }
+
+    @Test
+    public void canReadANamedColorAttribute() {
+        Configuration config = new Configuration(DEFAULT_TEST_CONFIGURATION_FILE);
+        assertEquals(Color.CYAN, config.debugColorText, "A named Color has not been interpreted.");
+    }
+
+    @Test
+    public void canReadAFloatComponentColorAttribute() {
+        Configuration config = new Configuration(DEFAULT_TEST_CONFIGURATION_FILE);
+        Color c = new Color(0.0f, 0.0f, 0.4f, 0.7f);
+        assertEquals(c, config.debugColorBackground, "A float formatted Color has not been interpreted.");
+    }
+
+    @Test
+    public void canReadAnIntComponentColorAttribute() {
+        Configuration config = new Configuration(DEFAULT_TEST_CONFIGURATION_FILE);
+        Color c = new Color(1, 1, 12, 255);
+        assertEquals(c, config.debugColorBorder, "An int formatted Color has not been interpreted.");
+    }
+
+    @Test
+    public void canReadAVec2dAttribute() {
+        Configuration config = new Configuration(DEFAULT_TEST_CONFIGURATION_FILE);
+        Vec2d g = new Vec2d(0, -0.981);
+        assertEquals(g, config.defaultGravity, "An int formatted Color has not been interpreted.");
     }
 }

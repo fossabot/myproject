@@ -70,10 +70,14 @@ public class Vec2d {
     }
 
     public String toString() {
-        return String.format("(%4.2f,%4.2f)", x, y);
+        return String.format("(%4.3f,%4.3f)", x, y);
     }
 
     public boolean isZero() {
         return (x == 0.0 && y == 0.0);
+    }
+
+    public String toStringAsInt() {
+        return String.format("(%4.0f,%4.0f)", x, y);
     }
 }

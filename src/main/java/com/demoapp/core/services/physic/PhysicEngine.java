@@ -35,7 +35,7 @@ public class PhysicEngine {
      */
     public PhysicEngine(Application app) {
         this.app = app;
-        this.world.gravity.y = app.getConfiguration().defaultGravity;
+        this.world.gravity = app.getConfiguration().defaultGravity;
         this.config = app.getConfiguration();
     }
 
@@ -67,7 +67,7 @@ public class PhysicEngine {
 
             case DYNAMIC:
                 Vec2d force = new Vec2d(0, 0);
-                go.forces.add(world.gravity.multiply(0.3 * 0.1));
+                go.forces.add(world.gravity.multiply(-0.03));
                 for (Vec2d f : go.forces) {
                     force.add(f);
                 }
@@ -82,7 +82,7 @@ public class PhysicEngine {
                 if (go.collide) {
                     go.speed = go.speed.multiply(go.colliders.get(0).material.friction);
                 } else {
-                    go.speed.multiply( density);
+                    go.speed.multiply(density);
                 }
                 go.speed = go.speed.minMax(config.speedMinValue, config.speedMaxValue);
 

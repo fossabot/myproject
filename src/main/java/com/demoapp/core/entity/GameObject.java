@@ -162,6 +162,12 @@ public class GameObject implements OnCollisionEvent {
     public Map<String, Object> attributes = new HashMap<>();
 
     /**
+     * The debug level will set how the debug information must be
+     * activated (debugLevel>0) and how many details to display (1=minimum to 5=maximum).
+     */
+    public int debugLevel;
+
+    /**
      * Create a new {@link GameObject} named <code>name</code>.
      *
      * @param name the name of the new {@link GameObject} to be managed by the
@@ -425,13 +431,23 @@ public class GameObject implements OnCollisionEvent {
      *
      * @param key   the key for this attribute.
      * @param value the value of this attribute.
-     * @return
+     * @return the current {@link GameObject} updated (fluent API).
      */
     public GameObject setAttribute(String key, Object value) {
         attributes.put(key, value);
         return this;
     }
 
+    /**
+     * Set the Debug level for this {@link GameObject}.
+     *
+     * @param level the debug leve (from 0=off to 5 max details).
+     * @return the current {@link GameObject} updated (fluent API).
+     */
+    public GameObject setDebugLevel(int level) {
+        this.debugLevel = level;
+        return this;
+    }
 
     /**
      * update the {@link GameObject}
@@ -445,7 +461,7 @@ public class GameObject implements OnCollisionEvent {
 
         // update the collision box.
         switch (type) {
-            case RECTANGLE, IMAGE, default -> this.collisionBox = new Rectangle2D.Double(
+            case RECTANGLE, TEXT, IMAGE, default -> this.collisionBox = new Rectangle2D.Double(
                     box.getX() + offsetBox.getBounds().getX(),
                     box.getY() + offsetBox.getBounds().getY(),
                     box.getWidth() - (offsetBox.getBounds().getWidth() + offsetBox.getBounds().getX()),
@@ -480,4 +496,31 @@ public class GameObject implements OnCollisionEvent {
 
     }
 
+    /**
+     * Prepare and set  the debug information according to the {@link GameObject#debugLevel} value.
+     *
+     * @return a list of debug information defined accordingly to the debugLevel for this {@link GameObject}.
+     */
+    public List<String> getDebugInformation() {
+        List<String> debugInfo = new ArrayList<>();
+
+        if (debugLevel > 0) {
+            debugInfo.add(String.format("#%d", this.id));
+            debugInfo.add(String.format(">name: %s", this.name));
+            if (debugLevel > 1) {
+                debugInfo.add(String.format(">>pos: %s", this.pos.toStringAsInt()));
+                debugInfo.add(String.format(">>spd: %s", this.speed));
+                debugInfo.add(String.format(">>acc: %s", this.acc));
+                if (debugLevel > 2) {
+                    debugInfo.add(String.format(">>>mat: %s", this.material.name));
+                    if (debugLevel > 3) {
+                        debugInfo.add(String.format(">>>>e=%1.02f", this.material.elasticity));
+                        debugInfo.add(String.format(">>>>d=%1.02f", this.material.density));
+                        debugInfo.add(String.format(">>>>f=%1.02f", this.material.friction));
+                    }
+                }
+            }
+        }
+        return debugInfo;
+    }
 }

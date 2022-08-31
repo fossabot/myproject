@@ -38,10 +38,11 @@ public class DemoScene extends AbstractScene implements Scene, OnKeyReleaseHandl
                 .setDimension(16.0, 16.0)
                 .setMass(100.0)
                 .setMaterial(new Material("player", 0.98, 0.6, 0.95))
-                .setLayer(1)
+                .setLayer(10)
                 .setPriority(1)
                 .setBorderColor(Color.BLUE)
-                .setFillColor(Color.CYAN);
+                .setFillColor(Color.CYAN)
+                .setDebugLevel(5);
         app.add(player);
 
         // add an object stick to camera
@@ -54,7 +55,7 @@ public class DemoScene extends AbstractScene implements Scene, OnKeyReleaseHandl
         score.setFillColor(Color.CYAN);
         score.setMass(0.0);
         score.setLayer(10);
-        score.setPriority(1);
+        score.setPriority(2);
         score.setStickToCamera(true);
         score.setAttribute("textFormat", "%06d");
         score.setAttribute("textValue", scoreValue);
@@ -70,7 +71,7 @@ public class DemoScene extends AbstractScene implements Scene, OnKeyReleaseHandl
                 .setFillColor(Color.GREEN)
                 .setMaterial(Material.STEEL)
                 .setMass(1000.0)
-                .setLayer(2)
+                .setLayer(1)
                 .setPriority(1);
         app.add(pfFloor);
 
@@ -126,7 +127,7 @@ public class DemoScene extends AbstractScene implements Scene, OnKeyReleaseHandl
                     .setFillColor(Color.GRAY)
                     .setMaterial(Material.STEEL)
                     .setMass(0.0)
-                    .setLayer(2)
+                    .setLayer(1)
                     .setPriority(5);
             app.add(pf);
         }
@@ -176,6 +177,9 @@ public class DemoScene extends AbstractScene implements Scene, OnKeyReleaseHandl
 
                 create(app);
                 break;
+            case KeyEvent.VK_D:
+                int d = app.getConfiguration().getDebugLevel() + 1 < 6 ? app.getConfiguration().getDebugLevel() + 1 : 0;
+                app.getConfiguration().setDebugLevel(d);
             default:
                 break;
         }

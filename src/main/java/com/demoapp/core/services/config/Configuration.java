@@ -1,12 +1,14 @@
 package com.demoapp.core.services.config;
 
+import com.demoapp.core.math.Vec2d;
 import com.demoapp.core.services.physic.PhysicEngine;
 
-import java.awt.Dimension;
+import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
+import java.util.Map;
 import java.util.Properties;
 
 public class Configuration {
@@ -14,7 +16,18 @@ public class Configuration {
     private final Properties props = new Properties();
     public double colSpeedMinValue;
     public double colSpeedMaxValue;
-    public double defaultGravity;
+    public Vec2d defaultGravity;
+
+    /**
+     * Debug modules parameters
+     */
+    public int debugMargin;
+    public Color debugColorBorder;
+    public Color debugColorBackground;
+    public Color debugColorText;
+    public Integer debugXOffset;
+    public Integer debugYOffset;
+
 
     /**
      * Internal title of this application to b used as display or as logging
@@ -104,7 +117,16 @@ public class Configuration {
      */
     private void populateValues() {
         this.title = props.getProperty("app.window.title", "Default Window Application title");
+
+        // Debug module configuration
         this.debugLevel = getInteger("app.debug", "0");
+        this.debugColorText = getColor("app.debug.color.text", "CYAN");
+        this.debugColorBackground = getColor("app.debug.color.background", "color(0.0,0.0,0.4,0.7)");
+        this.debugColorBorder = getColor("app.debug.color.border", "BLUE");
+        this.debugMargin = getInteger("app.debug.plate.margin", "4");
+        this.debugXOffset = getInteger("app.debug.plate.offset.x", "10");
+        this.debugYOffset = getInteger("app.debug.plate.offset.y", "-10");
+
 
         // Window configuration parameters
         this.windowDimension = new Dimension(
@@ -123,7 +145,7 @@ public class Configuration {
         this.sceneDefault = props.getProperty("app.scenes.default", "");
 
         // Physic engine configuration parameters
-        this.defaultGravity = getDouble("app.physic.default.gravity", "0.0");
+        this.defaultGravity = getVec2d("app.physic.default.gravity", new Vec2d(0.0, 0.0));
         this.speedMaxValue = getDouble("app.physic.speed.max", "0.5");
         this.speedMinValue = getDouble("app.physic.speed.min", "0.01");
         this.accMaxValue = getDouble("app.physic.acc.max", "0.5");
@@ -136,6 +158,35 @@ public class Configuration {
 
         // Input handler properties
         this.jupImpulsion = getDouble("app.io.input.jump.impulsion", "-50.0");
+    }
+
+    /**
+     * Convert a String 2D vector value from property <code>key</code>  to a {@link Vec2d} instance.
+     * <p>
+     * The string format to be used is <code>vec2d(x,y)</code> where <code>x,y</code> are double values, e.g. :
+     *
+     * <pre>
+     * app.physic.default.gravity=vec2d(0,-0.981)
+     * </pre>
+     *
+     * @param key          the key of the property value to be converted to a Vec2d instance.
+     * @param defaultValue the default Vec2d value if key does not exist.
+     * @return a converted to Vec2d instance of the key property value from the configuration file.
+     */
+    private Vec2d getVec2d(String key, Vec2d defaultValue) {
+        String value = props.getProperty(key);
+        if (value == null || value.equals("")) {
+            return defaultValue;
+        }
+        String[] interpretedValue = value
+                .substring(
+                        "vec2d(".length(),
+                        value.length() - ")".length())
+                .split(",");
+        Vec2d convertedValue = new Vec2d(
+                Double.parseDouble(interpretedValue[0]),
+                Double.parseDouble(interpretedValue[1]));
+        return convertedValue;
     }
 
     /**
@@ -160,6 +211,69 @@ public class Configuration {
     private double getDouble(String key, String defaultValue) {
         return Double.parseDouble(
                 props.getProperty(key, defaultValue));
+    }
+
+    /**
+     * Retrieve a Color from a specific configuration file entry, respecting the {@link Color} named color
+     * or a clear formatted String with color components.
+     * <p>
+     * The current textual accepted colors are :
+     * "BLACK", "WHITE", "CYAN", "RED", "ORANGE", "BLUE", "GREEN",
+     * "YELLOW", "GRAY", "DARK_GRAY".
+     * <p>
+     * The string format for custom Color is defined in {@link Configuration#convertStringToColor(String)}.
+     *
+     * @param key          the entry key from configuration file here to retrieve the value to be converted to a Color.
+     * @param defaultValue the default value if the entry does not exist into the configuration File.
+     * @return
+     * @see Configuration#convertStringToColor(String)
+     */
+    private Color getColor(String key, String defaultValue) {
+        Map<String, Color> colors = Map.of(
+                "BLACK", Color.BLACK,
+                "WHITE", Color.WHITE,
+                "CYAN", Color.CYAN,
+                "RED", Color.RED,
+                "ORANGE", Color.ORANGE,
+                "BLUE", Color.BLUE,
+                "GREEN", Color.GREEN,
+                "YELLOW", Color.YELLOW,
+                "GRAY", Color.GRAY,
+                "DARK_GRAY", Color.DARK_GRAY);
+        Color c = colors.containsKey(props.getProperty(key, defaultValue))
+                ? colors.get(props.getProperty(key, defaultValue))
+                : convertStringToColor(props.getProperty(key, defaultValue));
+        return c;
+    }
+
+    /**
+     * Convert a String value with coma separated color components as int of float to the corresponding Color.
+     * <p>
+     * The string format to define a specific color is:
+     * <ul>
+     *     <li> <code>0   -> 255</code> Byte component value : "color(0, 0, 0, 1)"</li>
+     *     <li> <code>0.0 -> 1.0</code> Float component value : "color(0.0, 0.0, 0.0, 1.0)"</li>
+     * </ul>
+     *
+     * @param value the String value formatted as a coma separated components values,
+     *              accepting int (0 to 255) or float value (0.0f to 1.0f).
+     * @return the created corresponding Color.
+     */
+    private Color convertStringToColor(String value) {
+        String[] components = value.substring(6, value.length() - 1).split(",");
+        Color c = Color.BLACK;
+        if (value.contains(".")) {
+            c = new Color(Float.parseFloat(components[0].trim()),
+                    Float.parseFloat(components[1].trim()),
+                    Float.parseFloat(components[2].trim()),
+                    Float.parseFloat(components[3].trim()));
+        } else {
+            c = new Color(Integer.parseInt(components[0].trim()),
+                    Integer.parseInt(components[1].trim()),
+                    Integer.parseInt(components[2].trim()),
+                    Integer.parseInt(components[3].trim()));
+        }
+        return c;
     }
 
     /**
@@ -303,5 +417,9 @@ public class Configuration {
 
     public double getFPS() {
         return this.fps;
+    }
+
+    public void setDebugLevel(int debugLevel) {
+        this.debugLevel = debugLevel;
     }
 }

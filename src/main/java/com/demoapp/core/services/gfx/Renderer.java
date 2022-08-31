@@ -24,6 +24,19 @@ public class Renderer {
     private final BufferedImage buffer;
     private final double scale;
 
+
+    // debug plate drawing parameters
+
+    int debugXOffset = 10; // X offset for plat against the GameObject
+    int debugYOffset = -10; // Y offset for plat against the GameObject
+    int debugMargin = 4; // internal plate margin to render debug info text
+
+    // rendering colors
+    Color debugColorText = Color.CYAN;
+    Color debugColorBackground = new Color(.0f, .0f, .5f, .7f);
+    Color debugColorBorder = Color.BLUE;
+
+
     /**
      * Initialize the {@link Renderer} component according to defined configuration
      * key :
@@ -41,7 +54,20 @@ public class Renderer {
                 (int) config.getGameArea().getWidth(),
                 (int) config.getGameArea().getHeight(),
                 BufferedImage.TYPE_INT_ARGB);
+        /**
+         * retrieve scale factor to be applied on rendering output.
+         */
         this.scale = config.getScale();
+
+        /**
+         * Retrieve configuration for debug mode rendering
+         */
+        this.debugMargin = config.debugMargin;
+        this.debugColorBorder = config.debugColorBorder;
+        this.debugColorBackground = config.debugColorBackground;
+        this.debugColorText = config.debugColorText;
+        this.debugXOffset = config.debugXOffset;
+        this.debugYOffset = config.debugYOffset;
     }
 
     /**
@@ -72,12 +98,49 @@ public class Renderer {
 
         // draw things with higher layer / higher priority draw first.
         app.getObjects().stream()
-                .sorted((a, b) -> a.layer > b.layer ? (a.priority > b.priority ? 1 : -1) : -1)
-                .forEach(o -> drawGameObject(scene, g, o));
+                .sorted((a, b) -> a.layer > b.layer ? (a.priority < b.priority ? 1 : -1) : -1)
+                .forEach(o -> {
+                    drawGameObject(app, scene, g, o);
+                });
 
 
         // release Graphics component.
         g.dispose();
+    }
+
+    private void drawDebugInfo(Application app, Graphics2D g, GameObject o) {
+        // compute the longest String
+        int maxWidth = 0;
+        g.setFont(g.getFont().deriveFont(9f));
+        for (String s : o.getDebugInformation()) {
+            maxWidth = g.getFontMetrics().stringWidth(s) > maxWidth ? g.getFontMetrics().stringWidth(s) : maxWidth;
+        }
+        // draw background
+        g.setColor(debugColorBackground);
+        g.fillRect(
+                (int) (o.pos.x + o.w + debugXOffset),
+                (int) (o.pos.y + debugYOffset - g.getFontMetrics().getHeight()),
+                maxWidth + 2 * debugMargin,
+                g.getFontMetrics().getHeight() * o.getDebugInformation().size() - 1 + (2 * debugMargin));
+        // draw border
+        g.setColor(debugColorBorder);
+        g.drawRect(
+                (int) (o.pos.x + o.w + debugXOffset),
+                (int) (o.pos.y + debugYOffset - g.getFontMetrics().getHeight()),
+                maxWidth + 2 * debugMargin,
+                g.getFontMetrics().getHeight() * o.getDebugInformation().size() - 1 + (2 * debugMargin));
+
+        // draw debug info text
+        int index = 0;
+        g.setColor(debugColorText);
+        for (String s : o.getDebugInformation()) {
+            s = s.replace('>', ' ');
+            s = s.replace('<', '*');
+            g.drawString(s,
+                    (int) (o.pos.x + o.w + debugXOffset + (0.5 * debugMargin)),
+                    (int) (o.pos.y + debugYOffset) + (int) (0.5 * debugMargin) + (index * g.getFontMetrics().getHeight()));
+            index++;
+        }
     }
 
     private void drawPlayArea(Graphics2D g) {
@@ -103,7 +166,7 @@ public class Renderer {
      * @param g the Graphics API (see {@link Graphics2D}
      * @param o the {@link Application} container
      */
-    private void drawGameObject(Scene scene, Graphics2D g, GameObject o) {
+    private void drawGameObject(Application app, Scene scene, Graphics2D g, GameObject o) {
 
         Camera currentCam = scene.getCamera();
         if (Optional.ofNullable(currentCam).isPresent() && !o.stickToCamera) {
@@ -146,9 +209,17 @@ public class Renderer {
                     g.setFont(g.getFont().deriveFont((float) o.attributes.get("textFontSize")));
                 }
                 g.drawString(o.textValue, (int) o.pos.x, (int) o.pos.y);
+                /**
+                 * update the size of the drawn text into the `GameObject` itself.
+                 */
+                o.h = g.getFontMetrics().getHeight();
+                o.w = g.getFontMetrics().stringWidth(o.textValue);
             }
         }
-
+        if (app.getConfiguration().getDebugLevel() > 0
+                && o.debugLevel > 0) {
+            drawDebugInfo(app, g, o);
+        }
         if (Optional.ofNullable(currentCam).isPresent() && !o.stickToCamera) {
             g.translate(currentCam.pos.x, currentCam.pos.y);
         }
