@@ -48,5 +48,5 @@ public interface GameLoop {
      * @param app     the Container {@link Application}
      * @param elapsed the elapsed time since previous call.
      */
-    void render(Application app, long elapsed);
+    void render(Application app, double elapsed);
 }

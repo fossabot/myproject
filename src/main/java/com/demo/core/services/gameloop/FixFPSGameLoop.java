@@ -18,7 +18,7 @@ public class FixFPSGameLoop extends StandardGameLoop {
 
         input(app);
 
-        long elapsed = startTime - previousTime;
+        double elapsed = startTime - previousTime;
         update(app, elapsed);
         render(app, elapsed);
 

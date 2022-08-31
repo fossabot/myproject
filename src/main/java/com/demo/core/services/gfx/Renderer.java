@@ -14,7 +14,8 @@ import java.util.Map;
 import java.util.Optional;
 
 /**
- * The {@link Renderer} component will support all drawing processing for the game.
+ * The {@link Renderer} component will support all drawing processing for the
+ * game.
  *
  * @author Frédéric Delorme
  * @version 1.0
@@ -24,18 +25,22 @@ public class Renderer {
     private final double scale;
 
     /**
-     * Initialize the {@link Renderer} component according to defined configuration key :
+     * Initialize the {@link Renderer} component according to defined configuration
+     * key :
      * <p>
      * 2 configuration attributes are defining the internal graphic buffer size:
      * <ul>
-     *     <li><code>app.window.width</code> set its width,</li>
-     *     <li><code>app.window.height</code> set its height.</li>
+     * <li><code>app.window.width</code> set its width,</li>
+     * <li><code>app.window.height</code> set its height.</li>
      * </ul>
      *
      * @param config the current application {@link Configuration} object.
      */
     public Renderer(Configuration config) {
-        this.buffer = new BufferedImage((int) config.getGameArea().getWidth(), (int) config.getGameArea().getHeight(), BufferedImage.TYPE_INT_ARGB);
+        this.buffer = new BufferedImage(
+                (int) config.getGameArea().getWidth(),
+                (int) config.getGameArea().getHeight(),
+                BufferedImage.TYPE_INT_ARGB);
         this.scale = config.getScale();
     }
 
@@ -50,23 +55,26 @@ public class Renderer {
                 RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON,
                 RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON
         ));
-        fillRect(g, Color.BLACK, 0, 0, buffer.getWidth(), buffer.getHeight());
+        fillRect(g, Color.BLACK,
+                0, 0,
+                buffer.getWidth(), buffer.getHeight());
 
         Camera currentCam = scene.getCamera();
         if (Optional.ofNullable(currentCam).isPresent()) {
-            g.translate(-currentCam.x, -currentCam.y);
+            g.translate(-currentCam.pos.x, -currentCam.pos.y);
         }
         // draw game area zone
         drawPlayArea(g);
 
+        if (Optional.ofNullable(currentCam).isPresent()) {
+            g.translate(currentCam.pos.x, currentCam.pos.y);
+        }
+
         // draw things with higher layer / higher priority draw first.
         app.getObjects().stream()
                 .sorted((a, b) -> a.layer > b.layer ? (a.priority > b.priority ? 1 : -1) : -1)
-                .forEach(o -> drawGameObject(g, o));
+                .forEach(o -> drawGameObject(scene, g, o));
 
-        if (Optional.ofNullable(currentCam).isPresent()) {
-            g.translate(currentCam.x, currentCam.y);
-        }
 
         // release Graphics component.
         g.dispose();
@@ -89,28 +97,52 @@ public class Renderer {
     }
 
     /**
-     * Draw one {@link GameObject} according to its drawing {@link GameObject.ObjectType}
+     * Draw one {@link GameObject} according to its drawing
+     * {@link GameObject.ObjectType}
      *
      * @param g the Graphics API (see {@link Graphics2D}
      * @param o the {@link Application} container
      */
-    private void drawGameObject(Graphics2D g, GameObject o) {
+    private void drawGameObject(Scene scene, Graphics2D g, GameObject o) {
+
+        Camera currentCam = scene.getCamera();
+        if (Optional.ofNullable(currentCam).isPresent() && !o.stickToCamera) {
+            g.translate(-currentCam.pos.x, -currentCam.pos.y);
+        }
+
+
         switch (o.type) {
-            case POINT -> fillRect(g, o.borderColor, (int) o.x, (int) (o.y + 0.5), 1, 1);
+            case POINT -> {
+                g.setColor(o.borderColor);
+                g.fillRect((int) o.pos.x, (int) o.pos.y, 1, 1);
+            }
             case LINE -> {
                 g.setColor(o.borderColor);
-                g.drawLine((int) o.x, (int) (o.y + 0.5), (int) (o.x + o.w), (int) (o.y + o.h));
+                g.drawLine(
+                        (int) o.pos.x, (int) o.pos.y,
+                        (int) (o.pos.x + o.w), (int) (o.pos.y + o.h));
             }
             case RECTANGLE -> {
-                Rectangle2D rect = new Rectangle2D.Double((o.x + 0.5), (o.y + 0.5), o.w, o.h);
+                Rectangle2D rect = new Rectangle2D.Double(
+                        o.pos.x, o.pos.y,
+                        o.w, o.h);
                 drawShape(g, o, rect);
             }
             case ELLIPSE -> {
-                Ellipse2D ellipse = new Ellipse2D.Double(o.x, (o.y + 0.5), o.w, o.h);
+                Ellipse2D ellipse = new Ellipse2D.Double(
+                        o.pos.x, o.pos.y,
+                        o.w, o.h);
                 drawShape(g, o, ellipse);
             }
-            case IMAGE -> g.drawImage(o.image, (int) o.x, (int) (o.y + 0.5), null);
+            case IMAGE -> g.drawImage(o.image,
+                    (int) o.pos.x, (int) o.pos.y,
+                    null);
         }
+
+        if (Optional.ofNullable(currentCam).isPresent() && !o.stickToCamera) {
+            g.translate(currentCam.pos.x, currentCam.pos.y);
+        }
+
     }
 
     /**
@@ -128,7 +160,7 @@ public class Renderer {
     }
 
     /**
-     * Copy rendering buffer content  to {@link Window}
+     * Copy rendering buffer content to {@link Window}
      *
      * @param window the window where to copy buffer to.
      */

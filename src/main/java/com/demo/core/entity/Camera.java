@@ -90,7 +90,7 @@ public class Camera extends GameObject {
     @Override
     public void update(double elapsed) {
         double elapsedD = elapsed * 0.000001;
-        x += (target.x + target.w - (fov.getWidth() * 0.5) - x) * tweenFactor * elapsedD;
-        y += (target.y + target.h - (fov.getHeight() * 0.5) - y) * tweenFactor * elapsedD;
+        pos.x += (target.pos.x + target.w - (fov.getWidth() * 0.5) - pos.x) * tweenFactor * elapsedD;
+        pos.y += (target.pos.y + target.h - (fov.getHeight() * 0.5) - pos.y) * tweenFactor * elapsedD;
     }
 }

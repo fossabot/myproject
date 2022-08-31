@@ -12,7 +12,7 @@
         <maven.compiler.target>18</maven.compiler.target>
         <maven.compiler.source>18</maven.compiler.source>
         <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
-        <mainClass>com.demo.core.Application</mainClass>
+        <project.mainClass>com.demo.core.Application</project.mainClass>
     </properties>
 
     <dependencyManagement>
@@ -41,9 +41,101 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.1</version>
             </plugin>
+            <!-- Resource parsing -->
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>3.2.0</version>
+                <configuration>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+            <!-- Sources -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.2.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Javadoc -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.3.2</version>
+                <configuration>
+                    <encoding>utf-8</encoding>
+                    <stylesheet>maven</stylesheet>
+                    <source>${maven.compiler.source}</source>
+                    <show>public</show>
+                    <failOnError>false</failOnError>
+                    <failOnWarnings>false</failOnWarnings>
+                    <useStandardDocletOptions>false</useStandardDocletOptions>
+                    <linksource>false</linksource>
+                    <show>private</show>
+                    <nohelp>true</nohelp>
+                    <overview>${project.basedir}/README.md</overview>
+                    <bottom>
+                        <![CDATA[<em>Copyright © \${project.inceptionYear} - SnapGames.</em>]]>
+                    </bottom>
+                    <!--links>
+                        <link>${project.issueManagement.url}</link>
+                        <link>${project.ciManagement.url}</link>
+                        <link>https://docs.oracle.com/en/java/javase/11/docs/api/</link>
+                    </links-->
+                    <!--doclet>ch.raffael.mddoclet.MarkdownDoclet</doclet>
+                    <docletArtifact>
+                        <groupId>ch.raffael.markdown-doclet</groupId>
+                        <artifactId>markdown-doclet</artifactId>
+                        <version>1.4</version>
+                    </docletArtifact-->
+                    <useStandardDocletOptions>true</useStandardDocletOptions>
+                    <additionalOptions>--enable-preview</additionalOptions>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- Build the minimalist JAR without dependencies (Normal Edition) -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.2.2</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <mainClass>${project.mainClass}</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.0.0-M7</version>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.1.0</version>
+                <configuration>
+                    <mainClass>${project.mainClass}</mainClass>
+                </configuration>
             </plugin>
         </plugins>
     </build>

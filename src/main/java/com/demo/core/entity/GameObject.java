@@ -1,11 +1,16 @@
 package com.demo.core.entity;
 
 import com.demo.core.Application;
+import com.demo.core.math.Material;
+import com.demo.core.math.PhysicType;
+import com.demo.core.math.Vec2d;
 import com.demo.core.services.gfx.Renderer;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <p>
@@ -30,8 +35,26 @@ import java.awt.image.BufferedImage;
  */
 public class GameObject {
 
+
+    public boolean stickToCamera=false;
+    private PhysicType physicType;
+
+    public GameObject setPhysicType(PhysicType physicType) {
+        this.physicType = physicType;
+        return this;
+    }
+
+    public GameObject setStickToCamera(boolean stick) {
+        stickToCamera = stick;
+        return this;
+    }
+
+    public PhysicType getPhysicType() {
+        return physicType;
+    }
+
     /**
-     * THe type of GameObject to be used, defining the rendering algorithm.
+     * The type of {@link GameObject} to be used, defining the rendering algorithm.
      */
     public enum ObjectType {
         // draw a simple point
@@ -47,34 +70,39 @@ public class GameObject {
     }
 
     /**
-     * internal gameObject counter index .
+     * internal {@link GameObject} counter index .
      */
     private static long index = 0;
 
     /**
-     * GameObject unique identifier
+     * {@link GameObject} unique identifier
      */
     private long id = index++;
     /**
-     * GameObject's name
+     * {@link GameObject}'s name
      */
     private String name = "noname_" + id;
 
     /**
-     * The GameObject type to draw.
+     * The {@link GameObject} type to draw.
      */
-    public ObjectType type;
-    /**
-     * Position of this GameObject
-     */
-    public double x;
-    public double y;
-    /**
-     * Speed of this GameObject
-     */
-    public double dx;
+    public ObjectType type = ObjectType.RECTANGLE;
 
-    public double dy;
+    /**
+     * {@link GameObject}'s Physic attributes
+     */
+    public Vec2d pos = new Vec2d(0.0, 0.0);
+    public Vec2d speed = new Vec2d(0.0, 0.0);
+    public Vec2d acc = new Vec2d(0.0, 0.0);
+    public double mass = 1.0;
+
+    public List<Vec2d> forces = new ArrayList<>();
+
+    /**
+     * Material for this object
+     */
+    public Material material;
+
     /**
      * Dimension of this GameObject
      */
@@ -105,29 +133,29 @@ public class GameObject {
      *             {@link Application} container.
      */
     public GameObject(String name) {
+        physicType = PhysicType.DYNAMIC;
         this.name = name;
     }
 
     /**
-     * Set GameObject position on <code>x</code> and <code>y</code>.
+     * Set {@link GameObject} position on <code>x</code> and <code>y</code>.
      *
-     * @param x horizontal position of this GameObject.
-     * @param y vertical position of this GameObject.
-     * @return the current GameObject updated (fluent API).
+     * @param x horizontal position of this {@link GameObject}.
+     * @param y vertical position of this {@link GameObject}.
+     * @return the current {@link GameObject} updated (fluent API).
      */
     public GameObject setPosition(double x, double y) {
-        this.x = x;
-        this.y = y;
+        this.pos = new Vec2d(x, y);
         return this;
     }
 
     /**
-     * Set GameObject dimension on width (<code>w</code>) and
+     * Set {@link GameObject} dimension on width (<code>w</code>) and
      * height(<code>h</code>).
      *
-     * @param w width of this GameObject.
-     * @param h height of this GameObject.
-     * @return the current GameObject updated (fluent API).
+     * @param w width of this {@link GameObject}.
+     * @param h height of this {@link GameObject}.
+     * @return the current {@link GameObject} updated (fluent API).
      */
     public GameObject setDimension(double w, double h) {
         this.w = w;
@@ -136,23 +164,34 @@ public class GameObject {
     }
 
     /**
-     * Set GameObject speed on <code>x</code> and <code>y</code>.
+     * Set {@link GameObject} <code>speed</code> with <code>(dx,dy)</code>.
      *
      * @param dx horizontal speed of this GameObject.
      * @param dy vertical speed of this GameObject.
      * @return the current GameObject updated (fluent API).
      */
     public GameObject setSpeed(double dx, double dy) {
-        this.dx = dx;
-        this.dy = dy;
+        this.speed = new Vec2d(dx, dy);
+        return this;
+    }
+
+    /**
+     * Set {@link GameObject} acceleration <code>acc</code> with <code>(ax,ay)</code>.
+     *
+     * @param ax horizontal speed of this {@link GameObject}.
+     * @param ay vertical speed of this {@link GameObject}.
+     * @return the current {@link GameObject} updated (fluent API).
+     */
+    public GameObject setAcc(double ax, double ay) {
+        this.acc = new Vec2d(ax, ay);
         return this;
     }
 
     /**
      * Set the type of object for rendering purpose.
      *
-     * @param t the type of the object to be set (see {@link ObjectType}.
-     * @return the current GameObject updated (fluent API).
+     * @param t the type of the {@link GameObject} to be set (see {@link ObjectType}.
+     * @return the current {@link GameObject} updated (fluent API).
      */
     public GameObject setType(ObjectType t) {
         this.type = t;
@@ -160,10 +199,10 @@ public class GameObject {
     }
 
     /**
-     * Set the layer were the object must evolve
+     * Set the layer were the {@link GameObject} must evolve
      *
      * @param l the layer number.
-     * @return the current GameObject updated (fluent API).
+     * @return the current {@link GameObject} updated (fluent API).
      */
     public GameObject setLayer(int l) {
         this.layer = l;
@@ -171,10 +210,10 @@ public class GameObject {
     }
 
     /**
-     * Set the rendering priority in the layer of this object.
+     * Set the rendering priority in the layer of this {@link GameObject}.
      *
      * @param p the priority number
-     * @return the current GameObject updated (fluent API).
+     * @return the current {@link GameObject} updated (fluent API).
      */
     public GameObject setPriority(int p) {
         this.priority = p;
@@ -182,9 +221,9 @@ public class GameObject {
     }
 
     /**
-     * Retrieve GaeObject name.
+     * Retrieve {@link GameObject} name.
      *
-     * @return a String for the current GameObject name.
+     * @return a String for the current {@link GameObject} name.
      */
     public String getName() {
         return name;
@@ -201,10 +240,10 @@ public class GameObject {
     }
 
     /**
-     * set the Border color
+     * set the Border color for this {@link GameObject}.
      *
      * @param c the {@link Color} to be used.
-     * @return the current GameObject updated (fluent API.
+     * @return the current GameObject updated (fluent API).
      */
     public GameObject setBorderColor(Color c) {
         this.borderColor = c;
@@ -212,10 +251,10 @@ public class GameObject {
     }
 
     /**
-     * set the Fill color
+     * set the Fill color for the {@link GameObject}.
      *
      * @param c the {@link Color} to be used.
-     * @return the current GameObject updated (fluent API.
+     * @return the current {@link GameObject} updated (fluent API).
      */
     public GameObject setFillColor(Color c) {
         this.fillColor = c;
@@ -223,10 +262,10 @@ public class GameObject {
     }
 
     /**
-     * set the mage to be used for this GameObject drawing
+     * set the mage to be used for this {@link GameObject} drawing
      *
-     * @param bf
-     * @return the current GameObject updated (fluent API.
+     * @param bf the {@link BufferedImage} to be used for this {@link GameObject}.
+     * @return the current {@link GameObject} updated (fluent API).
      */
     public GameObject setImage(BufferedImage bf) {
         this.image = bf;
@@ -234,44 +273,43 @@ public class GameObject {
     }
 
     /**
-     * Update physic and display attributes according to newton's laws.
+     * Apply a force to this {@link GameObject}.
+     * 
+     * @param f the force to be applied.
+     * @return the current {@link GameObject} updated (fluent API).
+     */
+    public GameObject addForce(Vec2d f) {
+        this.forces.add(f);
+        return this;
+    }
+
+    /**
+     * set the Mass for thi {@link GameObject}.
+     *
+     * @param m the new mass for this object.
+     * @return the current {@link GameObject} updated (fluent API).
+     */
+    public GameObject setMass(double m) {
+        this.mass = m;
+        return this;
+    }
+
+    /**
+     * Set the material for this {@link GameObject}.
+     *
+     * @param m the new Material of this {@link GameObject}.
+     * @return the current {@link GameObject} updated (fluent API).
+     */
+    public GameObject setMaterial(Material m) {
+        this.material = m;
+        return this;
+    }
+
+    /**
+     * update the {@link GameObject}
      *
      * @param elapsed the elapsed time since previous call.
      */
     public void update(double elapsed) {
-        x += dx * elapsed;
-        y += dy * elapsed;
     }
-
-    /**
-     * Contrains the current object into a Rectangle area.
-     *
-     * @param area the play area for the application.
-     * @return true if constrained, else false.
-     */
-    public boolean constrainedBy(Rectangle2D area) {
-        boolean collide = false;
-        if (area.contains(x, y, w, h)) {
-            collide = false;
-        } else {
-            if (x < 0.0) {
-                x = 0.0;
-                collide = true;
-            }
-            if (x > area.getWidth() - w) {
-                x = area.getWidth() - w;
-                collide = true;
-            }
-            if (y < 0.0) {
-                y = 0.0;
-                collide = true;
-            }
-            if (y > area.getHeight() - h) {
-                y = area.getHeight() - h;
-                collide = true;
-            }
-        }
-        return collide;
-    }
-
 }

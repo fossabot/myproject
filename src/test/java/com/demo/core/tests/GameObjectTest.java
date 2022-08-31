@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import com.demo.core.entity.GameObject;
+import com.demo.core.math.Material;
+import com.demo.core.math.PhysicType;
 import org.junit.jupiter.api.Test;
 
 import java.awt.Color;
@@ -21,8 +23,8 @@ public class GameObjectTest {
     @Test
     public void gameObjectHasPosition() {
         GameObject go = new GameObject("go-name").setPosition(12.0, 13.0);
-        assertEquals(12.0, go.x, 0.01, "the GameObject position on x axis has not been set");
-        assertEquals(13.0, go.y, 0.01, "the GameObject position on y axis has not been set");
+        assertEquals(12.0, go.pos.x, 0.01, "the GameObject position on x axis has not been set");
+        assertEquals(13.0, go.pos.y, 0.01, "the GameObject position on y axis has not been set");
     }
 
     @Test
@@ -35,14 +37,35 @@ public class GameObjectTest {
     @Test
     public void gameObjectHasSpeed() {
         GameObject go = new GameObject("go-name").setSpeed(0.01, -0.01);
-        assertEquals(0.01, go.dx, 0.0000001, "the GameObject speed on x axis has not been set");
-        assertEquals(-0.01, go.dy, 0.0000001, "the GameObject speed on y axis has not been set");
+        assertEquals(0.01, go.speed.x, 0.0000001, "the GameObject speed on x axis has not been set");
+        assertEquals(-0.01, go.speed.y, 0.0000001, "the GameObject speed on y axis has not been set");
+    }
+
+    @Test
+    public void gameObjectHasAcceleration() {
+        GameObject go = new GameObject("go-name").setAcc(0.01, -0.01);
+        assertEquals(0.01, go.acc.x, 0.0000001, "the GameObject acceleration on x axis has not been set");
+        assertEquals(-0.01, go.acc.y, 0.0000001, "the GameObject acceleration on y axis has not been set");
     }
 
     @Test
     public void gameObjectHasAType() {
         GameObject go = new GameObject("go-name").setType(GameObject.ObjectType.IMAGE);
         assertEquals(GameObject.ObjectType.IMAGE, go.type, "the GameObject type has not been set");
+    }
+
+    @Test
+    public void gameObjectHasAPhysicType() {
+        GameObject go = new GameObject("go-name").setPhysicType(PhysicType.STATIC);
+        assertEquals(PhysicType.STATIC, go.getPhysicType(), "the GameObject physicType has not been set");
+    }
+
+
+    @Test
+    public void gameObjectHasAMaterial() {
+        GameObject go = new GameObject("go-name").setMaterial(Material.DEFAULT);
+        assertNotNull(go.material, "the GameObject material has not been set");
+        assertEquals("default", go.material.name, "the GameObject material has not been set to default");
     }
 
     @Test
