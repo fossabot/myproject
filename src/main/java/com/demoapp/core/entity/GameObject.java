@@ -432,6 +432,16 @@ public class GameObject implements OnCollisionEvent {
         return this;
     }
 
+    /**
+     * Set the text to be displayed (if object is a {@link ObjectType#TEXT}.
+     *
+     * @param text the text to be displayed
+     * @return the current {@link GameObject} updated (fluent API).
+     */
+    public GameObject setText(String text) {
+        this.textValue = text;
+        return this;
+    }
 
     /**
      * update the {@link GameObject}
