@@ -143,6 +143,7 @@ public class ConfigurationTest {
     public void canReadAVec2dAttribute() {
         Configuration config = new Configuration(DEFAULT_TEST_CONFIGURATION_FILE);
         Vec2d g = new Vec2d(0, -0.981);
-        assertEquals(g, config.defaultGravity, "An int formatted Color has not been interpreted.");
+        assertEquals(g.x, config.defaultGravity.x, "An int formatted Color has not been interpreted.");
+        assertEquals(g.y, config.defaultGravity.y, "An int formatted Color has not been interpreted.");
     }
 }

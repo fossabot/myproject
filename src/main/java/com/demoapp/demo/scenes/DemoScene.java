@@ -195,7 +195,7 @@ public class DemoScene extends AbstractScene implements Scene, OnKeyReleaseHandl
                 Vec2d gravity = app.getPhysicEngine().getWorld().gravity;
                 if (!gravity.isZero()) {
                     Vec2d jumpVector = gravity
-                            .multiply(0.3 * 0.1) // attenuation factor
+                            .multiply(-0.03) // attenuation factor
                             .multiply(jumpImpulsion); // jump factor
                     player.addForce(jumpVector);
                 }
