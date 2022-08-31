@@ -119,6 +119,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
+                            <mainClass>${project.mainClass}</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
