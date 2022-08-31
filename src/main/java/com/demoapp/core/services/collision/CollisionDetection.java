@@ -7,6 +7,7 @@ import com.demoapp.core.math.Vec2d;
 import com.demoapp.core.services.config.Configuration;
 import com.demoapp.core.services.physic.PhysicType;
 
+import java.awt.geom.Point2D;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -159,5 +160,20 @@ public class CollisionDetection {
         }
         e1.update(1);
         e2.update(1);
+    }
+
+    /**
+     * Detect if a 2D point is contained by a {@link GameObject}
+     *
+     * @param position the position to test against the list of colliders {@link GameObject}t in the {@link CollisionDetection}
+     * @return the colliding {@link GameObject} or null;
+     */
+    public GameObject isColliding(Point2D position) {
+        for (GameObject o : colliders.values()) {
+            if (o.box.contains(position)) {
+                return o;
+            }
+        }
+        return null;
     }
 }

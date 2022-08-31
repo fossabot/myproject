@@ -7,6 +7,7 @@ import com.demoapp.core.math.Vec2d;
 import com.demoapp.core.services.io.InputHandler;
 import com.demoapp.core.services.io.OnKeyPressedHandler;
 import com.demoapp.core.services.io.OnKeyReleaseHandler;
+import com.demoapp.core.services.io.OnMouseClickHandler;
 import com.demoapp.core.services.physic.Material;
 import com.demoapp.core.services.physic.PhysicType;
 import com.demoapp.core.services.scene.AbstractScene;
@@ -14,9 +15,10 @@ import com.demoapp.core.services.scene.Scene;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
 
-public class DemoScene extends AbstractScene implements Scene, OnKeyReleaseHandler, OnKeyPressedHandler {
+public class DemoScene extends AbstractScene implements Scene, OnKeyReleaseHandler, OnKeyPressedHandler, OnMouseClickHandler {
 
     private Application app;
     private int scoreValue = 0;
@@ -212,4 +214,8 @@ public class DemoScene extends AbstractScene implements Scene, OnKeyReleaseHandl
         app.getObject("score").setAttribute("textValue", scoreValue);
     }
 
+    @Override
+    public void onMouseClick(MouseEvent e) {
+
+    }
 }

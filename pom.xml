@@ -47,6 +47,7 @@
                     <compilerArgs>--enable-preview</compilerArgs>
                 </configuration>
             </plugin>
+
             <!-- Resource parsing -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
