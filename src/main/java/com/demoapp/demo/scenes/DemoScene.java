@@ -1,5 +1,9 @@
 package com.demoapp.demo.scenes;
 
+import java.awt.Color;
+import java.awt.event.KeyEvent;
+import java.awt.geom.Rectangle2D;
+
 import com.demoapp.core.Application;
 import com.demoapp.core.entity.Camera;
 import com.demoapp.core.entity.GameObject;
@@ -8,19 +12,13 @@ import com.demoapp.core.services.io.InputHandler;
 import com.demoapp.core.services.io.OnKeyPressedHandler;
 import com.demoapp.core.services.io.OnKeyReleaseHandler;
 import com.demoapp.core.services.io.OnMouseClickHandler;
+import com.demoapp.core.services.io.OnMouseWheelHandler;
 import com.demoapp.core.services.physic.Material;
 import com.demoapp.core.services.physic.PhysicType;
 import com.demoapp.core.services.scene.AbstractScene;
-import com.demoapp.core.services.scene.Scene;
 
-import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
-import java.awt.geom.Rectangle2D;
+public class DemoScene extends AbstractScene implements OnKeyReleaseHandler, OnKeyPressedHandler, OnMouseClickHandler, OnMouseWheelHandler {
 
-public class DemoScene extends AbstractScene implements Scene, OnKeyReleaseHandler, OnKeyPressedHandler, OnMouseClickHandler {
-
-    private Application app;
     private int scoreValue = 0;
 
     double step = 0.020;
@@ -32,7 +30,7 @@ public class DemoScene extends AbstractScene implements Scene, OnKeyReleaseHandl
 
     @Override
     public void create(Application app) {
-        this.app = app;
+        super.create(app);
         // add the movable player
         GameObject player = new GameObject("player")
                 .setType(GameObject.ObjectType.ELLIPSE)
@@ -44,8 +42,9 @@ public class DemoScene extends AbstractScene implements Scene, OnKeyReleaseHandl
                 .setPriority(1)
                 .setBorderColor(Color.BLUE)
                 .setFillColor(Color.CYAN)
+                .setDebugLevel(2)
                 .setAttribute("lives", 5);
-        app.add(player);
+        add(player);
 
         // add an object stick to camera
         GameObject score = new GameObject("score")
@@ -62,7 +61,7 @@ public class DemoScene extends AbstractScene implements Scene, OnKeyReleaseHandl
                 .setAttribute("textFormat", "%06d")
                 .setAttribute("textValue", scoreValue)
                 .setAttribute("textFontSize", 20.0f);
-        app.add(score);
+        add(score);
 
         int liveValue = (int) player.attributes.get("lives");
         // add an object stick to camera
@@ -78,7 +77,7 @@ public class DemoScene extends AbstractScene implements Scene, OnKeyReleaseHandl
                 .setStickToCamera(true)
                 .setText("♥")
                 .setAttribute("textFontSize", 20.0f);
-        app.add(heart);
+        add(heart);
         GameObject lives = new GameObject("lives")
                 .setType(GameObject.ObjectType.TEXT)
                 .setPhysicType(PhysicType.NONE)
@@ -92,8 +91,7 @@ public class DemoScene extends AbstractScene implements Scene, OnKeyReleaseHandl
                 .setAttribute("textFormat", "x%01d")
                 .setAttribute("textValue", liveValue)
                 .setAttribute("textFontSize", 16.0f);
-        app.add(lives);
-
+        add(lives);
 
         GameObject pfFloor = new GameObject("pf_floor")
                 .setType(GameObject.ObjectType.RECTANGLE)
@@ -106,7 +104,7 @@ public class DemoScene extends AbstractScene implements Scene, OnKeyReleaseHandl
                 .setMass(1000.0)
                 .setLayer(1)
                 .setPriority(1);
-        app.add(pfFloor);
+        add(pfFloor);
 
         generatePlatforms(app,
                 20,
@@ -128,31 +126,35 @@ public class DemoScene extends AbstractScene implements Scene, OnKeyReleaseHandl
     }
 
     /**
-     * Generate platforms (in tile size of 16x16) in the areaPlatform[Width/Height] with
-     * a [min/max]PlatformWidth and a [min/max]PlatformHeight with respecting a safeBorderWidth space.
+     * Generate platforms (in tile size of 16x16) in the areaPlatform[Width/Height]
+     * with
+     * a [min/max]PlatformWidth and a [min/max]PlatformHeight with respecting a
+     * safeBorderWidth space.
      *
      * @param app                the parent Application
      * @param nbPlatforms        the nb of platforms to be generated
      * @param areaPlatformWidth  the width of the platform area (in tile)
      * @param areaPlatformHeight the height of the platform area (in tile)
      * @param safeBorderWidth    the safe space border around the platform area
-     * @param minPlatformWidth   the minimal height  of a platform (in tile)
+     * @param minPlatformWidth   the minimal height of a platform (in tile)
      * @param minPlatformHeight  the minimal width of a platform (in tile)
      * @param maxPlatformWidth   the maximal Width of a platform (in tile)
      */
     private void generatePlatforms(Application app,
-                                   int nbPlatforms,
-                                   int areaPlatformWidth, int areaPlatformHeight,
-                                   int safeBorderWidth,
-                                   int minPlatformWidth, int minPlatformHeight,
-                                   int maxPlatformWidth) {
+            int nbPlatforms,
+            int areaPlatformWidth, int areaPlatformHeight,
+            int safeBorderWidth,
+            int minPlatformWidth, int minPlatformHeight,
+            int maxPlatformWidth) {
         for (int i = 0; i < nbPlatforms; i++) {
             GameObject pf = new GameObject("pf_" + i)
                     .setType(GameObject.ObjectType.RECTANGLE)
                     .setPhysicType(PhysicType.STATIC)
                     .setPosition(
-                            (int) (safeBorderWidth + (Math.random() * (areaPlatformWidth - (2 * safeBorderWidth)))) * 16,
-                            (int) (safeBorderWidth + (Math.random() * (areaPlatformHeight - (2 * safeBorderWidth) / 2))) * 32)
+                            (int) (safeBorderWidth + (Math.random() * (areaPlatformWidth - (2 * safeBorderWidth))))
+                                    * 16,
+                            (int) (safeBorderWidth + (Math.random() * (areaPlatformHeight - (2 * safeBorderWidth) / 2)))
+                                    * 32)
                     .setDimension(
                             ((int) (minPlatformWidth + Math.random() * (maxPlatformWidth - minPlatformWidth))) * 16,
                             16)
@@ -162,7 +164,7 @@ public class DemoScene extends AbstractScene implements Scene, OnKeyReleaseHandl
                     .setMass(0.0)
                     .setLayer(1)
                     .setPriority(5);
-            app.add(pf);
+            add(pf);
         }
     }
 
@@ -218,7 +220,6 @@ public class DemoScene extends AbstractScene implements Scene, OnKeyReleaseHandl
         }
     }
 
-
     @Override
     public void onKeyPressed(KeyEvent e) {
         switch (e.getKeyCode()) {
@@ -238,15 +239,10 @@ public class DemoScene extends AbstractScene implements Scene, OnKeyReleaseHandl
         }
     }
 
-
     @Override
     public void update(Application app, double elapsed) {
         scoreValue += 10;
-        app.getObject("score").setAttribute("textValue", scoreValue);
-    }
-
-    @Override
-    public void onMouseClick(MouseEvent e) {
-
+        app.getObject("score")
+                .setAttribute("textValue", scoreValue);
     }
 }

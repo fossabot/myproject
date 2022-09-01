@@ -2,17 +2,22 @@ package com.demoapp.core.services.scene;
 
 import com.demoapp.core.Application;
 import com.demoapp.core.services.config.Configuration;
+import com.demoapp.core.services.io.OnKeyPressedHandler;
 import com.demoapp.core.services.io.OnKeyReleaseHandler;
+import com.demoapp.core.services.io.OnMouseClickHandler;
+import com.demoapp.core.services.io.OnMouseWheelHandler;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * Scene management component to maintain a current scene and a list of available scene in the Application.
+ * Scene management component to maintain a current scene and a list of
+ * available scene in the Application.
  *
  * @author Frédéric Delorme
  * @version 1.0.0
@@ -77,10 +82,23 @@ public class SceneManager {
             scn = sceneClass.getConstructor().newInstance();
             scenes.put(scn.getName(), scn);
             if (Optional.ofNullable(app.getWindow()).isPresent()) {
-                app.getWindow().getInputHandler().addKeyReleasedHandler((OnKeyReleaseHandler) scn);
+                List<Class<?>> interfaces = Arrays.asList(scn.getClass().getInterfaces());
+                if (interfaces.contains(com.demoapp.core.services.io.OnKeyPressedHandler.class)) {
+                    app.getWindow().getInputHandler().addKeyPressedHandler((OnKeyPressedHandler) scn);
+                }
+                if (interfaces.contains(com.demoapp.core.services.io.OnKeyReleaseHandler.class)) {
+                    app.getWindow().getInputHandler().addKeyReleasedHandler((OnKeyReleaseHandler) scn);
+                }
+
+                if (interfaces.contains(com.demoapp.core.services.io.OnMouseClickHandler.class)) {
+                    app.getWindow().getInputHandler().addMouseClickHandler((OnMouseClickHandler) scn);
+                }
+                if (interfaces.contains(com.demoapp.core.services.io.OnMouseWheelHandler.class)) {
+                    app.getWindow().getInputHandler().addMouseWheelHandler((OnMouseWheelHandler) scn);
+                }
             }
-        } catch (InstantiationException | IllegalAccessException | InvocationTargetException |
-                 NoSuchMethodException e) {
+        } catch (InstantiationException | IllegalAccessException | InvocationTargetException
+                | NoSuchMethodException e) {
             System.out.printf("ERR: unable to ass scene %s%n", sceneClass.getName());
         }
     }

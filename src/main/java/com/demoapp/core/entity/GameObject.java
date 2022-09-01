@@ -535,6 +535,8 @@ public class GameObject implements OnCollisionEvent {
         if (debugLevel > 0) {
             debugInfo.add(String.format("#%d", this.id));
             debugInfo.add(String.format(">name: %s", this.name));
+            debugInfo.add(String.format(">dbg: %d", this.debugLevel));
+
             if (debugLevel > 1) {
                 debugInfo.add(String.format(">>pos: %s", this.pos.toStringAsInt()));
                 debugInfo.add(String.format(">>spd: %s", this.speed));

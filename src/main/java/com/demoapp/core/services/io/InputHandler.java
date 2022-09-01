@@ -8,18 +8,22 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
- * The Input handler service will implement all the processing upon {@link KeyEvent}, {@link MouseEvent} to manage
+ * The Input handler service will implement all the processing upon
+ * {@link KeyEvent}, {@link MouseEvent} to manage
  * behavior in parent {@link Window}
- * this {@link InputHandler} instance must be added as a {@link KeyListener} and as a {@link MouseListener} to the parent Window.
+ * this {@link InputHandler} instance must be added as a {@link KeyListener} and
+ * as a {@link MouseListener} to the parent Window.
  *
  * @author Frédéric Delorme
  * @since 1.0.0
  */
-public class InputHandler implements KeyListener, MouseListener, MouseMotionListener {
+public class InputHandler implements KeyListener, MouseListener, MouseMotionListener, MouseWheelListener {
     /**
      * Key mapping cache
      */
@@ -37,6 +41,9 @@ public class InputHandler implements KeyListener, MouseListener, MouseMotionList
 
     private List<OnKeyReleaseHandler> keyReleasedHandlers = new CopyOnWriteArrayList<>();
     private List<OnKeyPressedHandler> keyPressedHandlers = new CopyOnWriteArrayList<>();
+    private List<OnMouseClickHandler> mouseClickHandlers = new CopyOnWriteArrayList<>();
+    private List<OnMouseWheelHandler> mouseWheelHandlers = new CopyOnWriteArrayList<>();
+    private int mouseWheelValue;
 
     /**
      * Initialize the InputHandler internal input status caches.
@@ -52,6 +59,14 @@ public class InputHandler implements KeyListener, MouseListener, MouseMotionList
 
     public void addKeyPressedHandler(OnKeyPressedHandler oKPH) {
         this.keyPressedHandlers.add(oKPH);
+    }
+
+    public void addMouseClickHandler(OnMouseClickHandler oMCH) {
+        this.mouseClickHandlers.add(oMCH);
+    }
+
+    public void addMouseWheelHandler(OnMouseWheelHandler oMWH) {
+        this.mouseWheelHandlers.add(oMWH);
     }
 
     @Override
@@ -87,6 +102,9 @@ public class InputHandler implements KeyListener, MouseListener, MouseMotionList
     @Override
     public void mousePressed(MouseEvent e) {
         mouseButton[e.getButton()] = true;
+        for (OnMouseClickHandler oMCH : mouseClickHandlers) {
+            oMCH.onMouseClick(e);
+        }
     }
 
     @Override
@@ -151,4 +169,13 @@ public class InputHandler implements KeyListener, MouseListener, MouseMotionList
     public boolean isShiftPressed() {
         return shiftPressed;
     }
+
+    @Override
+    public void mouseWheelMoved(MouseWheelEvent e) {
+        this.mouseWheelValue = e.getScrollAmount();
+        for (OnMouseWheelHandler oMWH : mouseWheelHandlers) {
+            oMWH.onMouseScrolled(e);
+        }
+    }
+
 }

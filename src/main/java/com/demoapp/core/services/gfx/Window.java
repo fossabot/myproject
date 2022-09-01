@@ -3,6 +3,7 @@ package com.demoapp.core.services.gfx;
 import com.demoapp.core.services.io.InputHandler;
 
 import java.awt.Dimension;
+import java.awt.Point;
 
 import javax.swing.JFrame;
 
@@ -15,6 +16,7 @@ import javax.swing.JFrame;
 public class Window extends JFrame {
 
     private InputHandler inputHandler;
+    private double scale;
 
     /**
      * Initialize the Window with its new title and a default Dimension.
@@ -28,6 +30,7 @@ public class Window extends JFrame {
                 (int) (dim.width * scale),
                 (int) (dim.height * scale));
         createWindow(winDim);
+        this.scale = scale;
     }
 
     /**
@@ -39,12 +42,14 @@ public class Window extends JFrame {
         setPreferredSize(dim);
         setMaximumSize(dim);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setFocusTraversalKeysEnabled(true);
         pack();
         setVisible(true);
     }
 
     /**
-     * Declare a new InputHandler on this window to support Mouse and keyboard operations.
+     * Declare a new InputHandler on this window to support Mouse and keyboard
+     * operations.
      *
      * @param ih the new InputHandler implementation to be linked to this Window.
      * @return the current Window object updated (Fluent API).
@@ -64,5 +69,17 @@ public class Window extends JFrame {
      */
     public InputHandler getInputHandler() {
         return inputHandler;
+    }
+
+    /**
+     * Compute mouse position into the {@link com.demoapp.core.Application} screen
+     * according to scale factor.
+     * 
+     * @param point the mouse potision to be converted
+     * @return the scale converted mouse position to the
+     *         {@link com.demoapp.core.Application} screen
+     */
+    public Point mouseScreenPosition(Point point) {
+        return new Point((int) (point.x / scale), (int) (point.y / scale));
     }
 }

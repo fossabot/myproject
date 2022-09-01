@@ -1,9 +1,9 @@
 package com.demoapp.core.tests.scenes;
 
+import java.awt.event.KeyEvent;
+
 import com.demoapp.core.Application;
 import com.demoapp.core.services.scene.AbstractScene;
-
-import java.awt.event.KeyEvent;
 
 public class TestPhysicEngineScene extends AbstractScene {
     @Override
@@ -25,4 +25,5 @@ public class TestPhysicEngineScene extends AbstractScene {
     public void onKeyReleased(KeyEvent e) {
 
     }
+
 }
