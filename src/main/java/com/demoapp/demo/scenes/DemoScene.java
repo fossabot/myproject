@@ -44,25 +44,56 @@ public class DemoScene extends AbstractScene implements Scene, OnKeyReleaseHandl
                 .setPriority(1)
                 .setBorderColor(Color.BLUE)
                 .setFillColor(Color.CYAN)
-                .setDebugLevel(5);
+                .setAttribute("lives", 5);
         app.add(player);
 
         // add an object stick to camera
-        GameObject score = new GameObject("score");
-        score.setType(GameObject.ObjectType.TEXT);
-        score.setPhysicType(PhysicType.NONE);
-        score.setPosition(8.0, 36.0);
-        score.setDimension(64.0, 16.0);
-        score.setBorderColor(Color.WHITE);
-        score.setFillColor(Color.CYAN);
-        score.setMass(0.0);
-        score.setLayer(10);
-        score.setPriority(2);
-        score.setStickToCamera(true);
-        score.setAttribute("textFormat", "%06d");
-        score.setAttribute("textValue", scoreValue);
-        score.setAttribute("textFontSize", 20.0f);
+        GameObject score = new GameObject("score")
+                .setType(GameObject.ObjectType.TEXT)
+                .setPhysicType(PhysicType.NONE)
+                .setPosition(8.0, 36.0)
+                .setDimension(64.0, 16.0)
+                .setBorderColor(Color.WHITE)
+                .setFillColor(Color.CYAN)
+                .setMass(0.0)
+                .setLayer(10)
+                .setPriority(1)
+                .setStickToCamera(true)
+                .setAttribute("textFormat", "%06d")
+                .setAttribute("textValue", scoreValue)
+                .setAttribute("textFontSize", 20.0f);
         app.add(score);
+
+        int liveValue = (int) player.attributes.get("lives");
+        // add an object stick to camera
+        GameObject heart = new GameObject("heart")
+                .setType(GameObject.ObjectType.TEXT)
+                .setPhysicType(PhysicType.NONE)
+                .setPosition(284.0, 36.0)
+                .setDimension(64.0, 16.0)
+                .setBorderColor(Color.RED)
+                .setMass(0.0)
+                .setLayer(10)
+                .setPriority(1)
+                .setStickToCamera(true)
+                .setText("♥")
+                .setAttribute("textFontSize", 20.0f);
+        app.add(heart);
+        GameObject lives = new GameObject("lives")
+                .setType(GameObject.ObjectType.TEXT)
+                .setPhysicType(PhysicType.NONE)
+                .setPosition(300.0, 36.0)
+                .setDimension(64.0, 16.0)
+                .setBorderColor(Color.WHITE)
+                .setMass(0.0)
+                .setLayer(10)
+                .setPriority(1)
+                .setStickToCamera(true)
+                .setAttribute("textFormat", "x%01d")
+                .setAttribute("textValue", liveValue)
+                .setAttribute("textFontSize", 16.0f);
+        app.add(lives);
+
 
         GameObject pfFloor = new GameObject("pf_floor")
                 .setType(GameObject.ObjectType.RECTANGLE)

@@ -146,24 +146,32 @@ public class GameObject implements OnCollisionEvent {
 
     /**
      * Layer number where to display the object:
-     * <pre><code>layer 0 -> n = front -> back</code></pre>
+     * 
+     * <pre>
+     * <code>layer 0 -> n = front -> back</code>
+     * </pre>
      */
     public int layer;
 
     /**
      * Rendering priority in the same layer:
-     * <pre><code>0->n = back -> front</code></pre>
+     * 
+     * <pre>
+     * <code>0->n = back -> front</code>
+     * </pre>
      */
     public int priority;
 
     /**
-     * Map of specific attributes to be set at Scene creation, to add new values attached to a {@link GameObject}
+     * Map of specific attributes to be set at Scene creation, to add new values
+     * attached to a {@link GameObject}
      */
     public Map<String, Object> attributes = new HashMap<>();
 
     /**
      * The debug level will set how the debug information must be
-     * activated (debugLevel>0) and how many details to display (1=minimum to 5=maximum).
+     * activated (debugLevel>0) and how many details to display (1=minimum to
+     * 5=maximum).
      */
     public int debugLevel;
 
@@ -218,7 +226,8 @@ public class GameObject implements OnCollisionEvent {
     }
 
     /**
-     * Set {@link GameObject} acceleration <code>acc</code> with <code>(ax,ay)</code>.
+     * Set {@link GameObject} acceleration <code>acc</code> with
+     * <code>(ax,ay)</code>.
      *
      * @param ax horizontal speed of this {@link GameObject}.
      * @param ay vertical speed of this {@link GameObject}.
@@ -232,7 +241,8 @@ public class GameObject implements OnCollisionEvent {
     /**
      * Set the type of object for rendering purpose.
      *
-     * @param t the type of the {@link GameObject} to be set (see {@link ObjectType}.
+     * @param t the type of the {@link GameObject} to be set (see
+     *          {@link ObjectType}.
      * @return the current {@link GameObject} updated (fluent API).
      */
     public GameObject setType(ObjectType t) {
@@ -350,7 +360,8 @@ public class GameObject implements OnCollisionEvent {
     /**
      * Deinf the {@link PhysicType} for this {@link GameObject}.
      *
-     * @param physicType the type of physic object to be correctly processed by the {@link PhysicEngine}.
+     * @param physicType the type of physic object to be correctly processed by the
+     *                   {@link PhysicEngine}.
      * @return the current {@link GameObject} updated (fluent API).
      */
     public GameObject setPhysicType(PhysicType physicType) {
@@ -398,7 +409,7 @@ public class GameObject implements OnCollisionEvent {
     }
 
     /**
-     * Set  the duration for this {@link GameObject}.
+     * Set the duration for this {@link GameObject}.
      *
      * @param d the new duration for this GameObject.
      * @return the current {@link GameObject} updated (fluent API).
@@ -413,8 +424,8 @@ public class GameObject implements OnCollisionEvent {
      *
      * @param left   left marge for this collision box.
      * @param top    top marge for this collision box.
-     * @param right  right  marge for this collision box.
-     * @param bottom bottom  marge for this collision box.
+     * @param right  right marge for this collision box.
+     * @param bottom bottom marge for this collision box.
      * @return the current {@link GameObject} updated (fluent API).
      */
     public GameObject setCollisionBox(double left, double top, double right, double bottom) {
@@ -427,7 +438,8 @@ public class GameObject implements OnCollisionEvent {
     }
 
     /**
-     * Add a new entry in the {@link GameObject#attributes} map, with <code>key</code> and <code>value</code>.
+     * Add a new entry in the {@link GameObject#attributes} map, with
+     * <code>key</code> and <code>value</code>.
      *
      * @param key   the key for this attribute.
      * @param value the value of this attribute.
@@ -446,6 +458,17 @@ public class GameObject implements OnCollisionEvent {
      */
     public GameObject setDebugLevel(int level) {
         this.debugLevel = level;
+        return this;
+    }
+
+    /**
+     * Set the text to be displayed (if object is a {@link ObjectType#TEXT}.
+     *
+     * @param text the text to be displayed
+     * @return the current {@link GameObject} updated (fluent API).
+     */
+    public GameObject setText(String text) {
+        this.textValue = text;
         return this;
     }
 
@@ -475,8 +498,10 @@ public class GameObject implements OnCollisionEvent {
     }
 
     /**
-     * Convert the exiting attribute <code>textValue</code> with the existing attribute <code>textFormat</code>
-     * to feed {@link GameObject#textValue}. If none of those attributes exist, nothing is done.
+     * Convert the exiting attribute <code>textValue</code> with the existing
+     * attribute <code>textFormat</code>
+     * to feed {@link GameObject#textValue}. If none of those attributes exist,
+     * nothing is done.
      */
     private void updateText() {
         if (attributes.containsKey("textFormat") && attributes.containsKey("textValue")) {
@@ -487,7 +512,8 @@ public class GameObject implements OnCollisionEvent {
     }
 
     /**
-     * Define a specific processing in case of collision between this {@link GameObject} (e1) and another one (e2).
+     * Define a specific processing in case of collision between this
+     * {@link GameObject} (e1) and another one (e2).
      *
      * @param e1 the primary {@link GameObject} in collision.
      * @param e2 the secondary {@link GameObject} in the collision.
@@ -497,9 +523,11 @@ public class GameObject implements OnCollisionEvent {
     }
 
     /**
-     * Prepare and set  the debug information according to the {@link GameObject#debugLevel} value.
+     * Prepare and set the debug information according to the
+     * {@link GameObject#debugLevel} value.
      *
-     * @return a list of debug information defined accordingly to the debugLevel for this {@link GameObject}.
+     * @return a list of debug information defined accordingly to the debugLevel for
+     *         this {@link GameObject}.
      */
     public List<String> getDebugInformation() {
         List<String> debugInfo = new ArrayList<>();
