@@ -72,7 +72,7 @@ public class Renderer {
 
         // draw things with higher layer / higher priority draw first.
         app.getObjects().stream()
-                .sorted((a, b) -> a.layer > b.layer ? (a.priority > b.priority ? 1 : -1) : -1)
+                .sorted((a, b) -> a.layer > b.layer ? (a.priority < b.priority ? 1 : -1) : -1)
                 .forEach(o -> drawGameObject(scene, g, o));
 
 
@@ -145,7 +145,9 @@ public class Renderer {
                 if (o.attributes.containsKey("textFontSize")) {
                     g.setFont(g.getFont().deriveFont((float) o.attributes.get("textFontSize")));
                 }
-                g.drawString(o.textValue, (int) o.pos.x, (int) o.pos.y);
+                if (Optional.ofNullable(o.textValue).isPresent()) {
+                    g.drawString(o.textValue, (int) o.pos.x, (int) o.pos.y);
+                }
             }
         }
 

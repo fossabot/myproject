@@ -1,4 +1,4 @@
-# Adding a new TEXT type
+# Adding a new GameObject Type
 
 Event if we already have a bunch of `ObjectType`, one was not already implemented: TEXT.
 If I want to draw some score, number of life, or just some text on my screen, I need a way to do it.
@@ -63,7 +63,7 @@ class GameObject {
 @enduml
 ```
 
-## Attributes for Text
+### Attributes for Text
 
 Our text valur will be fed some custom capabilities like :
 
@@ -143,7 +143,7 @@ And we introduce a new attribute `textFontSize` about... the font size, to set t
 
 And to test that, we need to chang ethe DemoScene.
 
-## DemoScene support text !
+### DemoScene support text !
 
 ```java
 public class DemoScene extends AbstractScene {
@@ -168,6 +168,88 @@ public class DemoScene extends AbstractScene {
         app.add(score);
 
         //...
+    }
+}
+```
+
+## IMAGE
+
+Now let's support Text and Image, we can add new graphics to the screen with the IMAGE type.
+But first to load images, we need to manage those resources.
+
+It is now time for a `ResourceManager`, with a first kind of resources: `BufferedImage`.
+
+### Create the ResourceManager
+
+The `ResourceManager` is a simple internal cache where resources like images, font, sound are loaded,
+available and reusable by any components from the `Application`.
+
+I will first implement the support for
+the [`BufferedImage`](https://docs.oracle.com/en/java/javase/18/docs/api/java.desktop/java/awt/image/BufferedImage.html "open the JDK18 official documentation")
+and some utils to manipulated images, to crop or resize.
+
+```plantuml
+!theme plain
+hide Application methods
+hide Application attributes
+class Application
+class ResourceManager {
+ - cache:Map<String,Object>
+ + addResource(name:String):void
+ + getImage(name:String):BufferedImage
+}
+Application "1" --> "1" ResourceManager:resMgr
+```
+
+I create first a Java class with an internal cache, and simple trick on the naming entry in the cache will consist in
+adding the resource type as a prefix. So for an image with path `/images/myimage.png`, the entry
+key would be `java.awt.image.BufferedImage:/images/myimage.png`.
+
+Some magic will be executed to detect the nature of the resource to be loaded, mainly based on the file extension.
+And then, to retrieve the image, just add as prefix this class name.
+
+#### Loading resource
+
+As define previously, the type of object corresponding to the loaded resource to store in cache,
+is detected on the resource file extension.
+
+For image, we will support only JPEG and PNG.
+
+```java
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.util.Locale;
+import java.util.concurrent.ConcurrentHashMap;
+
+public class ResourceManager {
+    private static Map<String, Object> cache = new ConcurrentHashMap<>();
+
+    public static void addResource(String path) {
+        String[] fileext = path.split(".");
+        switch (fileext[1].toUpperCase(Locale.ROOT)) {
+            case "PNG":
+            case "JPG":
+            case "JPEG":
+                BufferedImage img = ImageIO.read(
+                        ResourceManager.class.getResourceAsStream(path));
+                cache.put(
+                        img.getClass().getCanonicalName() + ":" + path,
+                        img);
+                break;
+            default:
+                System.err.printf("ResourceManager | ERR | Unknown resource type %s%n", path);
+                break;
+        }
+    }
+}
+```
+
+And then, I implement the method to retrieve such image resource:
+
+```java
+public class ResourceManager {
+    public static BufferedImage getImage(Stirng path) {
+        return (BufferedImage) cache.get(BufferedImage.class.getCanonicalName() + ":" + path);
     }
 }
 ```

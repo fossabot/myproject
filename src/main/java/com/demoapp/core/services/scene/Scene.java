@@ -22,6 +22,11 @@ public interface Scene {
     String getName();
 
     /**
+     * Load all required resources.
+     */
+    void load();
+
+    /**
      * Create the scene's objects
      *
      * @param app the {@link Application} container

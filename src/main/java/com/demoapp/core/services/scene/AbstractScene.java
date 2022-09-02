@@ -49,6 +49,11 @@ public abstract class AbstractScene implements Scene {
     }
 
     @Override
+    public void load() {
+
+    }
+
+    @Override
     public void update(Application app, double elapsed) {
 
     }
