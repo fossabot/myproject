@@ -1,6 +1,6 @@
 #!/bin/bash
 # more info at https://gist.github.com/mcgivrer/a31510019029eba73edf5721a93c3dec
-# Copyright 2020 Frederic Delorme (McGivrer) fredericDOTdelormeATgmailDOTcom
+# Copyright 2022 Frederic Delorme (McGivrer) fredericDOTdelormeATgmailDOTcom
 # Your program build definition
 export PROGRAM_NAME=DemoApp
 export PROGRAM_VERSION=1.0.1
