@@ -24,7 +24,6 @@ public class Renderer {
     private final BufferedImage buffer;
     private final double scale;
 
-
     // debug plate drawing parameters
 
     int debugXOffset = 10; // X offset for plat against the GameObject
@@ -35,7 +34,6 @@ public class Renderer {
     Color debugColorText = Color.CYAN;
     Color debugColorBackground = new Color(.0f, .0f, .5f, .7f);
     Color debugColorBorder = Color.BLUE;
-
 
     /**
      * Initialize the {@link Renderer} component according to defined configuration
@@ -79,8 +77,7 @@ public class Renderer {
         Graphics2D g = buffer.createGraphics();
         g.setRenderingHints(Map.of(
                 RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON,
-                RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON
-        ));
+                RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON));
         fillRect(g, Color.BLACK,
                 0, 0,
                 buffer.getWidth(), buffer.getHeight());
@@ -102,7 +99,6 @@ public class Renderer {
                 .forEach(o -> {
                     drawGameObject(app, scene, g, o);
                 });
-
 
         // release Graphics component.
         g.dispose();
@@ -138,7 +134,8 @@ public class Renderer {
             s = s.replace('<', '*');
             g.drawString(s,
                     (int) (o.pos.x + o.w + debugXOffset + (0.5 * debugMargin)),
-                    (int) (o.pos.y + debugYOffset) + (int) (0.5 * debugMargin) + (index * g.getFontMetrics().getHeight()));
+                    (int) (o.pos.y + debugYOffset) + (int) (0.5 * debugMargin)
+                            + (index * g.getFontMetrics().getHeight()));
             index++;
         }
     }
@@ -172,7 +169,6 @@ public class Renderer {
         if (Optional.ofNullable(currentCam).isPresent() && !o.stickToCamera) {
             g.translate(-currentCam.pos.x, -currentCam.pos.y);
         }
-
 
         switch (o.type) {
             case POINT -> {
@@ -208,12 +204,14 @@ public class Renderer {
                 if (o.attributes.containsKey("textFontSize")) {
                     g.setFont(g.getFont().deriveFont((float) o.attributes.get("textFontSize")));
                 }
-                g.drawString(o.textValue, (int) o.pos.x, (int) o.pos.y);
                 /**
                  * update the size of the drawn text into the `GameObject` itself.
                  */
                 o.h = g.getFontMetrics().getHeight();
                 o.w = g.getFontMetrics().stringWidth(o.textValue);
+                if (Optional.ofNullable(o.textValue).isPresent()) {
+                    g.drawString(o.textValue, (int) o.pos.x, (int) o.pos.y);
+                }
             }
         }
         if (app.getConfiguration().getDebugLevel() > 0
@@ -249,8 +247,7 @@ public class Renderer {
         Graphics2D g = (Graphics2D) window.getGraphics();
         g.setRenderingHints(Map.of(
                 RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF,
-                RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_OFF
-        ));
+                RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_OFF));
 
         g.drawImage(buffer,
                 0, 0,
@@ -259,7 +256,6 @@ public class Renderer {
                 0, 0,
                 (int) (window.getWidth() * (1.0 / this.scale)),
                 (int) (window.getHeight() * (1.0 / this.scale)),
-                null
-        );
+                null);
     }
 }

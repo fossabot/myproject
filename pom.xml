@@ -8,6 +8,17 @@
     <description>This is a simple implementation of an application providing good practices in terms of development and
         test
     </description>
+
+    <contributors>
+        <contributor>
+            <name>Frédéric Delorme</name>
+            <email>contact.snapgames@gmail.com</email>
+            <organization>SnapGames</organization>
+            <timezone>Europe/Paris</timezone>
+            <organizationUrl>https://snapgames.github.io/</organizationUrl>
+        </contributor>
+    </contributors>
+
     <properties>
         <maven.compiler.target>18</maven.compiler.target>
         <maven.compiler.source>18</maven.compiler.source>
@@ -85,25 +96,24 @@
                     <show>public</show>
                     <failOnError>false</failOnError>
                     <failOnWarnings>false</failOnWarnings>
-                    <useStandardDocletOptions>false</useStandardDocletOptions>
-                    <linksource>false</linksource>
+                    <linksource>true</linksource>
                     <show>private</show>
                     <nohelp>true</nohelp>
                     <overview>${project.basedir}/README.md</overview>
                     <bottom>
-                        <![CDATA[<em>Copyright © \${project.inceptionYear} - SnapGames.</em>]]>
+                        <![CDATA[<em>MIT license \${project.inceptionYear} - SnapGames</em>]]>
                     </bottom>
-                    <!--links>
+                    <links>
                         <link>${project.issueManagement.url}</link>
                         <link>${project.ciManagement.url}</link>
-                        <link>https://docs.oracle.com/en/java/javase/11/docs/api/</link>
-                    </links-->
-                    <!--doclet>ch.raffael.mddoclet.MarkdownDoclet</doclet>
+                        <link>https://docs.oracle.com/en/java/javase/${maven.compiler.target}/docs/api/</link>
+                    </links>
+                    <doclet>ch.raffael.mddoclet.MarkdownDoclet</doclet>
                     <docletArtifact>
                         <groupId>ch.raffael.markdown-doclet</groupId>
                         <artifactId>markdown-doclet</artifactId>
                         <version>1.4</version>
-                    </docletArtifact-->
+                    </docletArtifact>
                     <useStandardDocletOptions>true</useStandardDocletOptions>
                     <additionalOptions>--enable-preview</additionalOptions>
                 </configuration>

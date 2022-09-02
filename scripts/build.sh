@@ -1,19 +1,22 @@
 #!/bin/bash
 # more info at https://gist.github.com/mcgivrer/a31510019029eba73edf5721a93c3dec
-# Copyright 2020 Frederic Delorme (McGivrer) fredericDOTdelormeATgmailDOTcom
+# Copyright 2022 Frederic Delorme (McGivrer) fredericDOTdelormeATgmailDOTcom
 # Your program build definition
-export PROGRAM_NAME=myproject
-export PROGRAM_VERSION=1.0.0
-export PROGRAM_TITLE=MyProject
+export PROGRAM_NAME=DemoApp
+export PROGRAM_VERSION=1.0.1
+export PROGRAM_TITLE=DemoApp
 export AUTHOR_NAME='Frédéric Delorme'
 export VENDOR_NAME=frederic.delorme@gmail.com
-export MAIN_CLASS=com.demo.core.Application
-export JAVADOC_CLASSPATH="com.demo.core com.demoing.core.scenes"
-export SOURCE_VERSION=17
+export MAIN_CLASS=com.demoapp.core.Application
+# JDK & encodage
+export SOURCE_VERSION=18
 export SRC_ENCODING=UTF-8
 # the tools and sources versions
 export GIT_COMMIT_ID=$(git rev-parse HEAD)
 export JAVA_BUILD=$(java --version | head -1 | cut -f2 -d' ')
+# javadoc generation & resources
+export JAVADOC_CLASSPATH="com.demoapp.core com.demoapp.demo.scenes"
+export JAVADOC_RESOURCES="src/docs/images"
 #
 # Paths
 export SRC=src
@@ -24,9 +27,8 @@ export BUILD=$TARGET/build
 export CLASSES=$TARGET/classes
 export RESOURCES=$SRC/main/resources
 export TEST_RESOURCES=$SRC/test/resources
-export COMPILATION_OPTS="-Xlint:preview"
+export COMPILATION_OPTS="--enable-preview -Xlint:unchecked -source $SOURCE_VERSION"
 export JAR_NAME=$PROGRAM_NAME-$PROGRAM_VERSION.jar
-# -Xlint:unchecked -Xlint:preview"
 export JAR_OPTS=--enable-preview -Xlint:unchecked -Xlint:preview
 #
 function manifest() {
@@ -36,13 +38,17 @@ function manifest() {
   touch $TARGET/manifest.mf
   # build manifest
   echo "|_ 1. Create Manifest file '$TARGET/manifest.mf'"
-  echo 'Manifest-Version: 1.0' >$TARGET/manifest.mf
-  echo "Created-By: $JAVA_BUILD ($VENDOR_NAME)" >>$TARGET/manifest.mf
-  echo "Main-Class: $MAIN_CLASS" >>$TARGET/manifest.mf
-  echo "Implementation-Title: $PROGRAM_TITLE" >>$TARGET/manifest.mf
-  echo "Implementation-Version: $PROGRAM_VERSION-build_${GIT_COMMIT_ID:0:8}" >>$TARGET/manifest.mf
-  echo "Implementation-Vendor: $VENDOR_NAME" >>$TARGET/manifest.mf
-  echo "Implementation-Author: $AUTHOR_NAME" >>$TARGET/manifest.mf
+  # create manifest file
+  cat <<EOF >$TARGET/manifest.mf
+Manifest-Version: 1.0
+Created-By: $JAVA_BUILD ($VENDOR_NAME)
+Main-Class: $MAIN_CLASS
+Implementation-Title: $PROGRAM_TITLE
+Implementation-Version: $PROGRAM_VERSION-build_${GIT_COMMIT_ID:0:8}
+Implementation-Vendor: $VENDOR_NAME
+Implementation-Author: $AUTHOR_NAME
+
+EOF
   echo "   |_ done"
 }
 #
@@ -52,43 +58,57 @@ function compile() {
   echo "> to   : $CLASSES"
   # prepare target
   mkdir -p $CLASSES
+  # compilation options
+  cat <<EOF >lib/options.txt
+-d target/classes
+-g:source,lines,vars
+-sourcepath $SRC;$RESOURCE
+-source $SOURCE_VERSION
+-target $SOURCE_VERSION
+-classpath target/classes
+EOF
+
   # Compile class files
   rm -Rf $CLASSES/*
   echo "|_ 2. compile sources from '$SRC/main' ..."
   find $SRC/main -name '*.java' >$TARGET/sources.lst
-  #javac $COMPILATION_OPTS @$LIBS/options.txt @$TARGET/sources.lst -cp $CLASSES
+  javac $COMPILATION_OPTS @$LIBS/options.txt @$TARGET/sources.lst -cp $CLASSES
   javac $COMPILATION_OPTS @$TARGET/sources.lst -cp $CLASSES
   echo "   done."
 }
 #
-function generateDoc(){
-echo "generate Javadoc "
+function generateDoc() {
+  echo "generate Javadoc "
   echo "> from : $SRC"
   echo "> to   : $TARGET/javadoc"
   # prepare target
-  mkdir -p $TARGET/javadoc
+  mkdir -p $TARGET/javadoc/resources
   # Compile class files
   rm -Rf $TARGET/javadoc/*
   echo "|_ 2-5. generate javadoc from '$JAVADOC_CLASSPATH' ..."
-  #java -jar ./lib/tools/markdown2html-0.3.1.jar <README.md >$TARGET/javadoc/overview.html
+  cat <README.md >>target/README.temp.md
+  sed -i "s/src\/docs\/images/resources/" target/README.temp.md
+  java -jar ./lib/tools/markdown2html-0.3.1.jar <target/README.temp.md >$TARGET/javadoc/overview.html
   javadoc $JAR_OPTS -source $SOURCE_VERSION \
-  #  -overview $TARGET/javadoc/overview.html \
+    -overview $TARGET/javadoc/overview.html \
     -quiet -author -use -version \
     -doctitle "<h1>$PROGRAM_TITLE</h1>" \
     -d $TARGET/javadoc \
-    -sourcepath $SRC/main/java $JAVADOC_CLASSPATH  >> target/build.log
+    -sourcepath $SRC/main/java $JAVADOC_CLASSPATH >>target/build.log
+  echo "copy required resources"
+  cp -vr $JAVADOC_RESOURCES/* $TARGET/javadoc/resources
   echo "   done."
 
 }
 #
-function executeTests(){
+function executeTests() {
   echo "execute tests"
   echo "> from : $SRC/test"
   echo "> to   : $TARGET/test-classes"
   mkdir -p $TARGET/test-classes
   rm -Rf $TARGET/test-classes/*
   echo "copy test resources"
-  cp -r *TEST_RESOURCES/* $TARGET/test-classes
+  cp -r $TEST_RESOURCES/* $TARGET/test-classes
   echo "compile test classes"
   #list test sources
   find ./src/test -name '*.java' >$TARGET/test-sources.lst

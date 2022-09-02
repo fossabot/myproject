@@ -3,11 +3,15 @@ package com.demoapp.demo.scenes;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
+import java.util.List;
 
 import com.demoapp.core.Application;
 import com.demoapp.core.entity.Camera;
 import com.demoapp.core.entity.GameObject;
 import com.demoapp.core.math.Vec2d;
+import com.demoapp.core.services.files.ResourceManager;
+import com.demoapp.core.services.gfx.ImageUtils;
 import com.demoapp.core.services.io.InputHandler;
 import com.demoapp.core.services.io.OnKeyPressedHandler;
 import com.demoapp.core.services.io.OnKeyReleaseHandler;
@@ -17,15 +21,24 @@ import com.demoapp.core.services.physic.Material;
 import com.demoapp.core.services.physic.PhysicType;
 import com.demoapp.core.services.scene.AbstractScene;
 
-public class DemoScene extends AbstractScene implements OnKeyReleaseHandler, OnKeyPressedHandler, OnMouseClickHandler, OnMouseWheelHandler {
+public class DemoScene extends AbstractScene
+        implements OnKeyReleaseHandler, OnKeyPressedHandler, OnMouseClickHandler, OnMouseWheelHandler {
 
     private int scoreValue = 0;
 
     double step = 0.020;
+    private List<BufferedImage> tiles;
 
     @Override
     public String getName() {
         return "demo";
+    }
+
+    @Override
+    public void load() {
+        tiles = ImageUtils.splitImageToTile(
+                ResourceManager.getImage("/images/tiles01.png"),
+                0, 0, 16, 16);
     }
 
     @Override
@@ -63,21 +76,21 @@ public class DemoScene extends AbstractScene implements OnKeyReleaseHandler, OnK
                 .setAttribute("textFontSize", 20.0f);
         add(score);
 
-        int liveValue = (int) player.attributes.get("lives");
         // add an object stick to camera
         GameObject heart = new GameObject("heart")
-                .setType(GameObject.ObjectType.TEXT)
+                .setType(GameObject.ObjectType.IMAGE)
                 .setPhysicType(PhysicType.NONE)
-                .setPosition(284.0, 36.0)
-                .setDimension(64.0, 16.0)
-                .setBorderColor(Color.RED)
+                .setImage(tiles.get(1))
+                .setPosition(292.0, 20.0)
+                .setDimension(14.0, 16.0)
                 .setMass(0.0)
                 .setLayer(10)
                 .setPriority(1)
                 .setStickToCamera(true)
-                .setText("♥")
                 .setAttribute("textFontSize", 20.0f);
         add(heart);
+
+        int liveValue = (int) player.attributes.get("lives");
         GameObject lives = new GameObject("lives")
                 .setType(GameObject.ObjectType.TEXT)
                 .setPhysicType(PhysicType.NONE)

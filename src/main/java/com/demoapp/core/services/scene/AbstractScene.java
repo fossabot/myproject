@@ -62,6 +62,11 @@ public abstract class AbstractScene
     }
 
     @Override
+    public void load() {
+
+    }
+
+    @Override
     public void update(Application app, double elapsed) {
 
     }
