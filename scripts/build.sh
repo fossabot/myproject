@@ -2,14 +2,14 @@
 # more info at https://gist.github.com/mcgivrer/a31510019029eba73edf5721a93c3dec
 # Copyright 2020 Frederic Delorme (McGivrer) fredericDOTdelormeATgmailDOTcom
 # Your program build definition
-export PROGRAM_NAME=myproject
-export PROGRAM_VERSION=1.0.0
-export PROGRAM_TITLE=MyProject
+export PROGRAM_NAME=DemoApp
+export PROGRAM_VERSION=1.0.1
+export PROGRAM_TITLE=DemoApp
 export AUTHOR_NAME='Frédéric Delorme'
 export VENDOR_NAME=frederic.delorme@gmail.com
 export MAIN_CLASS=com.demo.core.Application
-export JAVADOC_CLASSPATH="com.demo.core com.demoing.core.scenes"
-export SOURCE_VERSION=17
+export JAVADOC_CLASSPATH="com.demoapp.core com.demoapp.demo.scenes"
+export SOURCE_VERSION=18
 export SRC_ENCODING=UTF-8
 # the tools and sources versions
 export GIT_COMMIT_ID=$(git rev-parse HEAD)
@@ -24,9 +24,8 @@ export BUILD=$TARGET/build
 export CLASSES=$TARGET/classes
 export RESOURCES=$SRC/main/resources
 export TEST_RESOURCES=$SRC/test/resources
-export COMPILATION_OPTS="-Xlint:preview"
+export COMPILATION_OPTS="--enable-preview -Xlint:unchecked -source $SOURCE_VERSION"
 export JAR_NAME=$PROGRAM_NAME-$PROGRAM_VERSION.jar
-# -Xlint:unchecked -Xlint:preview"
 export JAR_OPTS=--enable-preview -Xlint:unchecked -Xlint:preview
 #
 function manifest() {
@@ -36,13 +35,16 @@ function manifest() {
   touch $TARGET/manifest.mf
   # build manifest
   echo "|_ 1. Create Manifest file '$TARGET/manifest.mf'"
-  echo 'Manifest-Version: 1.0' >$TARGET/manifest.mf
-  echo "Created-By: $JAVA_BUILD ($VENDOR_NAME)" >>$TARGET/manifest.mf
-  echo "Main-Class: $MAIN_CLASS" >>$TARGET/manifest.mf
-  echo "Implementation-Title: $PROGRAM_TITLE" >>$TARGET/manifest.mf
-  echo "Implementation-Version: $PROGRAM_VERSION-build_${GIT_COMMIT_ID:0:8}" >>$TARGET/manifest.mf
-  echo "Implementation-Vendor: $VENDOR_NAME" >>$TARGET/manifest.mf
-  echo "Implementation-Author: $AUTHOR_NAME" >>$TARGET/manifest.mf
+  # create manifest file
+  cat <<EOF >$TARGET/manifest.mf
+ 'Manifest-Version: 1.0'
+ Created-By: $JAVA_BUILD ($VENDOR_NAME)
+Main-Class: $MAIN_CLASS
+Implementation-Title: $PROGRAM_TITLE
+Implementation-Version: $PROGRAM_VERSION-build_${GIT_COMMIT_ID:0:8}
+Implementation-Vendor: $VENDOR_NAME
+Implementation-Author: $AUTHOR_NAME
+EOF
   echo "   |_ done"
 }
 #
@@ -52,11 +54,21 @@ function compile() {
   echo "> to   : $CLASSES"
   # prepare target
   mkdir -p $CLASSES
+  # compilation options
+  cat <<EOF > lib/options.txt
+-d target/classes
+-g:source,lines,vars
+-sourcepath $SRC;$RESOURCE
+-source $SOURCE_VERSION
+-target $SOURCE_VERSION
+-classpath target/classes
+EOF
+
   # Compile class files
   rm -Rf $CLASSES/*
   echo "|_ 2. compile sources from '$SRC/main' ..."
   find $SRC/main -name '*.java' >$TARGET/sources.lst
-  #javac $COMPILATION_OPTS @$LIBS/options.txt @$TARGET/sources.lst -cp $CLASSES
+  javac $COMPILATION_OPTS @$LIBS/options.txt @$TARGET/sources.lst -cp $CLASSES
   javac $COMPILATION_OPTS @$TARGET/sources.lst -cp $CLASSES
   echo "   done."
 }
@@ -70,9 +82,9 @@ echo "generate Javadoc "
   # Compile class files
   rm -Rf $TARGET/javadoc/*
   echo "|_ 2-5. generate javadoc from '$JAVADOC_CLASSPATH' ..."
-  #java -jar ./lib/tools/markdown2html-0.3.1.jar <README.md >$TARGET/javadoc/overview.html
+  java -jar ./lib/tools/markdown2html-0.3.1.jar <README.md >$TARGET/javadoc/overview.html
   javadoc $JAR_OPTS -source $SOURCE_VERSION \
-  #  -overview $TARGET/javadoc/overview.html \
+    -overview $TARGET/javadoc/overview.html \
     -quiet -author -use -version \
     -doctitle "<h1>$PROGRAM_TITLE</h1>" \
     -d $TARGET/javadoc \
