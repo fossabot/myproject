@@ -7,13 +7,16 @@ export PROGRAM_VERSION=1.0.1
 export PROGRAM_TITLE=DemoApp
 export AUTHOR_NAME='Frédéric Delorme'
 export VENDOR_NAME=frederic.delorme@gmail.com
-export MAIN_CLASS=com.demo.core.Application
-export JAVADOC_CLASSPATH="com.demoapp.core com.demoapp.demo.scenes"
+export MAIN_CLASS=com.demoapp.core.Application
+# JDK & encodage
 export SOURCE_VERSION=18
 export SRC_ENCODING=UTF-8
 # the tools and sources versions
 export GIT_COMMIT_ID=$(git rev-parse HEAD)
 export JAVA_BUILD=$(java --version | head -1 | cut -f2 -d' ')
+# javadoc generation & resources
+export JAVADOC_CLASSPATH="com.demoapp.core com.demoapp.demo.scenes"
+export JAVADOC_RESOURCES="src/docs/images"
 #
 # Paths
 export SRC=src
@@ -37,13 +40,14 @@ function manifest() {
   echo "|_ 1. Create Manifest file '$TARGET/manifest.mf'"
   # create manifest file
   cat <<EOF >$TARGET/manifest.mf
- 'Manifest-Version: 1.0'
- Created-By: $JAVA_BUILD ($VENDOR_NAME)
+Manifest-Version: 1.0
+Created-By: $JAVA_BUILD ($VENDOR_NAME)
 Main-Class: $MAIN_CLASS
 Implementation-Title: $PROGRAM_TITLE
 Implementation-Version: $PROGRAM_VERSION-build_${GIT_COMMIT_ID:0:8}
 Implementation-Vendor: $VENDOR_NAME
 Implementation-Author: $AUTHOR_NAME
+
 EOF
   echo "   |_ done"
 }
@@ -55,7 +59,7 @@ function compile() {
   # prepare target
   mkdir -p $CLASSES
   # compilation options
-  cat <<EOF > lib/options.txt
+  cat <<EOF >lib/options.txt
 -d target/classes
 -g:source,lines,vars
 -sourcepath $SRC;$RESOURCE
@@ -73,34 +77,38 @@ EOF
   echo "   done."
 }
 #
-function generateDoc(){
-echo "generate Javadoc "
+function generateDoc() {
+  echo "generate Javadoc "
   echo "> from : $SRC"
   echo "> to   : $TARGET/javadoc"
   # prepare target
-  mkdir -p $TARGET/javadoc
+  mkdir -p $TARGET/javadoc/resources
   # Compile class files
   rm -Rf $TARGET/javadoc/*
   echo "|_ 2-5. generate javadoc from '$JAVADOC_CLASSPATH' ..."
-  java -jar ./lib/tools/markdown2html-0.3.1.jar <README.md >$TARGET/javadoc/overview.html
+  cat <README.md >>target/README.temp.md
+  sed -i "s/src\/docs\/images/resources/" target/README.temp.md
+  java -jar ./lib/tools/markdown2html-0.3.1.jar <target/README.temp.md >$TARGET/javadoc/overview.html
   javadoc $JAR_OPTS -source $SOURCE_VERSION \
     -overview $TARGET/javadoc/overview.html \
     -quiet -author -use -version \
     -doctitle "<h1>$PROGRAM_TITLE</h1>" \
     -d $TARGET/javadoc \
-    -sourcepath $SRC/main/java $JAVADOC_CLASSPATH  >> target/build.log
+    -sourcepath $SRC/main/java $JAVADOC_CLASSPATH >>target/build.log
+  echo "copy required resources"
+  cp -vr $JAVADOC_RESOURCES/* $TARGET/javadoc/resources
   echo "   done."
 
 }
 #
-function executeTests(){
+function executeTests() {
   echo "execute tests"
   echo "> from : $SRC/test"
   echo "> to   : $TARGET/test-classes"
   mkdir -p $TARGET/test-classes
   rm -Rf $TARGET/test-classes/*
   echo "copy test resources"
-  cp -r *TEST_RESOURCES/* $TARGET/test-classes
+  cp -r $TEST_RESOURCES/* $TARGET/test-classes
   echo "compile test classes"
   #list test sources
   find ./src/test -name '*.java' >$TARGET/test-sources.lst
