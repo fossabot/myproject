@@ -7,6 +7,9 @@ import java.util.Optional;
 public class StandardGameLoop implements GameLoop {
 
     protected long previousTime = System.nanoTime();
+    protected double cycleTime = 0.0;
+    protected int fps = 0;
+    private int fpsCount = 0;
 
     /**
      * Process game loop and return duration time for this cycle.
@@ -21,9 +24,10 @@ public class StandardGameLoop implements GameLoop {
         input(app);
 
         long elapsed = startTime - previousTime;
-        update(app, elapsed);
-        render(app, elapsed);
-
+        if (!app.isPaused()) {
+            update(app, elapsed);
+            render(app, elapsed);
+        }
         previousTime = startTime;
         return System.nanoTime() - startTime;
     }
@@ -62,7 +66,18 @@ public class StandardGameLoop implements GameLoop {
      */
     @Override
     public void render(Application app, double elapsed) {
-        app.getRender().draw(app, app.getSceneManager().getCurrent());
+        app.getRender().draw(app, fps);
         app.getRender().drawToWindow(app.getWindow());
+        computeFps(elapsed);
+    }
+
+    private void computeFps(double elapsed) {
+        cycleTime += elapsed;
+        fpsCount += 1;
+        if (cycleTime > 1000000000) {
+            cycleTime = 0.0;
+            fps = fpsCount;
+            fpsCount = 0;
+        }
     }
 }

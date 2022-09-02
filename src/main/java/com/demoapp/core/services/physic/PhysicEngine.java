@@ -66,8 +66,11 @@ public class PhysicEngine {
                 break;
 
             case DYNAMIC:
+
                 Vec2d force = new Vec2d(0, 0);
-                go.forces.add(world.gravity.multiply(-0.03));
+                Vec2d gravity = world.gravity.multiply(-0.03);
+
+                go.forces.add(gravity);
                 for (Vec2d f : go.forces) {
                     force.add(f);
                 }

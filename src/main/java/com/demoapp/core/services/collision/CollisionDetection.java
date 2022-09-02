@@ -1,21 +1,25 @@
 package com.demoapp.core.services.collision;
 
+import java.awt.Point;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
+
 import com.demoapp.core.Application;
+import com.demoapp.core.entity.Camera;
 import com.demoapp.core.entity.GameObject;
 import com.demoapp.core.math.MathUtils;
 import com.demoapp.core.math.Vec2d;
 import com.demoapp.core.services.config.Configuration;
 import com.demoapp.core.services.physic.PhysicType;
 
-import java.awt.geom.Point2D;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
 /**
  * Collision Detection service.
- * This service intends to detect collision (sic) between multiple GameObject into the application.
- * It is typically executed just after the PhysicEngine to compute and detect collision.
+ * This service intends to detect collision (sic) between multiple GameObject
+ * into the application.
+ * It is typically executed just after the PhysicEngine to compute and detect
+ * collision.
  *
  * @author Frédéric Delorme
  * @since 1.0.0
@@ -43,7 +47,8 @@ public class CollisionDetection {
     /**
      * Adding an {@link GameObject} to the collision detection service.
      *
-     * @param e the {@link GameObject} to kae part in the collision detection system.
+     * @param e the {@link GameObject} to kae part in the collision detection
+     *          system.
      */
     public void add(GameObject e) {
         colliders.put(e.getName(), e);
@@ -64,7 +69,8 @@ public class CollisionDetection {
      * Remove a {@link GameObject} on its name
      * detection service.
      *
-     * @param gameObjectName the name of the {@link GameObject} to be removed from the collision detection
+     * @param gameObjectName the name of the {@link GameObject} to be removed from
+     *                       the collision detection
      *                       system.
      */
     public void remove(String gameObjectName) {
@@ -131,9 +137,10 @@ public class CollisionDetection {
                     config.colSpeedMinValue, config.colSpeedMaxValue);
 
             /*
-            System.out.printf("e1.%s collides e2.%s Vp=%s / dist=%f / norm=%s%n", e1.getName(),
-                    e2.getName(), vp, distance, colNorm);
-            */
+             * System.out.printf("e1.%s collides e2.%s Vp=%s / dist=%f / norm=%s%n",
+             * e1.getName(),
+             * e2.getName(), vp, distance, colNorm);
+             */
         } else {
 
             if (e1.getPhysicType().equals(PhysicType.DYNAMIC)
@@ -149,8 +156,9 @@ public class CollisionDetection {
                         e1.speed.y = -e1.speed.y * e1.material.elasticity * e2.material.elasticity;
                     }
                     /*
-                    System.out.printf("e1.%s collides static e2.%s%n", e1.getName(), e2.getName());
-                    */
+                     * System.out.printf("e1.%s collides static e2.%s%n", e1.getName(),
+                     * e2.getName());
+                     */
                 }
             }
             if (e1.getPhysicType().equals(PhysicType.DYNAMIC)
@@ -163,13 +171,19 @@ public class CollisionDetection {
     }
 
     /**
-     * Detect if a 2D point is contained by a {@link GameObject}
+     * Detect if the 2D point position of mouse is contained by a {@link GameObject}
      *
-     * @param position the position to test against the list of colliders {@link GameObject}t in the {@link CollisionDetection}
+     * @param position the position to test against the list of colliders
+     *                 {@link GameObject}t in the {@link CollisionDetection}
+     * @param camera   the camera that can influence mouse coordinate.
      * @return the colliding {@link GameObject} or null;
      */
-    public GameObject isColliding(Point2D position) {
+    public GameObject isMouseColliding(Point position, Camera camera) {
         for (GameObject o : colliders.values()) {
+            if (Optional.ofNullable(camera).isPresent() && o.stickToCamera) {
+                position.x += camera.pos.x;
+                position.y += camera.pos.y;
+            }
             if (o.box.contains(position)) {
                 return o;
             }

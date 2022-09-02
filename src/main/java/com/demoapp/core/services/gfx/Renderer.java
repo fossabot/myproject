@@ -23,6 +23,7 @@ import java.util.Optional;
 public class Renderer {
     private final BufferedImage buffer;
     private final double scale;
+    private final Application app;
 
     // debug plate drawing parameters
 
@@ -45,9 +46,11 @@ public class Renderer {
      * <li><code>app.window.height</code> set its height.</li>
      * </ul>
      *
-     * @param config the current application {@link Configuration} object.
+     * @param app the parent {@link Application} object.
      */
-    public Renderer(Configuration config) {
+    public Renderer(Application app) {
+        this.app = app;
+        Configuration config = app.getConfiguration();
         this.buffer = new BufferedImage(
                 (int) config.getGameArea().getWidth(),
                 (int) config.getGameArea().getHeight(),
@@ -73,7 +76,8 @@ public class Renderer {
      *
      * @param app the {@link Application} container
      */
-    public void draw(Application app, Scene scene) {
+    public void draw(Application app, int fps) {
+        Scene scene = app.getSceneManager().getCurrent();
         Graphics2D g = buffer.createGraphics();
         g.setRenderingHints(Map.of(
                 RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON,
@@ -99,7 +103,7 @@ public class Renderer {
                 .forEach(o -> {
                     drawGameObject(app, scene, g, o);
                 });
-
+        drawDebugInformationLine(g, app, fps);
         // release Graphics component.
         g.dispose();
     }
@@ -224,8 +228,9 @@ public class Renderer {
 
     }
 
+
     /**
-     * helper on drawing simple shape.
+     * Helper method on drawing simple shape.
      *
      * @param g     the {@link Graphics2D} API to be used.
      * @param o     the {@link GameObject} to be drawn
@@ -257,5 +262,27 @@ public class Renderer {
                 (int) (window.getWidth() * (1.0 / this.scale)),
                 (int) (window.getHeight() * (1.0 / this.scale)),
                 null);
+    }
+
+    private void drawDebugInformationLine(Graphics2D g, Application app, int fps) {
+        if (app.getConfiguration().getDebugLevel() > 0) {
+            g.setFont(g.getFont().deriveFont(Font.ITALIC, 10.0f));
+
+            int dlYOffset = 8;
+            int screenWidth = (int) app.getConfiguration().getWindowDimension().getWidth();
+            int screenHeight = (int) app.getConfiguration().getWindowDimension().getHeight();
+            int fh = g.getFontMetrics().getHeight();
+
+            g.setColor(new Color(0.3f, 0.0f, 0.0f, 0.50f));
+            g.fillRect(0, screenHeight - (fh + dlYOffset), screenWidth, fh + 8);
+            g.setColor(Color.ORANGE);
+            g.drawRect(1, screenHeight - (fh + dlYOffset), screenWidth + 2, fh + 8);
+            g.setColor(Color.ORANGE);
+            g.drawString(String.format("[ dbg:%d | fps:%03d | obj:%04d]",
+                            app.getConfiguration().getDebugLevel(),
+                            fps,
+                            app.getObjects().size()),
+                    8, screenHeight - dlYOffset - 2);
+        }
     }
 }

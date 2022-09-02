@@ -17,4 +17,9 @@ public class World {
      * define a default material for the world to set a default physic computation behavior.
      */
     public Material defaultWorldMaterial = Material.AIR;
+
+    public World setGravity(Vec2d newG) {
+        this.gravity = newG;
+        return this;
+    }
 }

@@ -27,17 +27,17 @@ export BUILD=$TARGET/build
 export CLASSES=$TARGET/classes
 export RESOURCES=$SRC/main/resources
 export TEST_RESOURCES=$SRC/test/resources
-export COMPILATION_OPTS="--enable-preview -Xlint:unchecked -source $SOURCE_VERSION"
+export COMPILATION_OPTS="--enable-preview -Xlint:preview -Xlint:unchecked -source $SOURCE_VERSION"
 export JAR_NAME=$PROGRAM_NAME-$PROGRAM_VERSION.jar
-export JAR_OPTS=--enable-preview -Xlint:unchecked -Xlint:preview
+export JAR_OPTS=--enable-preview
 #
 function manifest() {
   mkdir $TARGET
-  echo "|_ 0. clear build directory"
+  echo "|_ Clear build directory"
   rm -Rf $TARGET/*
   touch $TARGET/manifest.mf
   # build manifest
-  echo "|_ 1. Create Manifest file '$TARGET/manifest.mf'"
+  echo "|_ Create Manifest file '$TARGET/manifest.mf'"
   # create manifest file
   cat <<EOF >$TARGET/manifest.mf
 Manifest-Version: 1.0
@@ -53,9 +53,9 @@ EOF
 }
 #
 function compile() {
-  echo "compile sources "
-  echo "> from : $SRC"
-  echo "> to   : $CLASSES"
+  echo "|_ Compilation with JDK $SOURCE_VERSION"
+  echo "   > from : $SRC"
+  echo "   > to   : $CLASSES"
   # prepare target
   mkdir -p $CLASSES
   # compilation options
@@ -70,22 +70,22 @@ EOF
 
   # Compile class files
   rm -Rf $CLASSES/*
-  echo "|_ 2. compile sources from '$SRC/main' ..."
+  echo "   |_ Compile sources from '$SRC/main' ..."
   find $SRC/main -name '*.java' >$TARGET/sources.lst
   javac $COMPILATION_OPTS @$LIBS/options.txt @$TARGET/sources.lst -cp $CLASSES
   javac $COMPILATION_OPTS @$TARGET/sources.lst -cp $CLASSES
-  echo "   done."
+  echo "   |_ done."
 }
 #
 function generateDoc() {
-  echo "generate Javadoc "
+  echo "|_ Generate Javadoc (with Markdown overview)"
   echo "> from : $SRC"
   echo "> to   : $TARGET/javadoc"
   # prepare target
   mkdir -p $TARGET/javadoc/resources
   # Compile class files
   rm -Rf $TARGET/javadoc/*
-  echo "|_ 2-5. generate javadoc from '$JAVADOC_CLASSPATH' ..."
+  echo "  |_ generate javadoc from '$JAVADOC_CLASSPATH' ..."
   cat <README.md >>target/README.temp.md
   sed -i "s/src\/docs\/images/resources/" target/README.temp.md
   java -jar ./lib/tools/markdown2html-0.3.1.jar <target/README.temp.md >$TARGET/javadoc/overview.html
@@ -95,33 +95,33 @@ function generateDoc() {
     -doctitle "<h1>$PROGRAM_TITLE</h1>" \
     -d $TARGET/javadoc \
     -sourcepath $SRC/main/java $JAVADOC_CLASSPATH >>target/build.log
-  echo "copy required resources"
+  echo "  |_copy required resources"
   cp -vr $JAVADOC_RESOURCES/* $TARGET/javadoc/resources
-  echo "   done."
+  echo "  |_done."
 
 }
 #
 function executeTests() {
-  echo "execute tests"
+  echo "|_ Execute tests"
   echo "> from : $SRC/test"
   echo "> to   : $TARGET/test-classes"
   mkdir -p $TARGET/test-classes
   rm -Rf $TARGET/test-classes/*
-  echo "copy test resources"
+  echo "  |_ copy test resources"
   cp -r $TEST_RESOURCES/* $TARGET/test-classes
-  echo "compile test classes"
+  echo "  |_ compile test classes"
   #list test sources
   find ./src/test -name '*.java' >$TARGET/test-sources.lst
-  javac -source 17 -encoding $SRC_ENCODING $COMPILATION_OPTS -cp "$LIB_TEST;$CLASSES;." -d $TARGET/test-classes @$TARGET/test-sources.lst
-  echo "execute tests through JUnit"
+  javac -source $SOURCE_VERSION -encoding $SRC_ENCODING $COMPILATION_OPTS -cp "$LIB_TEST;$CLASSES;." -d $TARGET/test-classes @$TARGET/test-sources.lst
+  echo "  |_ execute tests through JUnit"
   java $JAR_OPTS -jar "$LIB_TEST" --class-path "$CLASSES;$TARGET/test-classes;$TARGET/classes;$SRC/test/resources;" --scan-class-path
-  echo "done."
+  echo "  |_ done."
 }
 #
 function createJar() {
-  echo "|_ 3. package jar file '$TARGET/$JAR_NAME'..."
+  echo "|_ Package jar file '$TARGET/$JAR_NAME'..."
   if ([ $(ls $CLASSES | wc -l | grep -w "0") ]); then
-    echo 'No compiled class files'
+    echo ' ! WARNING ! No compiled class files'
   else
     # Build JAR
     jar -cfmv $TARGET/$JAR_NAME $TARGET/manifest.mf -C $CLASSES . -C $RESOURCES .
@@ -132,7 +132,7 @@ function createJar() {
 #
 function wrapJar() {
   # create runnable program
-  echo "|_ 4. create run file '$BUILD/$PROGRAM_NAME-$PROGRAM_VERSION.run'..."
+  echo "|_ Create run file '$BUILD/$PROGRAM_NAME-$PROGRAM_VERSION.run'..."
   mkdir -p $BUILD
   cat $LIBS/stub.sh $TARGET/$PROGRAM_NAME-$PROGRAM_VERSION.jar >$BUILD/$PROGRAM_NAME-$PROGRAM_VERSION.run
   chmod +x $BUILD/$PROGRAM_NAME-$PROGRAM_VERSION.run
@@ -143,13 +143,13 @@ function executeJar() {
   manifest
   compile
   createJar
-  echo "|_ 5.Execute just created JAR $TARGET/$PROGRAM_NAME-$PROGRAM_VERSION.jar"
+  echo "|_ Execute just created JAR $TARGET/$PROGRAM_NAME-$PROGRAM_VERSION.jar"
   java $JAR_OPTS -jar $TARGET/$PROGRAM_NAME-$PROGRAM_VERSION.jar "$@"
 }
 #
 function sign() {
   # must see here: https://docs.oracle.com/javase/tutorial/security/toolsign/signer.html
-  echo "not already implemented... sorry"
+  echo "! NOTE ! not already implemented... sorry"
 }
 #
 function help() {

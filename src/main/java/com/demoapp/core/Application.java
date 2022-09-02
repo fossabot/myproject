@@ -75,6 +75,16 @@ public class Application {
     private CollisionDetection collisionDetection;
 
     /**
+     * The <code>pauseStatus</code> is used to set the {@link Application}
+     * {@link com.demoapp.core.services.gameloop.GameLoop} in pause mode, to stop updating and rendering.
+     *
+     * @see com.demoapp.core.services.gameloop.GameLoop
+     * @see StandardGameLoop
+     * @see FixFPSGameLoop
+     */
+    private boolean pauseStatus;
+
+    /**
      * Initialize the application with default configuration file ad then parse args
      * from command line.
      *
@@ -127,7 +137,7 @@ public class Application {
                 config.getWindowDimension(), config.getScale())
                 .attachHandler(new InputHandler());
 
-        render = new Renderer(config);
+        render = new Renderer(this);
         gameLoop = new FixFPSGameLoop(config.getFPS());
         scm = new SceneManager(this);
         physicEngine = new PhysicEngine(this);
@@ -319,5 +329,13 @@ public class Application {
     public static void main(String[] args) {
         Application app = new Application(args);
         app.run();
+    }
+
+    public boolean isPaused() {
+        return pauseStatus;
+    }
+
+    public void setPause(boolean pauseMode) {
+        this.pauseStatus = pauseMode;
     }
 }

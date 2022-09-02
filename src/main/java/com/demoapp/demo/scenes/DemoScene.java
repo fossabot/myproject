@@ -134,8 +134,6 @@ public class DemoScene extends AbstractScene
                         app.getConfiguration().getWindowDimension().getWidth(),
                         app.getConfiguration().getWindowDimension().getHeight()));
         addCamera(camera);
-        app.getWindow().getInputHandler().addKeyReleasedHandler(this);
-        app.getWindow().getInputHandler().addKeyPressedHandler(this);
     }
 
     /**
@@ -154,11 +152,11 @@ public class DemoScene extends AbstractScene
      * @param maxPlatformWidth   the maximal Width of a platform (in tile)
      */
     private void generatePlatforms(Application app,
-            int nbPlatforms,
-            int areaPlatformWidth, int areaPlatformHeight,
-            int safeBorderWidth,
-            int minPlatformWidth, int minPlatformHeight,
-            int maxPlatformWidth) {
+                                   int nbPlatforms,
+                                   int areaPlatformWidth, int areaPlatformHeight,
+                                   int safeBorderWidth,
+                                   int minPlatformWidth, int minPlatformHeight,
+                                   int maxPlatformWidth) {
         for (int i = 0; i < nbPlatforms; i++) {
             GameObject pf = new GameObject("pf_" + i)
                     .setType(GameObject.ObjectType.RECTANGLE)
@@ -218,20 +216,6 @@ public class DemoScene extends AbstractScene
         }
     }
 
-    @Override
-    public void onKeyReleased(KeyEvent e) {
-        switch (e.getKeyCode()) {
-            case KeyEvent.VK_Z:
-
-                create(app);
-                break;
-            case KeyEvent.VK_D:
-                int d = app.getConfiguration().getDebugLevel() + 1 < 6 ? app.getConfiguration().getDebugLevel() + 1 : 0;
-                app.getConfiguration().setDebugLevel(d);
-            default:
-                break;
-        }
-    }
 
     @Override
     public void onKeyPressed(KeyEvent e) {
@@ -250,6 +234,11 @@ public class DemoScene extends AbstractScene
             default:
                 break;
         }
+    }
+
+    @Override
+    public void onKeyReleased(KeyEvent e) {
+        super.onKeyReleased(e);
     }
 
     @Override
