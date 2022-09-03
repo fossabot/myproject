@@ -266,7 +266,7 @@ public class Renderer {
 
     private void drawDebugInformationLine(Graphics2D g, Application app, int fps) {
         if (app.getConfiguration().getDebugLevel() > 0) {
-            g.setFont(g.getFont().deriveFont(Font.ITALIC, 10.0f));
+            g.setFont(g.getFont().deriveFont(Font.BOLD, 10.0f));
 
             int dlYOffset = 8;
             int screenWidth = (int) app.getConfiguration().getWindowDimension().getWidth();
@@ -278,10 +278,12 @@ public class Renderer {
             g.setColor(Color.ORANGE);
             g.drawRect(1, screenHeight - (fh + dlYOffset), screenWidth + 2, fh + 8);
             g.setColor(Color.WHITE);
-            g.drawString(String.format("[ dbg:%d | fps:%03d | obj:%04d]",
+            g.drawString(String.format("[ dbg:%d | fps:%03d | obj:%04d | col:%03d ]",
                             app.getConfiguration().getDebugLevel(),
                             fps,
-                            app.getObjects().size()),
+                            app.getObjects().size(),
+                            app.getCollisionDetection().getCollisionCounter()
+                    ),
                     8, screenHeight - dlYOffset - 2);
         }
     }

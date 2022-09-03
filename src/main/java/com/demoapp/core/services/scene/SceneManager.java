@@ -103,10 +103,6 @@ public class SceneManager {
         }
     }
 
-    public void activate(String sceneName) {
-        current = scenes.get(sceneName);
-    }
-
     public Scene getCurrent() {
         return current;
     }

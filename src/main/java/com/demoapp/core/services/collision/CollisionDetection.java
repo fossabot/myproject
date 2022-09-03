@@ -30,6 +30,8 @@ public class CollisionDetection {
      */
     private final Configuration config;
 
+    private int collisionCounter = 0;
+
     /**
      * List of the {@link GameObject} to be collision detect to.
      */
@@ -87,6 +89,7 @@ public class CollisionDetection {
     }
 
     private void detect() {
+        collisionCounter = 0;
         List<GameObject> targets = colliders.values().stream().filter(e -> e.isAlive() || e.isPersistent()).toList();
         for (GameObject e1 : colliders.values()) {
             e1.collide = e1.collide || false;
@@ -94,6 +97,7 @@ public class CollisionDetection {
                 e2.collide = e2.collide || false;
                 if (e1.id != e2.id) {
                     if (e1.collisionBox.getBounds().intersects(e2.collisionBox.getBounds())) {
+                        collisionCounter++;
                         resolve(e1, e2);
                         e1.onCollision(e1, e2);
                     }
@@ -189,5 +193,14 @@ public class CollisionDetection {
             }
         }
         return null;
+    }
+
+    /**
+     * Return the current collision  counter value.
+     *
+     * @return the value of the collision counter.
+     */
+    public int getCollisionCounter() {
+        return this.collisionCounter;
     }
 }

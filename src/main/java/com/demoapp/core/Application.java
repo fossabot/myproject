@@ -148,8 +148,10 @@ public class Application {
 
     public void createScene() {
         if (Optional.ofNullable(scm.getCurrent()).isPresent()) {
+            setPause(true);
             scm.getCurrent().load();
             scm.getCurrent().create(this);
+            setPause(false);
         }
     }
 
