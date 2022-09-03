@@ -273,11 +273,11 @@ public class Renderer {
             int screenHeight = (int) app.getConfiguration().getWindowDimension().getHeight();
             int fh = g.getFontMetrics().getHeight();
 
-            g.setColor(new Color(0.3f, 0.0f, 0.0f, 0.50f));
+            g.setColor(new Color(0.3f, 0.0f, 0.0f, 0.45f));
             g.fillRect(0, screenHeight - (fh + dlYOffset), screenWidth, fh + 8);
             g.setColor(Color.ORANGE);
             g.drawRect(1, screenHeight - (fh + dlYOffset), screenWidth + 2, fh + 8);
-            g.setColor(Color.ORANGE);
+            g.setColor(Color.WHITE);
             g.drawString(String.format("[ dbg:%d | fps:%03d | obj:%04d]",
                             app.getConfiguration().getDebugLevel(),
                             fps,
