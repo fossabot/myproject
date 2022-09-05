@@ -22,7 +22,7 @@ java -jar target/demoapp-1.0.0.jar
 
 You will see appearing such a window:
 
-![A screenshot of the demo](src/docs/images/012-collision-detection-and-platform.png "A simple screenshot of the demo")
+![A screenshot of the demo](src/docs/images/013-image-and-text.png "A simple screenshot of the demo")
 
 > _**NOTE**_<br/> > _You can also use the maven command line:_
 >
