@@ -25,6 +25,29 @@
         <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
         <project.mainClass>com.demoapp.core.Application</project.mainClass>
     </properties>
+    
+    <scm>
+        <url>https://github.com/mcgivrer/myproject</url>
+        <connection>scm:git:git@github.com:mcgivrer/myproject.git</connection>
+        <developerConnection>scm:git:https://github.com/mcgivrer/myproject.git</developerConnection>
+        <tag>v${project.version}</tag>
+    </scm>
+    <issueManagement>
+        <system>GitHub</system>
+        <url>https://github.com/mcgivrer/myproject/issues</url>
+    </issueManagement>
+    <ciManagement>
+        <url>https://github.com/mcgivrer/myproject/actions/</url>
+        <system>github-actions</system>
+    </ciManagement>
+
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>GitHub Packages</name>
+            <url>https://maven.pkg.github.com/mcgivrer/myproject</url>
+        </repository>
+    </distributionManagement>
 
     <dependencyManagement>
         <dependencies>
@@ -107,12 +130,12 @@
                         <link>${project.ciManagement.url}</link>
                         <link>https://docs.oracle.com/en/java/javase/${maven.compiler.target}/docs/api/</link>
                     </links>
-                    <doclet>ch.raffael.mddoclet.MarkdownDoclet</doclet>
+                    <!--doclet>ch.raffael.mddoclet.MarkdownDoclet</doclet>
                     <docletArtifact>
                         <groupId>ch.raffael.markdown-doclet</groupId>
                         <artifactId>markdown-doclet</artifactId>
                         <version>1.4</version>
-                    </docletArtifact>
+                    </docletArtifact-->
                     <useStandardDocletOptions>true</useStandardDocletOptions>
                     <additionalOptions>--enable-preview</additionalOptions>
                 </configuration>
