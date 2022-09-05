@@ -63,11 +63,71 @@ And we will need to update the `Window` to connect those new listener implementa
 
 ### InputHandler modification
 
-_TODO_
+The `InputHandler` must now support more events:
+
+- [`MouseEvent`](https://docs.oracle.com/en/java/javase/18/docs/api/java.xml/org/w3c/dom/events/MouseEvent.html) and
+- [`MouseWheelEvent`](https://docs.oracle.com/en/java/javase/18/docs/api/java.xml/org/w3c/dom/events/MouseWheelEvent.html)
+  need to be caught and processed.
+
+We will use the same previous approach by creating dedicated handler to implement at `Scene` level.
+
+We already have the `OnKeyPressedHandler` and the `OnKeyReleasedHandler`, we are going to add the 2 next ones
+
+- `OnMouseClickHandler` to manage mouse click and mouse position,
+- `OnMousWheelHandler` to manage mouse wheel operations.
+
+```java
+public interface OnMouseClickHandler {
+    void onMouseClick(MouseEvent e);
+}
+```
+
+and for the mouse wheel support:
+
+```java
+public interface OnMouseWheelHandler {
+    void onMouseScrolled(MouseWheelEvent e);
+}
+```
+
+and we connect the possible handler implmentation to the InputHandler:
+
+```java
+public class InputHandler {
+    //...
+    private List<OnMouseClickHandler> mouseClickHandlers = new CopyOnWriteArrayList<>();
+    private List<OnMouseWheelHandler> mouseWheelHandlers = new CopyOnWriteArrayList<>();
+
+    //...
+    public void addMouseClickHandler(OnMouseClickHandler oMCH) {
+        this.mouseClickHandlers.add(oMCH);
+    }
+
+    public void addMouseWheelHandler(OnMouseWheelHandler oMWH) {
+        this.mouseWheelHandlers.add(oMWH);
+    }
+
+    //...
+    @Override
+    public void mousePressed(MouseEvent e) {
+        mouseButton[e.getButton()] = true;
+        for (OnMouseClickHandler oMCH : mouseClickHandlers) {
+            oMCH.onMouseClick(e);
+        }
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+        mouseButton[e.getButton()] = false;
+        for (OnMouseClickHandler oMCH : mouseClickHandlers) {
+            oMCH.onMouseClick(e);
+        }
+    }
+
+}
+```
 
 ### Window listeners plugin
-
-_TODO_
 
 ## Debug information and structure
 

@@ -36,6 +36,10 @@ public class InputHandler implements KeyListener, MouseListener, MouseMotionList
      * mouse position
      */
     private Point mousePosition;
+    /**
+     * mouse wheel value
+     */
+    private int mouseWheelValue;
     private boolean ctrlPressed;
     private boolean shiftPressed;
 
@@ -43,7 +47,6 @@ public class InputHandler implements KeyListener, MouseListener, MouseMotionList
     private List<OnKeyPressedHandler> keyPressedHandlers = new CopyOnWriteArrayList<>();
     private List<OnMouseClickHandler> mouseClickHandlers = new CopyOnWriteArrayList<>();
     private List<OnMouseWheelHandler> mouseWheelHandlers = new CopyOnWriteArrayList<>();
-    private int mouseWheelValue;
 
     /**
      * Initialize the InputHandler internal input status caches.
@@ -110,6 +113,9 @@ public class InputHandler implements KeyListener, MouseListener, MouseMotionList
     @Override
     public void mouseReleased(MouseEvent e) {
         mouseButton[e.getButton()] = false;
+        for (OnMouseClickHandler oMCH : mouseClickHandlers) {
+            oMCH.onMouseClick(e);
+        }
     }
 
     @Override
