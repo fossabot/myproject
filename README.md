@@ -34,15 +34,18 @@ You will see appearing such a window:
 
 Basic commands:
 
-| Key              | Description          |
-| :--------------- | :------------------- |
-| <kbd>UP</kbd>    | move up player       |
-| <kbd>DOWN</kbd>  | move down player     |
-| <kbd>LEFT</kbd>  | move left player     |
-| <kbd>RIGHT</kbd> | move right player    |
-| <kbd>CTRL</kbd>  | player speed x 2     |
-| <kbd>SHIFT</kbd> | player speed x 6     |
-| <kbd>Z</kbd>     | regenerate platforms |
-| <kbd>Esc</kbd>   | quit demo            |
+| Key              | Description                 |
+| :--------------- | :-------------------------- |
+| <kbd>UP</kbd>    | move up player              |
+| <kbd>DOWN</kbd>  | move down player            |
+| <kbd>LEFT</kbd>  | move left player            |
+| <kbd>RIGHT</kbd> | move right player           |
+| <kbd>CTRL</kbd>  | player speed x 2            |
+| <kbd>SHIFT</kbd> | player speed x 6            |
+| <kbd>Z</kbd>     | regenerate platforms        |
+| <kbd>Esc</kbd>   | quit demo                   |
+| <kbd>D</kbd>     | switch debug mode ( 0 to 5) |
+
+> **NOTE** Mouse click on an object to siwtch its own debug level from 0 to 5.
 
 McG.
