@@ -57,9 +57,11 @@ Here is bellow some possible enhancement of this project to bring more possibili
 
 ![The Animated Sprite are coming](src/docs/images/illustration-sprites.png "Sprites are based on some animation sequences")
 
-- The current backgound color is set to `#000000`, but soon a new background image feature will be added with the tile map management integration, to gicving easy access to real platform level design with smart and fun graphism, and some new `Behavior` implmebtation tp give more coding flexibitlity and resusabilty to [`GameObject`](./src/main/java/com/demoapp/core/entity/GameObject.java) ans [`Scene`](./src/main/java/com/demoapp/core/servcies/scene/Scene.java)
+- The current backgound color is set to `#000000`, but soon a new background image feature will be added with the tile map management integration, to give an easy access to real platform level design with smart and fun graphism, 
 
-![Some tiles and objects to build levels](src/docs/images/illustration-tiles.png "Some tiles and objects to build levels with sthe so oldish standard 16x16 pixels")
+![Some tiles and objects to build levels](src/docs/images/illustration-tiles-scaled-up-480x192.png "Some tiles and objects to build levels with the so oldish standard 16x16 pixels")
+
+- A new `Behavior` interface will come to drive to more flexible and resusable code onto [`GameObject`](./src/main/java/com/demoapp/core/entity/GameObject.java) and [`Scene`](./src/main/java/com/demoapp/core/servcies/scene/Scene.java).
 
 - Sounds will eventually poped-up in a futur release, with the help of goos old Google libraries like `jlayer`, `mp3spi` and `tritonus-share` , bringing MP3 and OGG sound support to the java sound API (see the [Tritonus project](http://www.tritonus.org/) and [Java Sound API](https://www.oracle.com/java/technologies/tiger.html).
 
