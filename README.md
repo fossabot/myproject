@@ -22,7 +22,7 @@ java -jar target/demoapp-1.0.0.jar
 
 You will see appearing such a window:
 
-![A screenshot of the demo](src/docs/images/013-image-and-text.png "A simple screenshot of the demo")
+![A screenshot of the demo](src/docs/images/014-add-dynamic-debug-mode.png "A simple screenshot of the demo")
 
 > _**NOTE**_<br/> > _You can also use the maven command line:_
 >
@@ -34,15 +34,35 @@ You will see appearing such a window:
 
 Basic commands:
 
-| Key              | Description          |
-| :--------------- | :------------------- |
-| <kbd>UP</kbd>    | move up player       |
-| <kbd>DOWN</kbd>  | move down player     |
-| <kbd>LEFT</kbd>  | move left player     |
-| <kbd>RIGHT</kbd> | move right player    |
-| <kbd>CTRL</kbd>  | player speed x 2     |
-| <kbd>SHIFT</kbd> | player speed x 6     |
-| <kbd>Z</kbd>     | regenerate platforms |
-| <kbd>Esc</kbd>   | quit demo            |
+| Key              | Description                 |
+| :--------------- | :-------------------------- |
+| <kbd>UP</kbd>    | move up player              |
+| <kbd>DOWN</kbd>  | move down player            |
+| <kbd>LEFT</kbd>  | move left player            |
+| <kbd>RIGHT</kbd> | move right player           |
+| <kbd>CTRL</kbd>  | player speed x 2            |
+| <kbd>SHIFT</kbd> | player speed x 6            |
+| <kbd>Z</kbd>     | regenerate platforms        |
+| <kbd>Esc</kbd>   | quit demo                   |
+| <kbd>D</kbd>     | switch debug mode ( 0 to 5) |
+
+> __Note__ 
+> Mouse click on an object to siwtch its own debug level from 0 to 5.
+
+## Futur is coming
+
+Here is bellow some possible enhancement of this project to bring more possibilities in game design ! 
+
+- Animated [`GameObject`](./src/main/java/com/demoapp/core/entity/GameObject.java) with an `Animation` object will cover the famous sprite purpose,  
+
+![The Animated Sprite are coming](src/docs/images/illustration-sprites.png "Sprites are based on some animation sequences")
+
+- The current backgound color is set to `#000000`, but soon a new background image feature will be added with the tile map management integration, to give an easy access to real platform level design with smart and fun graphism, 
+
+![Some tiles and objects to build levels](src/docs/images/illustration-tiles-scaled-up-480x192.png "Some tiles and objects to build levels with the so oldish standard 16x16 pixels")
+
+- A new `Behavior` interface will come to drive to more flexible and resusable code onto [`GameObject`](./src/main/java/com/demoapp/core/entity/GameObject.java) and [`Scene`](./src/main/java/com/demoapp/core/servcies/scene/Scene.java).
+
+- Sounds will eventually poped-up in a futur release, with the help of goos old Google libraries like `jlayer`, `mp3spi` and `tritonus-share` , bringing MP3 and OGG sound support to the java sound API (see the [Tritonus project](http://www.tritonus.org/) and [Java Sound API](https://www.oracle.com/java/technologies/tiger.html).
 
 McG.
