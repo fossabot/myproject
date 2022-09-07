@@ -1,6 +1,6 @@
 # MyProject
 
-[![Java CI with Maven](https://github.com/mcgivrer/myproject/actions/workflows/main.yml/badge.svg)](https://github.com/mcgivrer/myproject/actions/workflows/main.yml)
+[![Java CI with Maven](https://github.com/mcgivrer/myproject/actions/workflows/main.yml/badge.svg)](https://github.com/mcgivrer/myproject/actions/workflows/main.yml) [![Known Vulnerabilities](https://snyk.io//test/github/mcgivrer/myproject/badge.svg?targetFile=pom.xml)](https://snyk.io//test/github/mcgivrer/myproject?targetFile=pom.xml)
 
 This is a Basic java program to rediscover how to code in java from scratch, without framework and runtime libraries.
 
