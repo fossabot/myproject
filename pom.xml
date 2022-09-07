@@ -25,7 +25,7 @@
         <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
         <project.mainClass>com.demoapp.core.Application</project.mainClass>
     </properties>
-    
+
     <scm>
         <url>https://github.com/mcgivrer/myproject</url>
         <connection>scm:git:git@github.com:mcgivrer/myproject.git</connection>
@@ -150,6 +150,28 @@
                     </execution>
                 </executions>
             </plugin>
+
+
+            <!-- Compute coverage -->
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.8.7</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>report</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
             <!-- Build the minimalist JAR without dependencies (Normal Edition) -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -213,7 +235,11 @@
         <profile>
             <id>codecoverage</id>
             <activation>
-                <property>CODACY_API_TOKEN</property>
+                <activeByDefault>true</activeByDefault>
+                <property>
+                    <name>env.CODACY_ACTIVE</name>
+                    <value>true</value>
+                </property>
             </activation>
             <build>
                 <plugins>
