@@ -1,6 +1,6 @@
 # MyProject
 
-[![Java CI with Maven](https://github.com/mcgivrer/myproject/actions/workflows/main.yml/badge.svg)](https://github.com/mcgivrer/myproject/actions/workflows/main.yml) [![Known Vulnerabilities](https://snyk.io//test/github/mcgivrer/myproject/badge.svg?targetFile=pom.xml)](https://snyk.io//test/github/mcgivrer/myproject?targetFile=pom.xml)
+[![Java CI with Maven](https://github.com/mcgivrer/myproject/actions/workflows/main.yml/badge.svg)](https://github.com/mcgivrer/myproject/actions/workflows/main.yml) [![Known Vulnerabilities](https://snyk.io//test/github/mcgivrer/myproject/badge.svg?targetFile=pom.xml)](https://snyk.io//test/github/mcgivrer/myproject?targetFile=pom.xml) [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fmcgivrer%2Fmyproject.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fmcgivrer%2Fmyproject?ref=badge_shield)
 
 This is a Basic java program to rediscover how to code in java from scratch, without framework and runtime libraries.
 
