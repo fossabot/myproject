@@ -213,7 +213,7 @@
         <profile>
             <id>codecoverage</id>
             <activation>
-                <property>codacy</property>
+                <property>CODACY_API_TOKEN</property>
             </activation>
             <build>
                 <plugins>
