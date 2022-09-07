@@ -1,0 +1,60 @@
+<h1>MyProject</h1>
+<p>This is a Basic java program to rediscover how to code in java from scratch, without framework and runtime libraries.</p>
+<p>Only Junit will be used for test purpose.</p>
+<h2>Build</h2>
+<p>A simple maven command will help :</p>
+<pre><code class="language-bash">mvn clean install
+</code></pre>
+<h2>Execute the program</h2>
+<p>After building, you may execute the code from the <code>target/</code>:</p>
+<pre><code class="language-bash">java -jar target/demoapp-1.0.0.jar
+</code></pre>
+<p>You will see appearing such a window:</p>
+<p><img src="resources/014-add-dynamic-debug-mode.png" alt="A screenshot of the demo" title="A simple screenshot of the demo" /></p>
+<blockquote>
+<p><em><strong>NOTE</strong></em><br/> &gt; <em>You can also use the maven command line:</em></p>
+<pre><code class="language-shell">mvn exec:java
+</code></pre>
+</blockquote>
+<h2>Usage</h2>
+<p>Basic commands:</p>
+<table>
+<thead>
+<tr><th align="left">Key</th><th align="left">Description</th></tr>
+</thead>
+<tbody>
+<tr><td align="left"><kbd>UP</kbd></td><td align="left">move up player</td></tr>
+<tr><td align="left"><kbd>DOWN</kbd></td><td align="left">move down player</td></tr>
+<tr><td align="left"><kbd>LEFT</kbd></td><td align="left">move left player</td></tr>
+<tr><td align="left"><kbd>RIGHT</kbd></td><td align="left">move right player</td></tr>
+<tr><td align="left"><kbd>CTRL</kbd></td><td align="left">player speed x 2</td></tr>
+<tr><td align="left"><kbd>SHIFT</kbd></td><td align="left">player speed x 6</td></tr>
+<tr><td align="left"><kbd>Z</kbd></td><td align="left">regenerate platforms</td></tr>
+<tr><td align="left"><kbd>Esc</kbd></td><td align="left">quit demo</td></tr>
+<tr><td align="left"><kbd>D</kbd></td><td align="left">switch debug mode ( 0 to 5)</td></tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Note</strong>
+Mouse click on an object to siwtch its own debug level from 0 to 5.</p>
+</blockquote>
+<h2>Futur is coming</h2>
+<p>Here is bellow some possible enhancement of this project to bring more possibilities in game design !</p>
+<ul>
+<li>Animated <a href="./src/main/java/com/demoapp/core/entity/GameObject.java"><code>GameObject</code></a> with an <code>Animation</code> object will cover the famous sprite purpose,</li>
+</ul>
+<p><img src="resources/illustration-sprites.png" alt="The Animated Sprite are coming" title="Sprites are based on some animation sequences" /></p>
+<ul>
+<li>The current backgound color is set to <code>#000000</code>, but soon a new background image feature will be added with the tile map management integration, to give an easy access to real platform level design with smart and fun graphism,</li>
+</ul>
+<p><img src="resources/illustration-tiles-scaled-up-480x192.png" alt="Some tiles and objects to build levels" title="Some tiles and objects to build levels with the so oldish standard 16x16 pixels" /></p>
+<ul>
+<li>
+<p>A new <code>Behavior</code> interface will come to drive to more flexible and resusable code onto <a href="./src/main/java/com/demoapp/core/entity/GameObject.java"><code>GameObject</code></a> and <a href="./src/main/java/com/demoapp/core/servcies/scene/Scene.java"><code>Scene</code></a>.</p>
+</li>
+<li>
+<p>Sounds will eventually poped-up in a futur release, with the help of goos old Google libraries like <code>jlayer</code>, <code>mp3spi</code> and <code>tritonus-share</code> , bringing MP3 and OGG sound support to the java sound API (see the <a href="http://www.tritonus.org/">Tritonus project</a> and <a href="https://www.oracle.com/java/technologies/tiger.html">Java Sound API</a>.</p>
+</li>
+</ul>
+<p>McG.</p>
+
