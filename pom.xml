@@ -212,6 +212,9 @@
     <profiles>
         <profile>
             <id>codecoverage</id>
+            <activation>
+                <property>codacy</property>
+            </activation>
             <build>
                 <plugins>
                     <!-- Online Code Quality service verification -->
