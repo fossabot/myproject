@@ -1,6 +1,7 @@
 # MyProject
 
 [![Java CI with Maven](https://github.com/mcgivrer/myproject/actions/workflows/main.yml/badge.svg)](https://github.com/mcgivrer/myproject/actions/workflows/main.yml) [![Known Vulnerabilities](https://snyk.io//test/github/mcgivrer/myproject/badge.svg?targetFile=pom.xml)](https://snyk.io//test/github/mcgivrer/myproject?targetFile=pom.xml)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fmcgivrer%2Fmyproject.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fmcgivrer%2Fmyproject?ref=badge_shield)
 
 This is a Basic java program to rediscover how to code in java from scratch, without framework and runtime libraries.
 
@@ -68,3 +69,7 @@ Here is bellow some possible enhancement of this project to bring more possibili
 - Sounds will eventually poped-up in a futur release, with the help of goos old Google libraries like `jlayer`, `mp3spi` and `tritonus-share` , bringing MP3 and OGG sound support to the java sound API (see the [Tritonus project](http://www.tritonus.org/) and [Java Sound API](https://www.oracle.com/java/technologies/tiger.html).
 
 McG.
+
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fmcgivrer%2Fmyproject.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fmcgivrer%2Fmyproject?ref=badge_large)
