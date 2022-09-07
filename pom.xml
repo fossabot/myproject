@@ -209,4 +209,39 @@
 
         </plugins>
     </build>
+    <profiles>
+        <profile>
+            <id>codecoverage</id>
+            <build>
+                <plugins>
+                    <!-- Online Code Quality service verification -->
+                    <plugin>
+                        <groupId>com.gavinmogan</groupId>
+                        <artifactId>codacy-maven-plugin</artifactId>
+                        <version>1.2.0</version>
+                        <configuration>
+                            <!--suppress UnresolvedMavenProperty -->
+                            <apiToken>${env.CODACY_API_TOKEN}</apiToken>
+                            <!--suppress UnresolvedMavenProperty -->
+                            <projectToken>${env.CODACY_PROJECT_TOKEN}</projectToken>
+                            <coverageReportFile>target/site/jacoco/jacoco.xml</coverageReportFile>
+                            <!--suppress UnresolvedMavenProperty -->
+                            <commit>${env.TRAVIS_COMMIT}</commit>
+                            <codacyApiBaseUrl>https://api.codacy.com</codacyApiBaseUrl>
+                            <failOnMissingReportFile>false</failOnMissingReportFile>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>post-test</id>
+                                <phase>post-integration-test</phase>
+                                <goals>
+                                    <goal>coverage</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>
