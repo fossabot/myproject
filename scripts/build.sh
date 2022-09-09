@@ -83,12 +83,13 @@ function generateDoc() {
   echo "> to   : $TARGET/javadoc"
   # prepare target
   mkdir -p $TARGET/javadoc/resources
+  mkdir -p $SRC/javadoc
   # Compile class files
   rm -Rf $TARGET/javadoc/*
   echo "  |_ generate javadoc from '$JAVADOC_CLASSPATH' ..."
   cat <README.md >>target/README.temp.md
   sed -i "s/src\/docs\/images/resources/" target/README.temp.md
-  java -jar ./lib/tools/markdown2html-0.3.1.jar <target/README.temp.md >$TARGET/javadoc/overview.html
+  java -jar ./lib/tools/markdown2html-0.3.1.jar <target/README.temp.md >$SRC/javadoc/overview.html
   javadoc $JAR_OPTS -source $SOURCE_VERSION \
     -overview $TARGET/javadoc/overview.html \
     -quiet -author -use -version \
