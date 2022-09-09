@@ -19,7 +19,7 @@ jobs:
       uses: actions/setup-java@v2
       with:
         java-version: '18'
-        distribution: 'adopt'
+        distribution: 'zulu'
     - name: Set up virtual X11
       run: sudo apt-get install xvfb
     - name: Start virtual frame buffer
